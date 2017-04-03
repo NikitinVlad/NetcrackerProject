@@ -9,6 +9,7 @@
 .items{
     width: 80%;
     height: 370px;
+    padding-top: 1%;
     padding-left: 0;
     margin-left: 9.5%;
     overflow: auto;
@@ -26,6 +27,65 @@
     width: 20%;
     margin-left: 65%;
 }
+.poster{
+    width: 100%;
+    height: 160px;
+}
+.photo-car{
+    margin-top: -10px;
+    height: 140px;
+    width: 20%;
+    float: left;
+}
+.item-price{
+    margin-left: 1%;
+    margin-top: 1%;
+    height: 120px;
+    width: 7%;
+    float: left;
+}
+.info{
+    float: left;
+    height: 140px;
+    width: 65%;
+    margin-top: 1%;
+    margin-left: 4%;
+}
+.posters-title{
+    margin-top: -1%;
+    color: #1a60ba;
+}
+
+.year-car{
+    color: black;
+}
+.main-price{
+    font-size: 110%;
+}
+.second-price{
+    color:rgba(0, 0, 0, 0.5);
+}
+.city-car{
+    color:rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.posters-title:hover{
+    cursor: pointer;
+}
+.characteristics{
+    color: black;
+    font-size: 135%;
+}
+.dop-info{
+    padding-top: 3%;
+    color:rgba(0, 0, 0, 0.5);
+}
+
+
+
 ::-webkit-scrollbar {width: 12px;height: 12px;}
 ::-webkit-scrollbar-thumb:vertical {height:12px;background:#272c35;}
 

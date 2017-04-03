@@ -9,8 +9,13 @@
         </div>
 
         <!-- items being paged -->
+
         <div class="container items">
-        <div *ngFor="let item of pagedItems">{{item.name}}</div>
+            <div class="container poster well" *ngFor="let item of pagedItems">
+                <div class="photo-car"><img src="../../../images/noimage.png"></div>
+                <div class="item-price"><p class="year-car" align="left">Год<p class="main-price" align="left"><b>Цена, р</b><p class="second-price" align="left">Цена, $<p class="city-car" align="left">Город</div>
+                <div class="info"><h3 class="posters-title" align="left">{{item.name}}</h3><p class="characteristics" align="left">Характеристики<p class="dop-info" align="left">Дополнительная информация</div>
+            </div>
             </div>
         <!-- pager -->
         <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
