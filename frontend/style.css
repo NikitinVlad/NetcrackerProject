@@ -1,0 +1,6 @@
+body{
+    background: url("images/background.jpg") no-repeat;
+    background-size: 100%;
+}
+::-webkit-scrollbar {width: 12px;height: 12px;}
+::-webkit-scrollbar-thumb:vertical {height:12px;background:#272c35;}

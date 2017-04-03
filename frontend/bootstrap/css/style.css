@@ -1,0 +1,11 @@
+.container .row{
+    margin-top: 200px;
+    height: 2000px;
+}
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+.carousel-inner{
+    width: 800px;
+    height: 700px;
+}

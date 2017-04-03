@@ -1,0 +1,34 @@
+ <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container mynav">
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/main" routerLinkActive="active"><img class="logo" src="../images/logo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="responsive-menu">
+            <ul class="nav navbar-nav mydrop">
+                <li><a (click)="goMainPage()" >Главная</a></li>
+                <li><a>Каталог автомобилей</a></li>
+                <li><a>Карта</a></li>
+            </ul>
+            <div class="personal">
+                <div  class="container not-profile" *ngIf="!this.localeAuth.checkAuth()">
+                    <a class="" (click)="goLogin()">Вход </a>
+                    |
+                    <a (click)="goRegistration()"> Регистрация</a>
+                </div>
+                <div  *ngIf="this.localeAuth.checkAuth()">
+                    <img class="no-photo" src="../images/no-photo.png">
+                    <a class="login" (click)="goPersonalArea(1)">{{this.localeAuth.getLogin()}}</a>
+                    <a class="func" (click)="goPersonalArea(2)"> Мои объявления</a>
+                    <a class="func" (click)="goPersonalArea(3)"> Корзина</a>
+                    <a class="func" (click)="exit()"> Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cont">
+    <router-outlet></router-outlet>
+</div>
+ <div class="container mytoast">
+     <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+ </div>

@@ -1,0 +1,17 @@
+.office{
+    width:65%;
+    height:550px;
+    margin-top: 7%;
+    background-color:white;
+    padding-left: 0;
+    padding-right: 0;
+}
+.well{
+    padding: 0;
+}
+.active a{
+    color: black;
+}
+.office a:hover{
+    cursor: pointer;
+}

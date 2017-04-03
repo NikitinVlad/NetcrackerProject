@@ -1,0 +1,12 @@
+<div class="container office well">
+    <ul class="breadcrumb">
+        <li [ngClass]="{'active': current==1}" ><a  (click)="changeCur(1)">Профиль</a></li>
+        <li [ngClass]="{'active': current==2}"><a (click)="changeCur(2)">Мои объявления</a></li>
+        <li [ngClass]="{'active': current==3}"><a  (click)="changeCur(3)">Корзина</a></li>
+    </ul>
+    <div class="container">
+        <office *ngIf="current==1"></office>
+        <posters *ngIf="current==2"></posters>
+        <basket *ngIf="current==3"></basket>
+    </div>
+</div>

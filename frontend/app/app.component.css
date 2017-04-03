@@ -1,0 +1,72 @@
+.cont{
+    margin-top: 70px;
+}
+.mynav{
+    height: 60px;
+}
+.mynav li a{
+    margin-top: 5px;
+    padding-left: 30px;
+    font-size: 140%;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+.logo{
+    width: 100px;
+    margin-top: -8px;
+}
+.mydrop  li a:hover{
+    cursor: pointer;
+}
+.personal{
+    position: absolute;
+    margin-left: 1000px;
+    margin-top: 37px;
+    height: 100px;
+    width: 500px;
+    color: white;
+}
+.personal a:hover{
+    cursor: pointer;
+}
+
+
+.login{
+    position: absolute;
+    font-weight: bolder;
+    font-size: 120%;
+    margin-top:-5.5%;
+    padding-right: 4%;
+    color: white;
+}
+
+
+.no-photo{
+    margin-top: -32px;
+    width: 60px;
+    height: 45px;
+}
+.mytoast{
+    position: absolute;
+    display: flex;
+    width: 10%;
+    height: 10%;
+    bottom:3%;
+    right: 10%;
+
+}
+.func{
+    margin-bottom: -50px;
+    padding-right: 2%;
+}
+.not-profile{
+    margin-left: 30%;
+    margin-top: -3%;
+}
+.not-profile a{
+    color: white;
+    font-size: 120%;
+
+}

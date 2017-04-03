@@ -1,0 +1,31 @@
+.pagination{
+    position: absolute;
+    right: 32%;
+    top:72%;
+}
+.pagination a:hover{
+    cursor: pointer;
+}
+.items{
+    width: 80%;
+    height: 370px;
+    padding-left: 0;
+    margin-left: 9.5%;
+    overflow: auto;
+}
+.body{
+   margin-left: -7%;
+}
+.title{
+    position: absolute;
+    margin-left: 10%;
+   margin-top: -11px;
+}
+.options{
+    height: 30px;
+    width: 20%;
+    margin-left: 65%;
+}
+::-webkit-scrollbar {width: 12px;height: 12px;}
+::-webkit-scrollbar-thumb:vertical {height:12px;background:#272c35;}
+
