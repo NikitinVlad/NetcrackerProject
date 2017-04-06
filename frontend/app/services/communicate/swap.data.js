@@ -35,9 +35,16 @@ var PersonalAreaServ = (function () {
     PersonalAreaServ.prototype.getOptionSelected = function () {
         return PersonalAreaServ.optionSelected;
     };
+    PersonalAreaServ.prototype.getNewPoster = function () {
+        return PersonalAreaServ.newPoster;
+    };
+    PersonalAreaServ.prototype.setNewPoster = function (val) {
+        PersonalAreaServ.newPoster = val;
+    };
     return PersonalAreaServ;
 }());
-PersonalAreaServ.currentPage = 2;
+PersonalAreaServ.newPoster = true;
+PersonalAreaServ.currentPage = 4;
 PersonalAreaServ.optionSelected = 4;
 var RouteTo = (function () {
     function RouteTo() {

@@ -19,12 +19,14 @@ var locale_auth_1 = require("../services/locale.auth");
 var router_1 = require("@angular/router");
 var UserLogin_1 = require("../dto/UserLogin");
 var swap_data_1 = require("../services/communicate/swap.data");
+var CurLang_1 = require("../Entities/CurLang");
 var LoginComponent = (function () {
     function LoginComponent(postsService, fb, localeAuth, router) {
         this.postsService = postsService;
         this.localeAuth = localeAuth;
         this.router = router;
         this.myerror = false;
+        this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'login';
         this.complexForm = fb.group({
             'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {ToasterService, Toast,ToasterConfig} from 'angular2-toaster';
 import {LocaleAuth} from "./services/locale.auth";
@@ -6,7 +6,6 @@ import {SwapData, RouteTo} from "./services/communicate/swap.data";
 import {CurLang} from "./Entities/CurLang";
 import {PostsService} from "./services/posts.service";
 import {Lang} from "./dto/Lang";
-import {Input,Output} from "@angular/core";
 
 
 
@@ -51,7 +50,7 @@ export class AppComponent{
         this.router.navigate(["main"]);
     }
     goRegistration(){
-        this.toasterService.pop("warning","Добро пожаловать","Зарегистрируйтесь и вы войдете в систему :)")
+        this.toasterService.pop("warning",this.loc.mes_welcome,this.loc.mes_welcome_body)
         this.router.navigate(["registration"]);
     }
     goLogin(){

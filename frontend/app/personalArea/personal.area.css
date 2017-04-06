@@ -15,3 +15,27 @@
 .office a:hover{
     cursor: pointer;
 }
+.add_poster{
+    position: absolute;
+    background-color: #3dca86;
+    width: 12%;
+    height: 36px;
+    margin-left: 48%;
+    margin-top: -3.6%;
+    border:1px solid black;
+}
+.add_poster:hover{
+    cursor: pointer;
+    background-color: #5e5e5e;
+}
+.add_poster h4{
+    color: white;
+    padding-left: 12%;
+    font-family: initial;
+
+}
+.close{position: absolute;
+    top:21%;
+    width: 2%;
+    right: 19%;
+}

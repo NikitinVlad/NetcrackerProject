@@ -27,6 +27,7 @@ var pager_service_1 = require("./services/pager.service");
 var swap_data_1 = require("./services/communicate/swap.data");
 var help_component_1 = require("./personalArea/helpComponent/help.component");
 var sturtup_service_1 = require("./services/sturtup.service");
+var add_poster_1 = require("./personalArea/addPosterComponent/add.poster");
 function startupServiceFactory(startupService) {
     return function () { return startupService.load(); };
 }
@@ -39,7 +40,7 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, angular2_toaster_1.ToasterModule, router_1.RouterModule.forRoot(app_routes_1.routes)],
-        declarations: [app_component_1.AppComponent, main_page_1.MainPage, registration_component_1.RegistrationComponent, login_component_1.LoginComponent, personal_area_1.PersonalArea, poster_component_1.PosterComponent, basket_component_1.BasketComponent, office_component_1.OfficeComponent, help_component_1.HelpComponent],
+        declarations: [app_component_1.AppComponent, main_page_1.MainPage, registration_component_1.RegistrationComponent, login_component_1.LoginComponent, personal_area_1.PersonalArea, poster_component_1.PosterComponent, basket_component_1.BasketComponent, office_component_1.OfficeComponent, help_component_1.HelpComponent, add_poster_1.AddPoster],
         providers: [sturtup_service_1.StartupService, posts_service_1.PostsService, locale_auth_1.LocaleAuth, pager_service_1.PagerService, swap_data_1.SwapData, { provide: core_1.APP_INITIALIZER,
                 useFactory: startupServiceFactory,
                 deps: [sturtup_service_1.StartupService],

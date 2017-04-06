@@ -38,11 +38,11 @@ public class Poster extends BaseEntity{
     private String dimension;
     private String transmision;
     private Date date;
-
+    private String description;
     public Poster(){
     }
 
-    public Poster(Basket basket, User user, City city, Model model, File file, double price, String currency, String year, String fuel, String dimension, String transmision, Date date) {
+    public Poster(Basket basket, User user, City city, Model model, File file, double price, String currency, String year, String fuel, String dimension, String transmision, Date date, String description) {
         this.basket = basket;
         this.user = user;
         this.city = city;
@@ -55,6 +55,7 @@ public class Poster extends BaseEntity{
         this.dimension = dimension;
         this.transmision = transmision;
         this.date = date;
+        this.description=description;
     }
 
     public Basket getBasket() {
@@ -151,5 +152,13 @@ public class Poster extends BaseEntity{
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

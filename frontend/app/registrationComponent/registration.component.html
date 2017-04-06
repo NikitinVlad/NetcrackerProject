@@ -1,43 +1,43 @@
 <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
 
 <div class="container well registration-form">
-    <h2 align="center">Регистрация</h2>
+    <h2 align="center">{{loc.auth_reg}}</h2>
     <div class="form-group row first" [ngClass]="{'has-error':!complexForm.controls['name'].valid && complexForm.controls['name'].touched}">
-        <label for="input-name">Ваше имя</label>
+        <label for="input-name">{{loc.auth_name}}</label>
         <div>
             <input class="form-control" type="text"  id="input-name" [formControl]="complexForm.controls['name']">
-            <div *ngIf="complexForm.controls['name'].hasError('required') && complexForm.controls['name'].touched" class="alert alert-danger">Поле <b>Имя</b> не может быть пустым</div>
+            <div *ngIf="complexForm.controls['name'].hasError('required') && complexForm.controls['name'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
         </div>
     </div>
     <div class="form-group row"  [ngClass]="{'has-error':!complexForm.controls['login'].valid && complexForm.controls['login'].touched}">
-        <label for="input-login">Логин</label>
+        <label for="input-login">{{loc.auth_login}}</label>
         <div>
             <input class="form-control" type="text"  id="input-login"  [formControl]="complexForm.controls['login']">
-            <div *ngIf="complexForm.controls['login'].hasError('required') && complexForm.controls['login'].touched" class="alert alert-danger">Поле <b>Логин</b> не может быть пустым</div>
-            <div *ngIf="complexForm.controls['login'].hasError('minlength') && complexForm.controls['login'].touched" class="alert alert-danger">Логин должен быть не менее 5 символов</div>
-            <div *ngIf="complexForm.controls['login'].hasError('maxlength') && complexForm.controls['login'].touched" class="alert alert-danger">Логин должен быть не более 15 символов</div>
+            <div *ngIf="complexForm.controls['login'].hasError('required') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
+            <div *ngIf="complexForm.controls['login'].hasError('minlength') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_login_min}}</div>
+            <div *ngIf="complexForm.controls['login'].hasError('maxlength') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_login_max}}</div>
         </div>
     </div>
     <div class="form-group row" [ngClass]="{'has-error':!complexForm.controls['pass'].valid && complexForm.controls['pass'].touched}">
-        <label for="input-pass">Пароль</label>
+        <label for="input-pass">{{loc.auth_pass}}</label>
         <div>
             <input class="form-control" type="password"  id="input-pass"  [formControl]="complexForm.controls['pass']">
-            <div *ngIf="complexForm.controls['pass'].hasError('required') && complexForm.controls['pass'].touched" class="alert alert-danger">Поле <b>Пароль</b> не может быть пустым</div>
-            <div *ngIf="complexForm.controls['pass'].hasError('minlength') && complexForm.controls['pass'].touched" class="alert alert-danger">Пароль должен быть не менее 10 символов</div>
-            <div *ngIf="complexForm.controls['pass'].hasError('maxlength') && complexForm.controls['pass'].touched" class="alert alert-danger">Пароль должен быть не более 20 символов</div>
+            <div *ngIf="complexForm.controls['pass'].hasError('required') && complexForm.controls['pass'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
+            <div *ngIf="complexForm.controls['pass'].hasError('minlength') && complexForm.controls['pass'].touched" class="alert alert-danger">{{loc.err_pass_min}}</div>
+            <div *ngIf="complexForm.controls['pass'].hasError('maxlength') && complexForm.controls['pass'].touched" class="alert alert-danger">{{loc.err_pass_max}}</div>
         </div>
     </div>
     <div class="form-group row" [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
-        <label for="input-email">Ваш Email</label>
+        <label for="input-email">{{loc.auth_email}}</label>
         <div>
             <input class="form-control" type="email"  id="input-email"  [formControl]="complexForm.controls['email']">
-            <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="alert alert-danger">Поле <b>Email</b> не может быть пустым</div>
-            <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">Email должен быть не менее 5 символов</div>
-            <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">Email должен быть не более 30 символов</div>
-            <div *ngIf="complexForm.controls['email'].hasError('pattern') && complexForm.controls['email'].touched" class="alert alert-danger">Пожалуйста, введите Email корректно</div>
+            <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
+            <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_min}}</div>
+            <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_max}}</div>
+            <div *ngIf="complexForm.controls['email'].hasError('pattern') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_incorrect}}</div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary registration-button" [disabled]="!complexForm.valid">Зарегистрироваться</button>
+    <button type="submit" class="btn btn-primary registration-button" [disabled]="!complexForm.valid">{{loc.auth_reg_go}}</button>
 </div>
 </form>
 

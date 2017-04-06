@@ -18,12 +18,23 @@ var CurLang_1 = require("../Entities/CurLang");
 var PersonalArea = (function () {
     function PersonalArea(swapData) {
         this.swapData = swapData;
+        this.newPoster = this.swapData.personalAreaServ.getNewPoster();
         this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'personal';
         this.current = swapData.personalAreaServ.getCurrentPage();
     }
     PersonalArea.prototype.changeCur = function (cur) {
         this.current = cur;
+    };
+    PersonalArea.prototype.addPoster = function () {
+        this.swapData.personalAreaServ.setNewPoster(true);
+        this.newPoster = true;
+        this.current = 4;
+    };
+    PersonalArea.prototype.closeNewAdd = function () {
+        this.swapData.personalAreaServ.setNewPoster(false);
+        this.newPoster = false;
+        this.current = 2;
     };
     return PersonalArea;
 }());

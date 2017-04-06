@@ -9,6 +9,7 @@ import {LocaleAuth} from "../services/locale.auth";
 import {Router} from "@angular/router";
 import {UserLogin} from "../dto/UserLogin";
 import {RouteTo} from "../services/communicate/swap.data";
+import {CurLang} from "../Entities/CurLang";
 @Component({
     moduleId:module.id,
     selector:"logIn",
@@ -16,9 +17,11 @@ import {RouteTo} from "../services/communicate/swap.data";
     styleUrls:["login.component.css"]
 })
 export class LoginComponent{
+    loc:any;
     complexForm:FormGroup;
     myerror:boolean=false;
     constructor(private postsService:PostsService,fb:FormBuilder,private localeAuth:LocaleAuth,private router:Router){
+        this.loc=CurLang.locale;
         RouteTo.rout='login';
         this.complexForm = fb.group({
             'login': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(15)])],

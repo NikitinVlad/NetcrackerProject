@@ -8,6 +8,8 @@ import {ToasterContainerComponent, ToasterService, Toast,ToasterConfig} from 'an
 import { FormGroup, FormBuilder ,Validators} from '@angular/forms';
 import {User} from "../Entities/User";
 import {RouteTo} from "../services/communicate/swap.data";
+import {CurLang} from "../Entities/CurLang";
+
 
 
 @Component({
@@ -17,19 +19,21 @@ import {RouteTo} from "../services/communicate/swap.data";
     styleUrls:["registration.component.css"],
 })
 export class RegistrationComponent{
+    loc:any;
     id:number;
     isAdmin:boolean;
     complexForm:FormGroup;
     toasterconfig : ToasterConfig;
     toast : Toast;
     constructor(private postsService:PostsService, private router:Router,private toasterService:ToasterService,fb:FormBuilder){
+        this.loc=CurLang.locale;
         RouteTo.rout='registration';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         this.complexForm = fb.group({
             'name' : [null, Validators.required],
             'login': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(15)])],
             'pass' : [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
-            'email' : [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.pattern(EMAIL_REGEXP),Validators.maxLength(30)])]
+            'email' : [null, Validators.compose([Validators.required,Validators.minLength(5), Validators.pattern(EMAIL_REGEXP),Validators.maxLength(30)])]
         });
         this.isAdmin=false;
         this.id=1;
@@ -48,11 +52,11 @@ export class RegistrationComponent{
         this.postsService.sendPost(user,'createUser').subscribe(answer=>{
             console.log(answer);
             if(answer>=1){
-                this.showToast('success','Поздравляем','Вы были успешно зарегистрированы');
+                this.showToast('success',this.loc.mess_cong,this.loc.mess_cong_body);
                 this.router.navigate(["main"]);
             }
             else {
-                this.showToast('error','Ошибка','Пользователь c логином '+user.login+' уже существует или данные были введены некорректно');
+                this.showToast('error',this.loc.err_reg,this.loc.err_reg_body+' '+user.login+' '+this.loc.err_reg_body2);
             }
         });
     }

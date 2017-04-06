@@ -55,7 +55,7 @@ var AppComponent = (function () {
         this.router.navigate(["main"]);
     };
     AppComponent.prototype.goRegistration = function () {
-        this.toasterService.pop("warning", "Добро пожаловать", "Зарегистрируйтесь и вы войдете в систему :)");
+        this.toasterService.pop("warning", this.loc.mes_welcome, this.loc.mes_welcome_body);
         this.router.navigate(["registration"]);
     };
     AppComponent.prototype.goLogin = function () {

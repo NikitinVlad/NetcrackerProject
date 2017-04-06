@@ -19,17 +19,19 @@ var angular2_toaster_1 = require("angular2-toaster");
 var forms_1 = require("@angular/forms");
 var User_1 = require("../Entities/User");
 var swap_data_1 = require("../services/communicate/swap.data");
+var CurLang_1 = require("../Entities/CurLang");
 var RegistrationComponent = (function () {
     function RegistrationComponent(postsService, router, toasterService, fb) {
         this.postsService = postsService;
         this.router = router;
         this.toasterService = toasterService;
+        this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'registration';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         this.complexForm = fb.group({
             'name': [null, forms_1.Validators.required],
             'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],
-            'pass': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.maxLength(20)])],
+            'pass': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(4), forms_1.Validators.maxLength(20)])],
             'email': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(5), forms_1.Validators.pattern(EMAIL_REGEXP), forms_1.Validators.maxLength(30)])]
         });
         this.isAdmin = false;
@@ -50,11 +52,11 @@ var RegistrationComponent = (function () {
         this.postsService.sendPost(user, 'createUser').subscribe(function (answer) {
             console.log(answer);
             if (answer >= 1) {
-                _this.showToast('success', 'Поздравляем', 'Вы были успешно зарегистрированы');
+                _this.showToast('success', _this.loc.mess_cong, _this.loc.mess_cong_body);
                 _this.router.navigate(["main"]);
             }
             else {
-                _this.showToast('error', 'Ошибка', 'Пользователь c логином ' + user.login + ' уже существует или данные были введены некорректно');
+                _this.showToast('error', _this.loc.err_reg, _this.loc.err_reg_body + ' ' + user.login + ' ' + _this.loc.err_reg_body2);
             }
         });
     };

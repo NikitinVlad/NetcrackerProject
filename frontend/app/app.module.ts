@@ -23,6 +23,7 @@ import {PagerService} from "./services/pager.service";
 import {SwapData} from "./services/communicate/swap.data";
 import {HelpComponent} from "./personalArea/helpComponent/help.component";
 import {StartupService} from "./services/sturtup.service";
+import {AddPoster} from "./personalArea/addPosterComponent/add.poster";
 
 
 export function startupServiceFactory(startupService: StartupService): Function {
@@ -31,7 +32,7 @@ export function startupServiceFactory(startupService: StartupService): Function 
 
 @NgModule({
     imports:[BrowserModule,FormsModule,ReactiveFormsModule,HttpModule,ToasterModule,RouterModule.forRoot(routes)],
-    declarations:[AppComponent,MainPage,RegistrationComponent,LoginComponent,PersonalArea,PosterComponent,BasketComponent,OfficeComponent,HelpComponent],
+    declarations:[AppComponent,MainPage,RegistrationComponent,LoginComponent,PersonalArea,PosterComponent,BasketComponent,OfficeComponent,HelpComponent,AddPoster],
     providers:[StartupService,PostsService,LocaleAuth,PagerService,SwapData,{provide: APP_INITIALIZER,
         useFactory: startupServiceFactory,
         deps: [StartupService],

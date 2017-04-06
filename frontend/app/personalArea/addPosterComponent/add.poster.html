@@ -1,0 +1,60 @@
+<h1>{{loc.new_poster}}</h1>
+
+<div class="container form-add">
+
+    <div class="form-item">
+        <div class="form-label"><label>{{loc.new_mark}}*</label></div>
+        <div class="form-cont">
+            <select >
+            <option></option>
+            </select><br/>
+            </div>
+    </div>
+    <div class="form-item">
+        <div class="form-label"><label>{{loc.new_model}}*</label></div>
+        <div class="form-cont">
+            <select >
+                <option></option>
+            </select><br/>
+        </div>
+    </div>
+    <div class="form-item">
+        <div class="form-label"><label>{{loc.new_year}}*</label></div>
+        <div class="form-cont">
+            <select>
+                <option *ngFor="let year of years">{{year}}</option>
+            </select><br/>
+        </div>
+    </div>
+    <div class="form-item">
+        <div class="form-label"><label>{{loc.new_cost}}*</label></div>
+        <div class="form-cont">
+           <input type="number">
+        </div>
+        <div class="currency">
+            <select>
+                <option>$</option>
+                <option >{{loc.new_blr}}</option>
+            </select><br/>
+        </div>
+    </div>
+    <div class="form-item">
+        <div class="form-label"><label>{{loc.new_city}}*</label></div>
+        <div class="form-cont">
+            <select >
+                <option></option>
+            </select><br/>
+        </div>
+        <div class="city">
+            <input placeholder="{{loc.new_other_city}}" type="text">
+        </div>
+    </div>
+    <div class="form-item">
+        <div class="form-label"><label class="area">{{loc.new_text}}</label></div>
+        <div class="form-cont">
+           <textarea rows="10" cols="70"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary">{{loc.new_go}}</button>
+</div>
+
