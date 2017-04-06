@@ -39,4 +39,10 @@ var PersonalAreaServ = (function () {
 }());
 PersonalAreaServ.currentPage = 2;
 PersonalAreaServ.optionSelected = 4;
+var RouteTo = (function () {
+    function RouteTo() {
+    }
+    return RouteTo;
+}());
+exports.RouteTo = RouteTo;
 //# sourceMappingURL=swap.data.js.map

@@ -14,13 +14,17 @@ var router_1 = require("@angular/router");
 var angular2_toaster_1 = require("angular2-toaster");
 var locale_auth_1 = require("./services/locale.auth");
 var swap_data_1 = require("./services/communicate/swap.data");
+var CurLang_1 = require("./Entities/CurLang");
+var posts_service_1 = require("./services/posts.service");
+var Lang_1 = require("./dto/Lang");
 var AppComponent = (function () {
-    function AppComponent(router, toasterService, localeAuth, swapData) {
+    function AppComponent(postsService, router, toasterService, localeAuth, swapData) {
+        this.postsService = postsService;
         this.router = router;
         this.toasterService = toasterService;
         this.localeAuth = localeAuth;
         this.swapData = swapData;
-        // this.auth=new LocaleAuth();
+        this.loc = CurLang_1.CurLang.locale;
         this.toasterconfig = new angular2_toaster_1.ToasterConfig({ positionClass: 'center', limit: 1 });
         this.toast = {
             type: 'warning',
@@ -30,6 +34,23 @@ var AppComponent = (function () {
             showCloseButton: true
         };
     }
+    AppComponent.prototype.test = function () {
+        var _this = this;
+        return this.postsService.sendPost(new Lang_1.Lang(CurLang_1.CurLang.lang).lang, "messageBundle").toPromise()
+            .then(function (data) {
+            CurLang_1.CurLang.locale = data;
+            _this.loc = CurLang_1.CurLang.locale;
+        })
+            .catch(function (err) { return Promise.resolve(); });
+    };
+    AppComponent.prototype.changeLang = function (lang) {
+        var _this = this;
+        CurLang_1.CurLang.lang = lang;
+        this.test().then(function (answ) {
+            console.log('Выполнилась');
+            _this.router.navigate(['help']);
+        });
+    };
     AppComponent.prototype.goMainPage = function () {
         this.router.navigate(["main"]);
     };
@@ -42,6 +63,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.goPersonalArea = function (page) {
         this.swapData.personalAreaServ.setCurrentPage(page);
+        swap_data_1.RouteTo.rout = 'personal';
         this.router.navigate(["help"]);
     };
     AppComponent.prototype.exit = function () {
@@ -57,7 +79,7 @@ AppComponent = __decorate([
         templateUrl: "app.component.html",
         styleUrls: ["app.component.css"]
     }),
-    __metadata("design:paramtypes", [router_1.Router, angular2_toaster_1.ToasterService, locale_auth_1.LocaleAuth, swap_data_1.SwapData])
+    __metadata("design:paramtypes", [posts_service_1.PostsService, router_1.Router, angular2_toaster_1.ToasterService, locale_auth_1.LocaleAuth, swap_data_1.SwapData])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

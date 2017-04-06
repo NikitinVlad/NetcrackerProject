@@ -1,10 +1,10 @@
 <div class="head">
-<h1>Смарт<b>А</b>вто приветствует вас!</h1>
+<h1>{{loc.main_logo}}<b>А</b>{{loc.main_logo2}}</h1>
     </div>
 <div class="container info">
-    <h4>На нашем сайте вы можете приобрести новые автомобили самых известных марок, а также разместить объявления о продаже своих авто. Для этого вам необходимо <a (click)="goLogin()">войти</a> или,
-    если у Вас еще нет аккаунта на нашем сайте, <a (click)="goRegistration()">зарегистрироваться</a></h4>
+    <h4>{{loc.main_text1}} <a (click)="goLogin()">{{loc.site_login}}</a> {{loc.main_text2}} <a (click)="goRegistration()">{{loc.site_reg}}</a></h4>
 </div>
+    <h1>{{title}}</h1>
 <div class="container brands1">
     <img class="brand" src="../../images/logos/audi.png">
     <img class="brand" src="../../images/logos/bmw.png">

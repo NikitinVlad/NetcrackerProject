@@ -17,6 +17,7 @@ var pager_service_1 = require("../../services/pager.service");
 var posts_service_1 = require("../../services/posts.service");
 var router_1 = require("@angular/router");
 var swap_data_1 = require("../../services/communicate/swap.data");
+var CurLang_1 = require("../../Entities/CurLang");
 var PosterComponent = (function () {
     function PosterComponent(postsService, pagerService, router, swapData) {
         var _this = this;
@@ -26,6 +27,8 @@ var PosterComponent = (function () {
         this.swapData = swapData;
         this.options = [];
         this.pager = {};
+        this.loc = CurLang_1.CurLang.locale;
+        swapData.personalAreaServ.setCurrentPage(2);
         console.log("constructor");
         this.currentSelection = this.swapData.personalAreaServ.getOptionSelected();
         this.postsService.getData('getCitiesSize').subscribe(function (answer) {
@@ -49,9 +52,7 @@ var PosterComponent = (function () {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        console.log(this.pager);
         this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'name'];
-        console.log(this.currentItems);
         this.postsService.sendPost(this.currentItems, 'getRangeCities').subscribe(function (answer) {
             _this.pagedItems = answer;
         });

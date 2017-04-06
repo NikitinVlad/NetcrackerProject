@@ -1,8 +1,8 @@
 <div class="container office well">
     <ul class="breadcrumb">
-        <li [ngClass]="{'active': current==1}" ><a  (click)="changeCur(1)">Профиль</a></li>
-        <li [ngClass]="{'active': current==2}"><a (click)="changeCur(2)">Мои объявления</a></li>
-        <li [ngClass]="{'active': current==3}"><a  (click)="changeCur(3)">Корзина</a></li>
+        <li [ngClass]="{'active': current==1}" ><a  (click)="changeCur(1)">{{loc.pers_profile}}</a></li>
+        <li [ngClass]="{'active': current==2}"><a (click)="changeCur(2)">{{loc.pers_posts}}</a></li>
+        <li [ngClass]="{'active': current==3}"><a  (click)="changeCur(3)">{{loc.app_basket}}</a></li>
     </ul>
     <div class="container">
         <office *ngIf="current==1"></office>

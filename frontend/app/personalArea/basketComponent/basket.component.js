@@ -13,8 +13,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by Влад on 02.04.2017.
  */
 var core_1 = require("@angular/core");
+var swap_data_1 = require("../../services/communicate/swap.data");
 var BasketComponent = (function () {
-    function BasketComponent() {
+    function BasketComponent(swapData) {
+        this.swapData = swapData;
+        swapData.personalAreaServ.setCurrentPage(3);
     }
     return BasketComponent;
 }());
@@ -25,7 +28,7 @@ BasketComponent = __decorate([
         templateUrl: "basket.component.html",
         styleUrls: ["basket.component.css"]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [swap_data_1.SwapData])
 ], BasketComponent);
 exports.BasketComponent = BasketComponent;
 //# sourceMappingURL=basket.component.js.map

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,APP_INITIALIZER  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser' ;
 
 import { AppComponent } from './app.component';
@@ -22,12 +22,20 @@ import {OfficeComponent} from "./personalArea/officeComponent/office.component";
 import {PagerService} from "./services/pager.service";
 import {SwapData} from "./services/communicate/swap.data";
 import {HelpComponent} from "./personalArea/helpComponent/help.component";
+import {StartupService} from "./services/sturtup.service";
 
+
+export function startupServiceFactory(startupService: StartupService): Function {
+    return () => startupService.load();
+}
 
 @NgModule({
     imports:[BrowserModule,FormsModule,ReactiveFormsModule,HttpModule,ToasterModule,RouterModule.forRoot(routes)],
     declarations:[AppComponent,MainPage,RegistrationComponent,LoginComponent,PersonalArea,PosterComponent,BasketComponent,OfficeComponent,HelpComponent],
-    providers:[PostsService,LocaleAuth,PagerService,SwapData],
+    providers:[StartupService,PostsService,LocaleAuth,PagerService,SwapData,{provide: APP_INITIALIZER,
+        useFactory: startupServiceFactory,
+        deps: [StartupService],
+        multi: true}],
     bootstrap:[AppComponent]
 })
 export class AppModule{

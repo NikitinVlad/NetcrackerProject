@@ -4,11 +4,14 @@ package user;
  * Created by Влад on 31.03.2017.
  */
 
+import dto.UserLogin;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -18,7 +21,10 @@ public class UserController {
     UserServiceImpl userService;
 
     @RequestMapping(value="/createUser",produces="application/json",method = RequestMethod.POST)
-    public long createUser(@RequestBody User user) {
+    public long createUser(@RequestBody @Valid User user,Errors errors) {
+        if(errors.hasErrors()){
+            return 0L;
+        }
         return userService.createUser(user);
     }
 
@@ -49,7 +55,10 @@ public class UserController {
     }
 
     @RequestMapping(value="/checkUser",produces="application/json",method = RequestMethod.POST)
-    public User checkUser(@RequestBody User user) {
+    public User checkUser(@RequestBody @Valid UserLogin user,Errors errors) {
+        if(errors.hasErrors()){
+            return new User();
+        }
         return userService.checkUser(user.getLogin(),user.getPass());
     }
 }

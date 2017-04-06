@@ -28,6 +28,7 @@ var LocaleAuth = (function () {
     };
     LocaleAuth.prototype.logIn = function (user) {
         localStorage.setItem(this.localeItem, JSON.stringify(user));
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     };
     LocaleAuth.prototype.logOut = function () {
         localStorage.removeItem(this.localeItem);

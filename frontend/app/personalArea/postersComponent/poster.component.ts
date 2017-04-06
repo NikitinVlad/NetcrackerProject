@@ -8,6 +8,7 @@ import {PostsService} from "../../services/posts.service";
 import {Router} from "@angular/router";
 import {routes} from "../../app.routes";
 import {SwapData} from "../../services/communicate/swap.data";
+import {CurLang} from "../../Entities/CurLang";
 
 @Component({
     moduleId:module.id,
@@ -17,6 +18,7 @@ import {SwapData} from "../../services/communicate/swap.data";
 })
 
 export class PosterComponent{
+    loc:any;
 
 
     private sizeItems:number;
@@ -31,6 +33,8 @@ export class PosterComponent{
     pagedItems: any[];
 
     constructor(private postsService:PostsService, private pagerService: PagerService,private router:Router,private swapData:SwapData) {
+        this.loc=CurLang.locale;
+        swapData.personalAreaServ.setCurrentPage(2);
         console.log("constructor");
         this.currentSelection=this.swapData.personalAreaServ.getOptionSelected();
         this.postsService.getData('getCitiesSize').subscribe(answer=>{
@@ -53,9 +57,7 @@ export class PosterComponent{
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page,this.currentSelection);
-        console.log(this.pager);
         this.currentItems=[this.pager.startIndex+1,this.pager.endIndex+1,'name'];
-        console.log(this.currentItems);
         this.postsService.sendPost(this.currentItems,'getRangeCities').subscribe(answer=>{
             this.pagedItems=answer;
         });

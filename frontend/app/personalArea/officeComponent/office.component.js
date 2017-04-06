@@ -13,8 +13,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by Влад on 02.04.2017.
  */
 var core_1 = require("@angular/core");
+var swap_data_1 = require("../../services/communicate/swap.data");
 var OfficeComponent = (function () {
-    function OfficeComponent() {
+    function OfficeComponent(swapData) {
+        this.swapData = swapData;
+        swapData.personalAreaServ.setCurrentPage(1);
     }
     return OfficeComponent;
 }());
@@ -25,7 +28,7 @@ OfficeComponent = __decorate([
         templateUrl: "office.component.html",
         styleUrls: ["office.component.css"]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [swap_data_1.SwapData])
 ], OfficeComponent);
 exports.OfficeComponent = OfficeComponent;
 //# sourceMappingURL=office.component.js.map

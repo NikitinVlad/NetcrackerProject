@@ -3,6 +3,7 @@
  */
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
+import {RouteTo} from "../../services/communicate/swap.data";
 @Component({
     moduleId:module.id,
     selector:"help",
@@ -11,6 +12,6 @@ import {Router} from "@angular/router";
 
 export class HelpComponent{
     constructor(private router:Router){
-        this.router.navigate(["personal"]);
+        this.router.navigate([RouteTo.rout]);
     }
 }

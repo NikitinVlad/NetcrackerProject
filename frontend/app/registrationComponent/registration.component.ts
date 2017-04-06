@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {ToasterContainerComponent, ToasterService, Toast,ToasterConfig} from 'angular2-toaster';
 import { FormGroup, FormBuilder ,Validators} from '@angular/forms';
 import {User} from "../Entities/User";
+import {RouteTo} from "../services/communicate/swap.data";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class RegistrationComponent{
     toasterconfig : ToasterConfig;
     toast : Toast;
     constructor(private postsService:PostsService, private router:Router,private toasterService:ToasterService,fb:FormBuilder){
+        RouteTo.rout='registration';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         this.complexForm = fb.group({
             'name' : [null, Validators.required],
@@ -50,11 +52,9 @@ export class RegistrationComponent{
                 this.router.navigate(["main"]);
             }
             else {
-                this.showToast('error','Ошибка','Пользователь c логином '+user.login+' уже существует');
+                this.showToast('error','Ошибка','Пользователь c логином '+user.login+' уже существует или данные были введены некорректно');
             }
         });
-        // Role.title=form.login;
-        // // this.auth.logIn(user);
     }
 
     showToast(type:string,title:string,body:string){

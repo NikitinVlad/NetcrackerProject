@@ -15,15 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var posts_service_1 = require("../services/posts.service");
-var User_1 = require("../Entities/User");
 var locale_auth_1 = require("../services/locale.auth");
 var router_1 = require("@angular/router");
+var UserLogin_1 = require("../dto/UserLogin");
+var swap_data_1 = require("../services/communicate/swap.data");
 var LoginComponent = (function () {
     function LoginComponent(postsService, fb, localeAuth, router) {
         this.postsService = postsService;
         this.localeAuth = localeAuth;
         this.router = router;
         this.myerror = false;
+        swap_data_1.RouteTo.rout = 'login';
         this.complexForm = fb.group({
             'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],
             'pass': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(4), forms_1.Validators.maxLength(20)])]
@@ -31,12 +33,13 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.submitForm = function (form) {
         var _this = this;
-        var user = new User_1.User("", form.login, form.pass, "");
+        var user = new UserLogin_1.UserLogin(form.login, form.pass);
         this.postsService.sendPost(user, 'checkUser').subscribe(function (answer) {
             if (answer.id != "") {
                 _this.myerror = false;
                 var user = answer;
                 _this.localeAuth.logIn(user);
+                console.log(user);
                 _this.router.navigate(["main"]);
             }
             else {

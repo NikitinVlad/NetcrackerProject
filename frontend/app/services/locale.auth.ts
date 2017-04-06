@@ -19,6 +19,7 @@ export class LocaleAuth{
 }
     logIn(user:User):void{
         localStorage.setItem(this.localeItem,JSON.stringify(user));
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     logOut():void{
         localStorage.removeItem(this.localeItem);

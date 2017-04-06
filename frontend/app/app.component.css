@@ -70,3 +70,25 @@
     font-size: 120%;
 
 }
+.lang{
+    position: absolute;
+    width: 3%;
+    height: 25px;
+    left: 3%;
+    top: 20px;
+    color: white;
+}
+.lang2{
+    position: absolute;
+    width: 3%;
+    height: 25px;
+    left: 5%;
+    top: 20px;
+    color: white;
+}
+.lang:hover{
+    cursor: pointer;
+}
+.lang2:hover{
+    cursor: pointer;
+}

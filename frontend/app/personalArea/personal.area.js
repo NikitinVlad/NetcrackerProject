@@ -14,9 +14,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@angular/core");
 var swap_data_1 = require("../services/communicate/swap.data");
+var CurLang_1 = require("../Entities/CurLang");
 var PersonalArea = (function () {
     function PersonalArea(swapData) {
         this.swapData = swapData;
+        this.loc = CurLang_1.CurLang.locale;
+        swap_data_1.RouteTo.rout = 'personal';
         this.current = swapData.personalAreaServ.getCurrentPage();
     }
     PersonalArea.prototype.changeCur = function (cur) {

@@ -23,3 +23,8 @@ class PersonalAreaServ{
         return PersonalAreaServ.optionSelected;
     }
 }
+
+export class RouteTo{
+    static rout:string;
+}
+

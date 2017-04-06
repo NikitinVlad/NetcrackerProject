@@ -2,6 +2,7 @@
  * Created by Влад on 02.04.2017.
  */
 import {Component} from "@angular/core";
+import {SwapData} from "../../services/communicate/swap.data";
 @Component({
     moduleId:module.id,
     selector:"basket",
@@ -10,6 +11,7 @@ import {Component} from "@angular/core";
 })
 
 export class BasketComponent{
-    constructor(){
+    constructor(private swapData:SwapData){
+        swapData.personalAreaServ.setCurrentPage(3);
     }
 }

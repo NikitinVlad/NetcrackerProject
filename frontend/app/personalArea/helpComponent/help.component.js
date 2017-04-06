@@ -14,10 +14,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var swap_data_1 = require("../../services/communicate/swap.data");
 var HelpComponent = (function () {
     function HelpComponent(router) {
         this.router = router;
-        this.router.navigate(["personal"]);
+        this.router.navigate([swap_data_1.RouteTo.rout]);
     }
     return HelpComponent;
 }());

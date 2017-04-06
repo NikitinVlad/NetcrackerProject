@@ -1,9 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit, EventEmitter} from '@angular/core';
 import {Router} from "@angular/router";
-import {Role} from "./Entities/Role";
-import {ToasterContainerComponent, ToasterService, Toast,ToasterConfig} from 'angular2-toaster';
+import {ToasterService, Toast,ToasterConfig} from 'angular2-toaster';
 import {LocaleAuth} from "./services/locale.auth";
-import {SwapData} from "./services/communicate/swap.data";
+import {SwapData, RouteTo} from "./services/communicate/swap.data";
+import {CurLang} from "./Entities/CurLang";
+import {PostsService} from "./services/posts.service";
+import {Lang} from "./dto/Lang";
+import {Input,Output} from "@angular/core";
+
+
 
 @Component({
     moduleId:module.id,
@@ -12,11 +17,11 @@ import {SwapData} from "./services/communicate/swap.data";
     styleUrls:["app.component.css"]
 })
 export class AppComponent{
-    // auth:LocaleAuth;
+    loc:any;
     toasterconfig : ToasterConfig;
     toast : Toast;
-    constructor(private router:Router,private toasterService:ToasterService,private localeAuth:LocaleAuth,private swapData:SwapData){
-        // this.auth=new LocaleAuth();
+    constructor(private postsService:PostsService,private router:Router,private toasterService:ToasterService,private localeAuth:LocaleAuth,private swapData:SwapData){
+        this.loc=CurLang.locale;
         this.toasterconfig = new ToasterConfig({positionClass: 'center',limit:1});
         this.toast={
             type: 'warning',
@@ -25,6 +30,22 @@ export class AppComponent{
             timeout: 2000,
             showCloseButton: true
         };
+    }
+    test():Promise<any>{
+        return this.postsService.sendPost(new Lang(CurLang.lang).lang,"messageBundle").toPromise()
+            .then((data: any) => {
+            CurLang.locale=data;
+                this.loc=CurLang.locale;
+            })
+            .catch((err: any) => Promise.resolve());
+    }
+
+    changeLang(lang:string){
+        CurLang.lang=lang;
+        this.test().then(answ=>{
+            console.log('Выполнилась');
+            this.router.navigate(['help']);
+        });
     }
     goMainPage(){
         this.router.navigate(["main"]);
@@ -38,6 +59,7 @@ export class AppComponent{
     }
     goPersonalArea(page:number){
         this.swapData.personalAreaServ.setCurrentPage(page);
+        RouteTo.rout='personal';
         this.router.navigate(["help"]);
     }
     exit():void{
