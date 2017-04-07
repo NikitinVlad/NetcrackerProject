@@ -16,6 +16,7 @@ import {Lang} from "./dto/Lang";
     styleUrls:["app.component.css"]
 })
 export class AppComponent{
+    active:string='ru';
     loc:any;
     toasterconfig : ToasterConfig;
     toast : Toast;
@@ -40,6 +41,7 @@ export class AppComponent{
     }
 
     changeLang(lang:string){
+        this.active=lang;
         CurLang.lang=lang;
         this.test().then(answ=>{
             console.log('Выполнилась');

@@ -1,6 +1,7 @@
 package entity;
 
 import javafx.geometry.Pos;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,7 +34,7 @@ public class Poster extends BaseEntity{
     private double price;
     private String currency;
 
-    private String year;
+    private int year;
     private String fuel;
     private String dimension;
     private String transmision;
@@ -42,8 +43,7 @@ public class Poster extends BaseEntity{
     public Poster(){
     }
 
-    public Poster(Basket basket, User user, City city, Model model, File file, double price, String currency, String year, String fuel, String dimension, String transmision, Date date, String description) {
-        this.basket = basket;
+    public Poster(User user,  Model model, City city, int year, String currency, double price, String description, File file) {
         this.user = user;
         this.city = city;
         this.model = model;
@@ -51,10 +51,6 @@ public class Poster extends BaseEntity{
         this.price = price;
         this.currency = currency;
         this.year = year;
-        this.fuel = fuel;
-        this.dimension = dimension;
-        this.transmision = transmision;
-        this.date = date;
         this.description=description;
     }
 
@@ -90,11 +86,11 @@ public class Poster extends BaseEntity{
         this.model = model;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

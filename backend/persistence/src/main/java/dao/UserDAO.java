@@ -12,7 +12,6 @@ import java.util.List;
  * Created by Влад on 31.03.2017.
  */
 @Repository
-@Lazy
 public class UserDAO extends BaseDAO<User>{
     public UserDAO(){
         super(User.class);

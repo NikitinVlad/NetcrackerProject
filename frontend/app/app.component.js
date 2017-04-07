@@ -24,6 +24,7 @@ var AppComponent = (function () {
         this.toasterService = toasterService;
         this.localeAuth = localeAuth;
         this.swapData = swapData;
+        this.active = 'ru';
         this.loc = CurLang_1.CurLang.locale;
         this.toasterconfig = new angular2_toaster_1.ToasterConfig({ positionClass: 'center', limit: 1 });
         this.toast = {
@@ -45,6 +46,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.changeLang = function (lang) {
         var _this = this;
+        this.active = lang;
         CurLang_1.CurLang.lang = lang;
         this.test().then(function (answ) {
             console.log('Выполнилась');

@@ -5,16 +5,17 @@
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_mark}}*</label></div>
         <div class="form-cont">
-            <select >
-            <option></option>
+            <select (change)="getModels($event.target.value)">
+                <option selected></option>
+            <option #opt *ngFor="let mark of addInfo.marks">{{mark.name}}</option>
             </select><br/>
             </div>
     </div>
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_model}}*</label></div>
         <div class="form-cont">
-            <select >
-                <option></option>
+            <select>
+                <option *ngFor="let model of models">{{model.name}}</option>
             </select><br/>
         </div>
     </div>
@@ -42,7 +43,7 @@
         <div class="form-label"><label>{{loc.new_city}}*</label></div>
         <div class="form-cont">
             <select >
-                <option></option>
+                <option *ngFor="let city of addInfo.cities">{{city.name}}</option>
             </select><br/>
         </div>
         <div class="city">
@@ -55,6 +56,6 @@
            <textarea rows="10" cols="70"></textarea>
         </div>
     </div>
-    <button type="button" class="btn btn-primary">{{loc.new_go}}</button>
+    <button type="button" class="btn btn-primary" (click)="addPoster()">{{loc.new_go}}</button>
 </div>
 

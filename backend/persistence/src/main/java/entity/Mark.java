@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.OrderBy;
 
@@ -16,8 +17,11 @@ import java.util.List;
 public class Mark extends BaseEntity{
     @Column(unique = true)
     private String name;
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "mark")
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "mark")
+    @Fetch (FetchMode.SELECT)
     @OrderBy(clause = "name DESC")
+    @JsonIgnore
     private List<Model> models=new ArrayList<Model>();
 
     public Mark() {

@@ -18,7 +18,7 @@ import java.util.Locale;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "currency,user,city,i18n")
+@ComponentScan(basePackages = "currency,user,city,i18n,mark,poster,model")
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public SessionLocaleResolver localeResolver(){

@@ -1,6 +1,7 @@
 package dao;
 import entity.BaseEntity;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -20,7 +21,6 @@ import java.util.logging.Logger;
  * Created by Влад on 23.03.2017.
  */
 @Repository
-@Lazy
 @Transactional
 public abstract class BaseDAO<T extends BaseEntity> {
     @Autowired
@@ -99,14 +99,13 @@ public abstract class BaseDAO<T extends BaseEntity> {
 
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-
     public T findByID(long id){
         Criteria criteria=getCurrentSession().createCriteria(entityClass);
         T ent=(T) criteria.add(Restrictions.eq("id",id)).uniqueResult();
         return ent;
     }
-    @Transactional(readOnly = true)
 
+    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByField(String field,Object value){
         Criteria criteria=getCurrentSession().createCriteria(entityClass);
@@ -117,6 +116,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
     public int getSize(){
         return getAll().size();
     }
+
 
 
 

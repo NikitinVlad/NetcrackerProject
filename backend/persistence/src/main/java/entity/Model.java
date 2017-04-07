@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +14,7 @@ public class Model extends BaseEntity {
     private String name;
     @ManyToOne
     @JoinColumn(name = "id_mark")
+    @JsonIgnore
     private Mark mark;
     public Model(){
     }
