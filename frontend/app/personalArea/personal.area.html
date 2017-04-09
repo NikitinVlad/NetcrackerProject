@@ -1,16 +1,13 @@
 <div class="container office well">
     <img (click)="closeNewAdd()" *ngIf="current==4" class="close" src="../../images/close.png">
     <ul class="breadcrumb">
-        <li [ngClass]="{'active': current==1}" ><a  (click)="changeCur(1)">{{loc.pers_profile}}</a></li>
-        <li [ngClass]="{'active': current==2}"><a (click)="changeCur(2)">{{loc.pers_posts}}</a></li>
-        <li [ngClass]="{'active': current==3}"><a  (click)="changeCur(3)">{{loc.app_basket}}</a></li>
-        <li *ngIf="newPoster" [ngClass]="{'active': current==4}"><a  (click)="changeCur(4)">*{{loc.new_poster}}</a></li>
+        <li [routerLink]="['profile']" routerLinkActive="active" ><a >{{loc.pers_profile}}</a></li>
+        <li [routerLink]="['posters']" routerLinkActive="active"><a >{{loc.pers_posts}}</a></li>
+        <li [routerLink]="['basket']" routerLinkActive="active" ><a  >{{loc.app_basket}}</a></li>
+        <li [routerLink]="['addPoster']" routerLinkActive="active" *ngIf="newPoster"><a>*{{loc.new_poster}}</a></li>
     </ul>
     <div class="add_poster" (click)="addPoster()"><h4>{{loc.new_add}}</h4></div>
     <div class="container">
-        <office *ngIf="current==1"></office>
-        <posters *ngIf="current==2"></posters>
-        <basket *ngIf="current==3"></basket>
-        <add-poster *ngIf="current==4"></add-poster>
+        <router-outlet></router-outlet>
     </div>
 </div>

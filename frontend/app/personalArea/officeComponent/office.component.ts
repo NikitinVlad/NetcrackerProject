@@ -2,7 +2,7 @@
  * Created by Влад on 02.04.2017.
  */
 import {Component} from "@angular/core";
-import {SwapData} from "../../services/communicate/swap.data";
+import {SwapData, RouteTo} from "../../services/communicate/swap.data";
 @Component({
     moduleId:module.id,
     selector:"office",
@@ -12,6 +12,6 @@ import {SwapData} from "../../services/communicate/swap.data";
 
 export class OfficeComponent{
     constructor(private swapData:SwapData){
-        swapData.personalAreaServ.setCurrentPage(1);
+        RouteTo.rout='personal/profile';
     }
 }

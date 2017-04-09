@@ -23,5 +23,11 @@ export class PostsService {
         return this.http.get('http://localhost:8080/'+url)
             .map(res=>res.json());
     }
+    sendFile(file:any,url:string){
+        let headers      = new  Headers({'Accept': 'multipart/form-data, application/json'});
+        let options       = new RequestOptions({ headers: headers});
+        return this.http.post('http://localhost:8080/'+url, file, options)
+            .map((res:Response) => res.json());
+        }
 }
 

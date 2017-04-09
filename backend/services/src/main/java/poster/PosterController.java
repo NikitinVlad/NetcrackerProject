@@ -1,5 +1,7 @@
 package poster;
 
+import currency.Currency;
+import currency.ExchangeRates;
 import dto.AddInfo;
 import dto.NewPoster;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class PosterController {
     @Autowired
     PosterService posterService;
 
+    @Autowired
+    ExchangeRates exchangeRates;
+
     @RequestMapping(value="/getAddInfo",produces="application/json",method = RequestMethod.GET)
     public @ResponseBody AddInfo getAddInfo() {
         return posterService.getAddInfo();
@@ -25,4 +30,5 @@ public class PosterController {
     {
         return posterService.addNewPoster(newPoster);
     }
+
 }

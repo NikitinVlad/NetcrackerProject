@@ -49,7 +49,6 @@ var AppComponent = (function () {
         this.active = lang;
         CurLang_1.CurLang.lang = lang;
         this.test().then(function (answ) {
-            console.log('Выполнилась');
             _this.router.navigate(['help']);
         });
     };
@@ -64,8 +63,7 @@ var AppComponent = (function () {
         this.router.navigate(["login"]);
     };
     AppComponent.prototype.goPersonalArea = function (page) {
-        this.swapData.personalAreaServ.setCurrentPage(page);
-        swap_data_1.RouteTo.rout = 'personal';
+        swap_data_1.RouteTo.rout = 'poster';
         this.router.navigate(["help"]);
     };
     AppComponent.prototype.exit = function () {

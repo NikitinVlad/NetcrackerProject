@@ -17,7 +17,7 @@ var swap_data_1 = require("../../services/communicate/swap.data");
 var OfficeComponent = (function () {
     function OfficeComponent(swapData) {
         this.swapData = swapData;
-        swapData.personalAreaServ.setCurrentPage(1);
+        swap_data_1.RouteTo.rout = 'personal/profile';
     }
     return OfficeComponent;
 }());

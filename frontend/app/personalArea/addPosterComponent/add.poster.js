@@ -29,7 +29,7 @@ var AddPoster = (function () {
         this.loc = CurLang_1.CurLang.locale;
         this.addInfo = new AddInfo_1.AddInfo();
         this.models = [];
-        this.swapData.personalAreaServ.setCurrentPage(4);
+        swap_data_1.RouteTo.rout = "personal/addPoster";
         for (var i = 2017; i >= 1990; i--) {
             this.years.push(i);
         }

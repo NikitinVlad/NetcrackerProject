@@ -17,7 +17,7 @@ var swap_data_1 = require("../../services/communicate/swap.data");
 var BasketComponent = (function () {
     function BasketComponent(swapData) {
         this.swapData = swapData;
-        swapData.personalAreaServ.setCurrentPage(3);
+        swap_data_1.RouteTo.rout = 'personal/basket';
     }
     return BasketComponent;
 }());

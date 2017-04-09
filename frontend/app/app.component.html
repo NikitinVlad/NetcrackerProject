@@ -19,9 +19,9 @@
                 </div>
                 <div  *ngIf="this.localeAuth.checkAuth()">
                     <img class="no-photo" src="../images/no-photo.png">
-                    <a class="login" (click)="goPersonalArea(1)">{{this.localeAuth.getLogin()}}</a>
-                    <a class="func" (click)="goPersonalArea(2)"> {{loc.app_post}}</a>
-                    <a class="func" (click)="goPersonalArea(3)"> {{loc.app_basket}}</a>
+                    <a class="login" (click)="goPersonalArea('personal/profile')">{{this.localeAuth.getLogin()}}</a>
+                    <a class="func" (click)="goPersonalArea('personal/posters')"> {{loc.app_post}}</a>
+                    <a class="func" (click)="goPersonalArea('personal/basket')"> {{loc.app_basket}}</a>
                     <a class="func" (click)="exit()"> {{loc.app_exit}}</a>
                 </div>
             </div>

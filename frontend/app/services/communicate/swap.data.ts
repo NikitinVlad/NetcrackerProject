@@ -9,14 +9,7 @@ export class SwapData{
 
 class PersonalAreaServ{
     static newPoster=true;
-    static currentPage:number=4;
     static optionSelected:number=4;
-    getCurrentPage():number{
-        return PersonalAreaServ.currentPage;
-    }
-    setCurrentPage(page:number){
-        PersonalAreaServ.currentPage=page;
-    }
     setOptionSelected(num:number){
         PersonalAreaServ.optionSelected=num;
     }

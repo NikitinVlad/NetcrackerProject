@@ -2,7 +2,7 @@
  * Created by Влад on 06.04.2017.
  */
 import {Component} from "@angular/core";
-import {SwapData} from "../../services/communicate/swap.data";
+import {SwapData, RouteTo} from "../../services/communicate/swap.data";
 import {CurLang} from "../../Entities/CurLang";
 import {PostsService} from "../../services/posts.service";
 import {Model} from "../../Entities/Model";
@@ -25,7 +25,7 @@ export class AddPoster{
     models:Model[]=[];
 
     constructor(private swapData:SwapData,private postsService:PostsService,private auth:LocaleAuth){
-        this.swapData.personalAreaServ.setCurrentPage(4);
+        RouteTo.rout="personal/addPoster";
         for(var i=2017;i>=1990;i--){
             this.years.push(i);
         }
@@ -54,7 +54,7 @@ export class AddPoster{
         var newPoster:NewPoster=new NewPoster();
         newPoster.idUser=this.auth.getUser().id;
 
-        var model=(document.getElementsByTagName("select")[1] as HTMLInputElement).value;
+        var model=(document.getElementsByTagName("select")[1] as HTMLSelectElement).value;
         for(var i=0;i<this.models.length;i++){
             if(this.models[i].name==model){
                 newPoster.idModel=this.models[i].id;
@@ -62,7 +62,7 @@ export class AddPoster{
             }
         }
 
-        var city=(document.getElementsByTagName("select")[4] as HTMLInputElement).value;
+        var city=(document.getElementsByTagName("select")[4] as HTMLSelectElement).value;
         for (var i = 0; i < this.addInfo.cities.length; i++) {
             if (this.addInfo.cities[i].name == city) {
                 newPoster.idCity=this.addInfo.cities[i].id;
@@ -71,9 +71,9 @@ export class AddPoster{
         }
 
         newPoster.anotherCity=(document.getElementsByTagName("input")[1] as HTMLInputElement).value;
-        newPoster.year=(document.getElementsByTagName("select")[2] as HTMLInputElement).value;
+        newPoster.year=(document.getElementsByTagName("select")[2] as HTMLSelectElement).value;
 
-        var currency:string=(document.getElementsByTagName("select")[3] as HTMLInputElement).value;
+        var currency:string=(document.getElementsByTagName("select")[3] as HTMLSelectElement).value;
         if(currency=='бел.руб' || currency=='BLR'){
             currency='BLR';
         }
@@ -81,7 +81,7 @@ export class AddPoster{
         newPoster.currency=currency;
 
         newPoster.cost=+(document.getElementsByTagName("input")[0] as HTMLInputElement).value;
-        newPoster.description=(document.getElementsByTagName("textarea")[0] as HTMLInputElement).value;
+        newPoster.description=(document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement).value;
 
         this.postsService.sendPost(newPoster,'addNewPoster').subscribe(answer =>{
             console.log(answer);

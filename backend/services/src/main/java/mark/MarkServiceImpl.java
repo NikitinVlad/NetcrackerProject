@@ -13,7 +13,6 @@ import java.util.List;
  * Created by Влад on 07.04.2017.
  */
 @Service
-@Transactional
 public class MarkServiceImpl implements MarkService {
     @Autowired
     MarkDAO markDAO;
@@ -21,7 +20,7 @@ public class MarkServiceImpl implements MarkService {
     public List getAllMarks() {
         return markDAO.getAll();
     }
-    @Transactional
+
     public List getMarkModels(long id) {
         Mark mark=markDAO.findByID(id);
         return mark.getModels();

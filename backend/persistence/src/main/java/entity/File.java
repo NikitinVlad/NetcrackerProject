@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -10,6 +12,7 @@ import javax.persistence.OneToOne;
 public class File extends BaseEntity{
     private String filename;
     @OneToOne(mappedBy = "file")
+    @JsonIgnore
     private Poster poster;
     public File(){}
 

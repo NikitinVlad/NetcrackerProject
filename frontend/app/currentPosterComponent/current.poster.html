@@ -1,0 +1,108 @@
+<div class="container all well">
+    <h1>Название объявления</h1>
+    <div class="image-poster">
+        <div class="image">
+            <img [src]="getImg">
+        </div>
+        <form enctype="multipart/form-data">
+            <label class="btn btn-primary btn-file">
+                Загрузить фото <input  type="file" accept="image/jpeg,image/png" hidden (change)="selectFile($event)">
+            </label>
+        </form>
+    </div>
+    <div class="char">
+        <div class="main-info">
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Марка:</label>
+                </div>
+                <div class="input-el">
+                    <label>AUDI</label>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Модель:</label>
+                </div>
+                <div class="input-el">
+                    <label>A4</label>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Год выпуска:</label>
+                </div>
+                <div class="input-el">
+                    <label>2010</label>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Привод:</label>
+                </div>
+                <div class="input-el">
+                    <select>
+                        <option>Передний</option>
+                        <option>Задний</option>
+                        <option>Полный</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Тип топлива:</label>
+                </div>
+                <div class="input-el">
+                    <select>
+                        <option>Бензин</option>
+                        <option>Дизель</option>
+                        <option>Гибридный</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Объем:</label>
+                </div>
+                <div class="input-el">
+                    <input type="number">см.куб.
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Цена:</label>
+                </div>
+                <div class="input-el">
+                    <input type="number">
+                    <select class="cur">
+                        <option>$</option>
+                        <option>бел.руб.</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-to">
+                    <label>Город:</label>
+                </div>
+                <div class="input-el">
+                    <label>Минск</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="area">
+        <textarea cols="90" rows="8" placeholder="Текст объявления"></textarea>
+    </div>
+    <img src="../../images/close.png" class="myclose">
+    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено 24.03.2017 пользователем</label> <label>Влад</label></div>
+        <div class="submit-form"><button type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
+</div>

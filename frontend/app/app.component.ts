@@ -44,7 +44,6 @@ export class AppComponent{
         this.active=lang;
         CurLang.lang=lang;
         this.test().then(answ=>{
-            console.log('Выполнилась');
             this.router.navigate(['help']);
         });
     }
@@ -58,9 +57,8 @@ export class AppComponent{
     goLogin(){
         this.router.navigate(["login"]);
     }
-    goPersonalArea(page:number){
-        this.swapData.personalAreaServ.setCurrentPage(page);
-        RouteTo.rout='personal';
+    goPersonalArea(page:string){
+        RouteTo.rout='poster';
         this.router.navigate(["help"]);
     }
     exit():void{

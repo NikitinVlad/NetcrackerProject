@@ -23,12 +23,6 @@ exports.SwapData = SwapData;
 var PersonalAreaServ = (function () {
     function PersonalAreaServ() {
     }
-    PersonalAreaServ.prototype.getCurrentPage = function () {
-        return PersonalAreaServ.currentPage;
-    };
-    PersonalAreaServ.prototype.setCurrentPage = function (page) {
-        PersonalAreaServ.currentPage = page;
-    };
     PersonalAreaServ.prototype.setOptionSelected = function (num) {
         PersonalAreaServ.optionSelected = num;
     };
@@ -44,7 +38,6 @@ var PersonalAreaServ = (function () {
     return PersonalAreaServ;
 }());
 PersonalAreaServ.newPoster = true;
-PersonalAreaServ.currentPage = 4;
 PersonalAreaServ.optionSelected = 4;
 var RouteTo = (function () {
     function RouteTo() {

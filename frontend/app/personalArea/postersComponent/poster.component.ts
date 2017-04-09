@@ -7,7 +7,7 @@ import * as _ from 'underscore';
 import {PostsService} from "../../services/posts.service";
 import {Router} from "@angular/router";
 import {routes} from "../../app.routes";
-import {SwapData} from "../../services/communicate/swap.data";
+import {SwapData, RouteTo} from "../../services/communicate/swap.data";
 import {CurLang} from "../../Entities/CurLang";
 
 @Component({
@@ -33,8 +33,8 @@ export class PosterComponent{
     pagedItems: any[];
 
     constructor(private postsService:PostsService, private pagerService: PagerService,private router:Router,private swapData:SwapData) {
+        RouteTo.rout='personal/posters';
         this.loc=CurLang.locale;
-        swapData.personalAreaServ.setCurrentPage(2);
         console.log("constructor");
         this.currentSelection=this.swapData.personalAreaServ.getOptionSelected();
         this.postsService.getData('getCitiesSize').subscribe(answer=>{

@@ -7,6 +7,11 @@ import {RegistrationComponent} from "./registrationComponent/registration.compon
 import {LoginComponent} from "./loginComponent/login.component";
 import {PersonalArea} from "./personalArea/personal.area";
 import {HelpComponent} from "./personalArea/helpComponent/help.component";
+import {OfficeComponent} from "./personalArea/officeComponent/office.component";
+import {PosterComponent} from "./personalArea/postersComponent/poster.component";
+import {BasketComponent} from "./personalArea/basketComponent/basket.component";
+import {AddPoster} from "./personalArea/addPosterComponent/add.poster";
+import {CurrentPoster} from "./currentPosterComponent/current.poster";
 
 
 
@@ -16,6 +21,15 @@ export const routes:Routes=[
     {path:"registration",component:RegistrationComponent},
     {path:"login",component:LoginComponent},
     {path:"", redirectTo:"main",pathMatch:"full"},
-    {path:"personal",component:PersonalArea},
-    {path:"help",component:HelpComponent}
+    {path:"personal",component:PersonalArea,
+        children: [
+            {path: '', redirectTo: 'profile', pathMatch: 'full'},
+            { path: 'profile', component: OfficeComponent },
+            { path: 'posters', component: PosterComponent },
+            {path:'basket', component:BasketComponent},
+            {path: 'addPoster', component: AddPoster },
+        ]
+    },
+    {path:"help",component:HelpComponent},
+    {path: 'poster', component: CurrentPoster },
 ]

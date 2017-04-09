@@ -27,8 +27,8 @@ var PosterComponent = (function () {
         this.swapData = swapData;
         this.options = [];
         this.pager = {};
+        swap_data_1.RouteTo.rout = 'personal/posters';
         this.loc = CurLang_1.CurLang.locale;
-        swapData.personalAreaServ.setCurrentPage(2);
         console.log("constructor");
         this.currentSelection = this.swapData.personalAreaServ.getOptionSelected();
         this.postsService.getData('getCitiesSize').subscribe(function (answer) {
