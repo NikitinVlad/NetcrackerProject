@@ -57,11 +57,12 @@ public abstract class BaseDAO<T extends BaseEntity> {
     @Transactional(readOnly = true)
     public List getRange(int from, int to, String orderField){
         Criteria criteria=getCurrentSession().createCriteria(entityClass);
-        criteria.addOrder(Order.asc(orderField));
+        criteria.addOrder(Order.desc(orderField));
         criteria.setFirstResult(from-1);
         criteria.setMaxResults(to-from+1);
         return criteria.list();
     }
+
 
     public long update(T entity){
         try {

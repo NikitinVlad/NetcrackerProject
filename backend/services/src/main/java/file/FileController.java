@@ -22,7 +22,7 @@ public class FileController {
     public @ResponseBody Bytes uploadFile(@RequestParam("file") MultipartFile file) throws IOException{
         return  fileService.uploadFile(file);
     }
-    @RequestMapping(value = "/save",produces = "application/json",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveFile",produces = "application/json",method = RequestMethod.POST)
     public @ResponseBody int saveFile(@RequestParam("file") MultipartFile file,@RequestParam("name") String filename) throws IOException{
         fileService.saveFile(file,filename);
         return 1;

@@ -58,7 +58,7 @@ export class AppComponent{
         this.router.navigate(["login"]);
     }
     goPersonalArea(page:string){
-        RouteTo.rout='poster';
+        RouteTo.rout=page;
         this.router.navigate(["help"]);
     }
     exit():void{

@@ -18,20 +18,25 @@ var posts_service_1 = require("../../services/posts.service");
 var router_1 = require("@angular/router");
 var swap_data_1 = require("../../services/communicate/swap.data");
 var CurLang_1 = require("../../Entities/CurLang");
+var locale_auth_1 = require("../../services/locale.auth");
+var platform_browser_1 = require("@angular/platform-browser");
 var PosterComponent = (function () {
-    function PosterComponent(postsService, pagerService, router, swapData) {
+    function PosterComponent(postsService, pagerService, router, swapData, auth, sanitizer) {
         var _this = this;
         this.postsService = postsService;
         this.pagerService = pagerService;
         this.router = router;
         this.swapData = swapData;
+        this.auth = auth;
+        this.sanitizer = sanitizer;
         this.options = [];
         this.pager = {};
         swap_data_1.RouteTo.rout = 'personal/posters';
         this.loc = CurLang_1.CurLang.locale;
         console.log("constructor");
         this.currentSelection = this.swapData.personalAreaServ.getOptionSelected();
-        this.postsService.getData('getCitiesSize').subscribe(function (answer) {
+        this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(function (answer) {
+            console.log(answer);
             _this.sizeItems = answer;
             if (_this.sizeItems > 20) {
                 for (var i = 0; i < 20; i++) {
@@ -52,14 +57,52 @@ var PosterComponent = (function () {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'name'];
-        this.postsService.sendPost(this.currentItems, 'getRangeCities').subscribe(function (answer) {
+        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', this.auth.getUser().id];
+        this.postsService.sendPost(this.currentItems, 'getRangePosters').subscribe(function (answer) {
             _this.pagedItems = answer;
         });
     };
     PosterComponent.prototype.setOption = function (sel) {
         var num = +sel;
         this.swapData.personalAreaServ.setOptionSelected(num);
+        this.router.navigate(["help"]);
+    };
+    PosterComponent.prototype.getTransmission = function (tr) {
+        if (tr == "FRONT") {
+            return "привод:передний, ";
+        }
+        else if (tr == "REAR") {
+            return "привод:задний, ";
+        }
+        else if (tr == "FULL") {
+            return "привод:полный, ";
+        }
+        else
+            return "";
+    };
+    PosterComponent.prototype.getFuel = function (fl) {
+        if (fl == "PETROL") {
+            return "бензин, ";
+        }
+        else if (fl == "DIESEL") {
+            return "дизель, ";
+        }
+        else if (fl == "HYBRID") {
+            return "гибрид, ";
+        }
+        else
+            return "";
+    };
+    PosterComponent.prototype.getImg = function (bytes) {
+        var imgPath = "../../../images/noimage.png";
+        if (bytes != null) {
+            imgPath = 'data:image/jpg;base64,' + bytes;
+        }
+        return this.sanitizer.bypassSecurityTrustUrl(imgPath);
+    };
+    PosterComponent.prototype.goPoster = function (id) {
+        this.swapData.personalAreaServ.setCurrentPosterID(id);
+        swap_data_1.RouteTo.rout = "poster";
         this.router.navigate(["help"]);
     };
     return PosterComponent;
@@ -71,7 +114,7 @@ PosterComponent = __decorate([
         templateUrl: "poster.component.html",
         styleUrls: ["poster.component.css"]
     }),
-    __metadata("design:paramtypes", [posts_service_1.PostsService, pager_service_1.PagerService, router_1.Router, swap_data_1.SwapData])
+    __metadata("design:paramtypes", [posts_service_1.PostsService, pager_service_1.PagerService, router_1.Router, swap_data_1.SwapData, locale_auth_1.LocaleAuth, platform_browser_1.DomSanitizer])
 ], PosterComponent);
 exports.PosterComponent = PosterComponent;
 //# sourceMappingURL=poster.component.js.map

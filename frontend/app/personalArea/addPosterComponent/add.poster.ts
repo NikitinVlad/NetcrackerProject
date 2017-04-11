@@ -8,9 +8,9 @@ import {PostsService} from "../../services/posts.service";
 import {Model} from "../../Entities/Model";
 import {AddInfo} from "../../dto/AddInfo";
 import {Mark} from "../../Entities/Mark";
-import {Role} from "../../Entities/Role";
-import {NewPoster} from "../../dto/NewPoster";
 import {LocaleAuth} from "../../services/locale.auth";
+import {Router} from "@angular/router";
+import {NewPoster} from "../../dto/NewPoster";
 @Component({
     moduleId:module.id,
     selector:"add-poster",
@@ -24,7 +24,7 @@ export class AddPoster{
     addInfo:AddInfo=new AddInfo();
     models:Model[]=[];
 
-    constructor(private swapData:SwapData,private postsService:PostsService,private auth:LocaleAuth){
+    constructor(private swapData:SwapData,private postsService:PostsService,private auth:LocaleAuth, private router:Router){
         RouteTo.rout="personal/addPoster";
         for(var i=2017;i>=1990;i--){
             this.years.push(i);
@@ -84,7 +84,8 @@ export class AddPoster{
         newPoster.description=(document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement).value;
 
         this.postsService.sendPost(newPoster,'addNewPoster').subscribe(answer =>{
-            console.log(answer);
+            this.swapData.personalAreaServ.setCurrentPosterID(answer);
+            this.router.navigate(['poster']);
         });
     }
 }

@@ -17,24 +17,119 @@ var swap_data_1 = require("../services/communicate/swap.data");
 var posts_service_1 = require("../services/posts.service");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
+var CurrPoster_1 = require("../dto/CurrPoster");
 var CurrentPoster = (function () {
     function CurrentPoster(swapData, postsService, router, sanitizer) {
+        var _this = this;
         this.swapData = swapData;
         this.postsService = postsService;
         this.router = router;
         this.sanitizer = sanitizer;
+        this.newImage = false;
         this.imgPath = '../../images/noimage.png';
+        this.poster = new CurrPoster_1.CurrPoster();
         swap_data_1.RouteTo.rout = 'poster';
+        this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
+            _this.poster = answer;
+            _this.updatePoster();
+        });
     }
+    CurrentPoster.prototype.updatePoster = function () {
+        if (this.poster.currency == 'USD') {
+            document.getElementsByClassName('cur')[0].selectedIndex = 0;
+            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceUsd;
+        }
+        else {
+            document.getElementsByClassName('cur')[0].selectedIndex = 1;
+            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceBlr;
+        }
+        if (this.poster.transmission == "FRONT") {
+            document.getElementsByClassName('transmission')[0].selectedIndex = 0;
+        }
+        else if (this.poster.transmission == "REAR") {
+            document.getElementsByClassName('transmission')[0].selectedIndex = 1;
+        }
+        else {
+            document.getElementsByClassName('transmission')[0].selectedIndex = 2;
+        }
+        if (this.poster.fuel == "PETROL") {
+            document.getElementsByClassName('fuel')[0].selectedIndex = 0;
+        }
+        else if (this.poster.fuel == "DIESEL") {
+            document.getElementsByClassName('fuel')[0].selectedIndex = 1;
+        }
+        else {
+            document.getElementsByClassName('fuel')[0].selectedIndex = 2;
+        }
+        document.getElementsByClassName('dimension')[0].value = this.poster.dimension;
+        this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
+    };
+    CurrentPoster.prototype.saveChanges = function () {
+        var _this = this;
+        var transmition = document.getElementsByClassName('transmission')[0].selectedIndex;
+        if (transmition == 0) {
+            this.poster.transmission = "FRONT";
+        }
+        else if (transmition == 1) {
+            this.poster.transmission = "REAR";
+        }
+        else {
+            this.poster.transmission = "FULL";
+        }
+        var fuel = document.getElementsByClassName('fuel')[0].selectedIndex;
+        if (fuel == 0) {
+            this.poster.fuel = "PETROL";
+        }
+        else if (fuel == 1) {
+            this.poster.fuel = "DIESEL";
+        }
+        else {
+            this.poster.fuel = "HYBRID";
+        }
+        this.poster.dimension = document.getElementsByClassName('dimension')[0].value;
+        var currency = document.getElementsByClassName('cur')[0].selectedIndex;
+        if (currency == 0) {
+            this.poster.currency = "USD";
+            this.poster.priceUsd = +document.getElementsByClassName('cur-input')[0].value;
+        }
+        else {
+            this.poster.currency = "BLR";
+            this.poster.priceBlr = +document.getElementsByClassName('cur-input')[0].value;
+        }
+        this.poster.description = document.getElementsByTagName("textarea")[0].value;
+        if (this.newImage) {
+            this.poster.fileName = '' + this.poster.id;
+            this.postsService.sendFile(this.fileData, 'saveFile').subscribe(function (ans) {
+                console.log(ans);
+            });
+        }
+        else {
+            this.poster.fileName = '';
+        }
+        this.postsService.sendPost(this.poster, 'savePoster').subscribe(function (ans) {
+            _this.exit();
+        });
+    };
+    CurrentPoster.prototype.exit = function () {
+        this.router.navigate(["personal/posters"]);
+    };
+    CurrentPoster.prototype.changeCurrency = function (val) {
+        if (val == "$") {
+            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceUsd;
+        }
+        else
+            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceBlr;
+    };
     CurrentPoster.prototype.selectFile = function (event) {
         var _this = this;
         var formData = new FormData();
         formData.append('file', event.target.files[0]);
-        formData.append('name', "25_34");
+        formData.append('name', '' + this.poster.id);
         this.fileData = formData;
         this.postsService.sendFile(formData, 'upload').subscribe(function (ans) {
             var bytes = ans;
-            _this.imgPath = 'data:image/png;base64,' + bytes.bytes;
+            _this.imgPath = 'data:image/jpg;base64,' + bytes.bytes;
+            _this.newImage = true;
         });
     };
     Object.defineProperty(CurrentPoster.prototype, "getImg", {
@@ -44,11 +139,6 @@ var CurrentPoster = (function () {
         enumerable: true,
         configurable: true
     });
-    CurrentPoster.prototype.saveChanges = function () {
-        this.postsService.sendFile(this.fileData, 'save').subscribe(function (ans) {
-            console.log(ans);
-        });
-    };
     return CurrentPoster;
 }());
 CurrentPoster = __decorate([

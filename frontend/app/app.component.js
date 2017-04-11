@@ -63,7 +63,7 @@ var AppComponent = (function () {
         this.router.navigate(["login"]);
     };
     AppComponent.prototype.goPersonalArea = function (page) {
-        swap_data_1.RouteTo.rout = 'poster';
+        swap_data_1.RouteTo.rout = page;
         this.router.navigate(["help"]);
     };
     AppComponent.prototype.exit = function () {

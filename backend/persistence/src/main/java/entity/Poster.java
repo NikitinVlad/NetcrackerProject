@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class Poster extends BaseEntity{
     @ManyToOne
-    @JoinColumn(name = "id_poster")
+    @JoinColumn(name = "id_basket")
     private Basket basket;
 
     @ManyToOne

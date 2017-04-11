@@ -1,12 +1,12 @@
 <div class="container all well">
-    <h1>Название объявления</h1>
+    <h1>{{poster.markName+' '+poster.modelName}}</h1>
     <div class="image-poster">
         <div class="image">
             <img [src]="getImg">
         </div>
         <form enctype="multipart/form-data">
             <label class="btn btn-primary btn-file">
-                Загрузить фото <input  type="file" accept="image/jpeg,image/png" hidden (change)="selectFile($event)">
+                Загрузить фото <input  type="file" accept="image/jpeg" hidden (change)="selectFile($event)">
             </label>
         </form>
     </div>
@@ -17,7 +17,7 @@
                     <label>Марка:</label>
                 </div>
                 <div class="input-el">
-                    <label>AUDI</label>
+                    <label>{{poster.markName}}</label>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
                     <label>Модель:</label>
                 </div>
                 <div class="input-el">
-                    <label>A4</label>
+                    <label>{{poster.modelName}}</label>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                     <label>Год выпуска:</label>
                 </div>
                 <div class="input-el">
-                    <label>2010</label>
+                    <label>{{poster.year}}</label>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                     <label>Привод:</label>
                 </div>
                 <div class="input-el">
-                    <select>
+                    <select class="transmission">
                         <option>Передний</option>
                         <option>Задний</option>
                         <option>Полный</option>
@@ -58,7 +58,7 @@
                     <label>Тип топлива:</label>
                 </div>
                 <div class="input-el">
-                    <select>
+                    <select class="fuel">
                         <option>Бензин</option>
                         <option>Дизель</option>
                         <option>Гибридный</option>
@@ -71,7 +71,7 @@
                     <label>Объем:</label>
                 </div>
                 <div class="input-el">
-                    <input type="number">см.куб.
+                    <input type="number" class="dimension" maxlength="4">см.куб.
                 </div>
             </div>
 
@@ -80,8 +80,8 @@
                     <label>Цена:</label>
                 </div>
                 <div class="input-el">
-                    <input type="number">
-                    <select class="cur">
+                    <input class="cur-input" type="number" maxlength="10">
+                    <select class="cur" (change)="changeCurrency($event.target.value)">
                         <option>$</option>
                         <option>бел.руб.</option>
                     </select>
@@ -93,16 +93,16 @@
                     <label>Город:</label>
                 </div>
                 <div class="input-el">
-                    <label>Минск</label>
+                    <label>{{poster.city}}</label>
                 </div>
             </div>
 
         </div>
     </div>
     <div class="area">
-        <textarea cols="90" rows="8" placeholder="Текст объявления"></textarea>
+        <textarea cols="90" rows="8" placeholder="Текст объявления">{{poster.description}}</textarea>
     </div>
-    <img src="../../images/close.png" class="myclose">
-    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено 24.03.2017 пользователем</label> <label>Влад</label></div>
+    <img src="../../images/close.png" class="myclose" (click)="exit()">
+    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}} пользователем</label> <label>{{poster.user.login}}</label></div>
         <div class="submit-form"><button type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
 </div>

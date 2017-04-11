@@ -8,4 +8,5 @@ import java.util.List;
 public interface MarkService {
     List getAllMarks();
     List getMarkModels(long id);
+
 }

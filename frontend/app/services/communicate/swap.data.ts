@@ -8,8 +8,9 @@ export class SwapData{
 }
 
 class PersonalAreaServ{
-    static newPoster=true;
+    static newPoster=false;
     static optionSelected:number=4;
+    static currentPosterID:number;
     setOptionSelected(num:number){
         PersonalAreaServ.optionSelected=num;
     }
@@ -21,6 +22,12 @@ class PersonalAreaServ{
     }
     setNewPoster(val:boolean){
         PersonalAreaServ.newPoster=val;
+    }
+    setCurrentPosterID(num:number){
+        PersonalAreaServ.currentPosterID=num;
+    }
+    getCurrentPosterID():number{
+        return PersonalAreaServ.currentPosterID;
     }
 }
 

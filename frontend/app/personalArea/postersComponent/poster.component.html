@@ -12,9 +12,9 @@
 
         <div class="container items">
             <div class="container poster well" *ngFor="let item of pagedItems">
-                <div class="photo-car"><img src="../../../images/noimage.png"></div>
-                <div class="item-price"><p class="year-car" align="left">Год<p class="main-price" align="left"><b>Цена, р</b><p class="second-price" align="left">Цена, $<p class="city-car" align="left">Город</div>
-                <div class="info"><h3 class="posters-title" align="left">{{item.name}}</h3><p class="characteristics" align="left">Характеристики<p class="dop-info" align="left">Дополнительная информация</div>
+                <div class="photo-car"><img [src]="getImg(item.file)"></div>
+                <div class="item-price"><p class="year-car" align="left">{{item.year}}<p class="main-price" align="left"><b>{{item.priceBlr}} р</b><p class="second-price" align="left">{{item.priceUsd}} $<p class="city-car" align="left">{{item.city}}</div>
+                <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="left">{{item.description}}</div>
             </div>
             </div>
         <!-- pager -->

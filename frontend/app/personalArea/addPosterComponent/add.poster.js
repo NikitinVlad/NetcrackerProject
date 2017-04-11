@@ -17,14 +17,16 @@ var swap_data_1 = require("../../services/communicate/swap.data");
 var CurLang_1 = require("../../Entities/CurLang");
 var posts_service_1 = require("../../services/posts.service");
 var AddInfo_1 = require("../../dto/AddInfo");
-var NewPoster_1 = require("../../dto/NewPoster");
 var locale_auth_1 = require("../../services/locale.auth");
+var router_1 = require("@angular/router");
+var NewPoster_1 = require("../../dto/NewPoster");
 var AddPoster = (function () {
-    function AddPoster(swapData, postsService, auth) {
+    function AddPoster(swapData, postsService, auth, router) {
         var _this = this;
         this.swapData = swapData;
         this.postsService = postsService;
         this.auth = auth;
+        this.router = router;
         this.years = [];
         this.loc = CurLang_1.CurLang.locale;
         this.addInfo = new AddInfo_1.AddInfo();
@@ -55,6 +57,7 @@ var AddPoster = (function () {
             this.models = [];
     };
     AddPoster.prototype.addPoster = function () {
+        var _this = this;
         var newPoster = new NewPoster_1.NewPoster();
         newPoster.idUser = this.auth.getUser().id;
         var model = document.getElementsByTagName("select")[1].value;
@@ -83,7 +86,8 @@ var AddPoster = (function () {
         newPoster.cost = +document.getElementsByTagName("input")[0].value;
         newPoster.description = document.getElementsByTagName("textarea")[0].value;
         this.postsService.sendPost(newPoster, 'addNewPoster').subscribe(function (answer) {
-            console.log(answer);
+            _this.swapData.personalAreaServ.setCurrentPosterID(answer);
+            _this.router.navigate(['poster']);
         });
     };
     return AddPoster;
@@ -95,7 +99,7 @@ AddPoster = __decorate([
         templateUrl: "add.poster.html",
         styleUrls: ["add.poster.css"]
     }),
-    __metadata("design:paramtypes", [swap_data_1.SwapData, posts_service_1.PostsService, locale_auth_1.LocaleAuth])
+    __metadata("design:paramtypes", [swap_data_1.SwapData, posts_service_1.PostsService, locale_auth_1.LocaleAuth, router_1.Router])
 ], AddPoster);
 exports.AddPoster = AddPoster;
 //# sourceMappingURL=add.poster.js.map
