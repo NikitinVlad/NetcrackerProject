@@ -12,6 +12,7 @@ import file.FileService;
 import mark.MarkService;
 import model.ModelService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import user.UserService;
@@ -29,6 +30,8 @@ import java.util.List;
  */
 @Service
 public class PosterServiceImpl implements PosterService {
+    private Logger logger=Logger.getLogger(PosterServiceImpl.class);
+
     CityService cityService;
     MarkService markService;
     ModelService modelService;
@@ -52,6 +55,7 @@ public class PosterServiceImpl implements PosterService {
 
     @SuppressWarnings("unchecked")
     public AddInfo getAddInfo() {
+        logger.info("Get poster's info ");
         AddInfo addInfo = new AddInfo();
         addInfo.setCities(cityService.getAllCities());
         addInfo.setMarks(markService.getAllMarks());
@@ -59,6 +63,7 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public long addNewPoster(NewPoster newPoster) {
+        logger.info("Add new poster");
         User user = userService.findUser(newPoster.getIdUser());
         Model model = modelService.findModel(newPoster.getIdModel());
         City city;
@@ -78,10 +83,12 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public Poster findPoster(long id) {
+        logger.info("Find poster by ID");
         return posterDAO.findByID(id);
     }
 
     public CurrPoster getCurrentPoster(long id) throws IOException {
+        logger.info("Get current poster");
         Poster poster = findPoster(id);
         CurrPoster currentPoster = new CurrPoster();
         currentPoster.setId(poster.getId());
@@ -113,6 +120,7 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public long savePoster(CurrPoster currPoster) {
+        logger.info("Save poster");
         Poster poster = findPoster(currPoster.getId());
         poster.setDimension(currPoster.getDimension());
         poster.setFuel(currPoster.getFuel());
@@ -132,6 +140,7 @@ public class PosterServiceImpl implements PosterService {
 
 
     public long deletePoster(long id) {
+        logger.info("Delete poster");
         Poster poster=posterDAO.findByID(id);
         if(poster.getFile().getFilename()!=null){
             fileService.deleteFile(id);
@@ -141,6 +150,7 @@ public class PosterServiceImpl implements PosterService {
 
     @SuppressWarnings("unchecked")
     public List getRangedPosters(int from, int to, String orderField, long idUser) throws IOException {
+        logger.info("Get ranged posters");
         List<Poster> posters = posterDAO.getRangedPosters(from,to,orderField,idUser);
         List<CurrPoster> currPosters = new ArrayList<CurrPoster>();
         for (int i = 0; i < posters.size(); i++) {
@@ -151,6 +161,7 @@ public class PosterServiceImpl implements PosterService {
 
     @SuppressWarnings("unchecked")
     public int getPostersSize(long idUser) {
+        logger.info("Get size of posters");
         List<Poster> posters = posterDAO.getAll();
         int i = 0;
         for (Poster pos : posters) {

@@ -1,6 +1,7 @@
 package dao;
 
 import entity.BaseEntity;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,33 +16,35 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
-/**
- * Created by Влад on 23.03.2017.
- */
+
 @Repository
 @Transactional
 public abstract class BaseDAO<T extends BaseEntity> {
     @Autowired
     SessionFactory sessionFactory;
 
+    protected final Logger logger;
+
     private final Class<T> entityClass;
 
     public BaseDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
+        this.logger=Logger.getLogger(entityClass);
     }
 
 
     public long create(T entity) {
+        logger.info("Create entity");
         try {
             getCurrentSession().save(entity);
             return entity.getId();
         } catch (DataIntegrityViolationException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
         } catch (ConstraintViolationException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
             getCurrentSession().clear();
         } catch (Exception e) {
-            e.getMessage();
+            logger.error(e.getMessage());
             getCurrentSession().clear();
         }
         return 0L;
@@ -49,12 +52,14 @@ public abstract class BaseDAO<T extends BaseEntity> {
 
     @Transactional(readOnly = true)
     public List getAll() {
+        logger.info("Get list of entities");
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         return criteria.list();
     }
 
     @Transactional(readOnly = true)
     public List getRange(int from, int to, String orderField) {
+        logger.info("Get range of entities");
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         criteria.addOrder(Order.desc(orderField));
         criteria.setFirstResult(from - 1);
@@ -64,29 +69,34 @@ public abstract class BaseDAO<T extends BaseEntity> {
 
 
     public long update(T entity) {
+        logger.info("Update entity");
         try {
             getCurrentSession().update(entity);
             return entity.getId();
         } catch (DataIntegrityViolationException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
         } catch (Exception e) {
+            logger.error(e.getMessage());
             getCurrentSession().clear();
         }
         return 0L;
     }
 
     public long delete(T entity) {
+        logger.info("Delete enity entity by entity");
         try {
             long id = entity.getId();
             getCurrentSession().delete(entity);
             return id;
         } catch (Exception e) {
+            logger.error(e.getMessage());
             getCurrentSession().clear();
         }
         return 0L;
     }
 
     public long delete(long id) {
+        logger.info("Delete entity by ID");
         T entity = findByID(id);
         getCurrentSession().delete(entity);
         return id;
@@ -95,6 +105,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByID(long id) {
+        logger.info("Find entity by ID");
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         T ent = (T) criteria.add(Restrictions.eq("id", id)).uniqueResult();
         return ent;
@@ -103,12 +114,14 @@ public abstract class BaseDAO<T extends BaseEntity> {
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public T findByField(String field, Object value) {
+        logger.info("Find entity by field");
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         return (T) criteria.add(Restrictions.eq(field, value)).uniqueResult();
     }
 
     @Transactional(readOnly = true)
     public int getSize() {
+        logger.info("Get size of entities");
         return getAll().size();
     }
 

@@ -1,5 +1,6 @@
 package currency;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,7 +17,9 @@ import java.util.Date;
  */
 @Service
 public class ExchangeRatesImpl implements ExchangeRates {
+    private Logger logger=Logger.getLogger(ExchangeRatesImpl.class);
     public void getCourse() {
+        logger.info("GetCourse");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String now = dateFormat.format(new Date());
         if (Currency.UsdBuy == 0 || !now.equals(dateFormat.format(Currency.date))) {
@@ -38,6 +41,7 @@ public class ExchangeRatesImpl implements ExchangeRates {
                 Currency.UsdSale = Double.parseDouble(usdSale);
                 Currency.date = new Date();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

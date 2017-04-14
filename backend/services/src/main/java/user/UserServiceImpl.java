@@ -5,6 +5,7 @@ import dto.UserLogin;
 import entity.Basket;
 import entity.User;
 import enums.Role;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private Logger logger=Logger.getLogger(UserServiceImpl.class);
+
     @Autowired
     UserDAO userDAO;
 
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
 
     public long createUser(User user) {
+        logger.info("Create user");
         user.setRole(Role.ROLE_USER.toString());
         user.setBasket(new Basket());
         long id = userDAO.create(user);
@@ -39,10 +43,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findUser(long id) {
+        logger.info("Find user by ID");
         return userDAO.findByID(id);
     }
 
     public User findUser(String login) {
+        logger.info("find user by field");
         return userDAO.findByField("login", login);
     }
 
@@ -51,6 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User checkUser(String login, String pass) {
+        logger.info("Check user if exist");
         long id = userDAO.ifExist(login, pass);
         if (id == 0L) {
             return new User();

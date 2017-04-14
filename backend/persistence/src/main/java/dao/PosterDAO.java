@@ -19,6 +19,7 @@ public class PosterDAO extends BaseDAO<Poster> {
     }
 
     public List getRangedPosters(int from, int to, String orderField, long idUser){
+        logger.info("Get ranged posters");
         Criteria criteria = getCurrentSession().createCriteria(Poster.class);
         criteria.createAlias("user","us");
         criteria.add(Restrictions.eq("us.id",idUser));

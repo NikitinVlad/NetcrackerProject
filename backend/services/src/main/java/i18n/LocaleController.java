@@ -20,7 +20,6 @@ public class LocaleController {
     @RequestMapping(value = "/messageBundle", produces = "application/json", method = RequestMethod.POST)
     @ResponseBody
     public Properties list(@RequestBody Lang lang) {
-        System.out.println(lang.getLang());
         return messageBundle.getAllProperties(new Locale(lang.getLang()));
     }
 }
