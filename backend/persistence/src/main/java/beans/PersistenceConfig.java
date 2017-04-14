@@ -1,9 +1,6 @@
 package beans;
 
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.google.common.base.Preconditions;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +14,13 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.google.common.base.Preconditions;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "classpath:persistence-mysql.properties" })
-@ComponentScan({ "entity,beans,dao" })
+@PropertySource({"classpath:persistence-mysql.properties"})
+@ComponentScan({"entity,beans,dao"})
 public class PersistenceConfig {
 
     @Autowired
@@ -36,7 +34,7 @@ public class PersistenceConfig {
     public LocalSessionFactoryBean sessionFactory() {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(restDataSource());
-        sessionFactory.setPackagesToScan(new String[] { "entity" });
+        sessionFactory.setPackagesToScan(new String[]{"entity"});
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

@@ -13,10 +13,18 @@ import java.util.List;
  */
 public interface PosterService {
     AddInfo getAddInfo();
+
     long addNewPoster(NewPoster newPoster);
+
     Poster findPoster(long id);
+
     CurrPoster getCurrentPoster(long id) throws IOException;
+
     long savePoster(CurrPoster currPoster);
-    List getRangedPosters(int from,int to,String orderField,long idUser) throws IOException;
+
+    long deletePoster(long id);
+
+    List getRangedPosters(int from, int to, String orderField, long idUser) throws IOException;
+
     int getPostersSize(long idUser);
 }

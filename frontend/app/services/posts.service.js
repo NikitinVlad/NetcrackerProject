@@ -19,19 +19,31 @@ var PostsService = (function () {
     function PostsService(http) {
         this.http = http;
     }
+    PostsService.prototype.createAuthorizationHeader = function (headers) {
+        var login;
+        if (localStorage.getItem('currentUser') != null) {
+            login = JSON.parse(localStorage.getItem('currentUser')).login;
+            headers.append('Authorization', login);
+        }
+    };
     PostsService.prototype.sendPost = function (body, url) {
         var bodyString = JSON.stringify(body);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.createAuthorizationHeader(headers);
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('http://localhost:8080/' + url, bodyString, options)
             .map(function (res) { return res.json(); });
     };
     PostsService.prototype.getData = function (url) {
-        return this.http.get('http://localhost:8080/' + url)
+        var headers = new http_1.Headers();
+        this.createAuthorizationHeader(headers);
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get('http://localhost:8080/' + url, options)
             .map(function (res) { return res.json(); });
     };
     PostsService.prototype.sendFile = function (file, url) {
         var headers = new http_1.Headers({ 'Accept': 'multipart/form-data, application/json' });
+        this.createAuthorizationHeader(headers);
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('http://localhost:8080/' + url, file, options)
             .map(function (res) { return res.json(); });

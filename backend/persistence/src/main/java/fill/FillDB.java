@@ -7,7 +7,11 @@ import entity.Mark;
 import entity.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,41 +25,43 @@ public class FillDB {
     @Autowired
     MarkDAO markDAO;
 
-    List<City> entities=new ArrayList();
-    List<Mark> marks=new ArrayList();
-    List<Model> models=new ArrayList();
-    MyFile myFile=new MyFile();
+    List<City> entities = new ArrayList();
+    List<Mark> marks = new ArrayList();
+    List<Model> models = new ArrayList();
+    MyFile myFile = new MyFile();
 
 
-    public List<City> fillCities()throws IOException{
-        List list=new ArrayList();
-        list=myFile.readInput("cities");
-        for(int i=0;i<list.size();i++){
-            City city=new City();
+    public List<City> fillCities() throws IOException {
+        List list = new ArrayList();
+        list = myFile.readInput("cities");
+        for (int i = 0; i < list.size(); i++) {
+            City city = new City();
             city.setName((String) list.get(i));
             entities.add(city);
         }
         return entities;
     }
 
-    public void fillAuto()throws IOException{
-        List list=new ArrayList();
-        list=myFile.readInput("marks");
-        boolean flag=false;
-        for(int i=0;i<list.size();i++){
-            Mark mark=new Mark();
+    public void fillAuto() throws IOException {
+        List list = new ArrayList();
+        list = myFile.readInput("marks");
+        boolean flag = false;
+        for (int i = 0; i < list.size(); i++) {
+            Mark mark = new Mark();
             mark.setName((String) list.get(i));
-            markDAO.create(mark);
+            long a = markDAO.create(mark);
             ++i;
-            for(;i<list.size() && !list.get(i).equals("");i++){
-                Model model=new Model();
-                model.setName((String) list.get(i));
-                model.setMark(mark);
-                mark.getModels().add(model);
-                models.add(model);
+            if (a != 0L) {
+                for (; i < list.size() && !list.get(i).equals(""); i++) {
+                    Model model = new Model();
+                    model.setName((String) list.get(i));
+                    model.setMark(mark);
+                    mark.getModels().add(model);
+                    models.add(model);
+                }
             }
         }
-        for(int i=0;i<models.size();i++){
+        for (int i = 0; i < models.size(); i++) {
             modelDAO.create(models.get(i));
         }
     }
@@ -69,9 +75,9 @@ public class FillDB {
 
 }
 
-class MyFile{
+class MyFile {
     public List readInput(String filename) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("E:/"+filename+".txt"),"Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("E:/" + filename + ".txt"), "Cp1251"));
         String line;
         List<String> lines = new ArrayList<String>();
         while ((line = reader.readLine()) != null) {

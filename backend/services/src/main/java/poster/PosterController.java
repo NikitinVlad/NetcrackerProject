@@ -5,9 +5,11 @@ import dto.AddInfo;
 import dto.CurrPoster;
 import dto.NewPoster;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,36 +24,48 @@ public class PosterController {
     @Autowired
     ExchangeRates exchangeRates;
 
-    @RequestMapping(value="/getAddInfo",produces="application/json",method = RequestMethod.GET)
+    @RequestMapping(value = "/getAddInfo", produces = "application/json", method = RequestMethod.GET)
     public @ResponseBody AddInfo getAddInfo() {
         return posterService.getAddInfo();
     }
 
-    @RequestMapping(value="/addNewPoster",produces="application/json",method = RequestMethod.POST)
-    public long addNewPoster(@RequestBody NewPoster newPoster)
-    {
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/addNewPoster", produces = "application/json", method = RequestMethod.POST)
+    public long addNewPoster(@RequestBody @Valid NewPoster newPoster, Errors errors) {
+        if (errors.hasErrors()){
+            return 0L;
+        }
         return posterService.addNewPoster(newPoster);
     }
 
-    @RequestMapping(value="/getCurrentPoster",produces="application/json",method = RequestMethod.POST)
-    public CurrPoster addNewPoster(@RequestBody long id) throws IOException
-    {
+    @RequestMapping(value = "/getCurrentPoster", produces = "application/json", method = RequestMethod.POST)
+    public CurrPoster getCurrentPoster(@RequestBody long id) throws IOException {
         return posterService.getCurrentPoster(id);
     }
-    @RequestMapping(value="/savePoster",produces="application/json",method = RequestMethod.POST)
-    public long savePoster(@RequestBody CurrPoster currPoster)
-    {
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/savePoster", produces = "application/json", method = RequestMethod.POST)
+    public long savePoster(@RequestBody CurrPoster currPoster) {
         return posterService.savePoster(currPoster);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/getRangePosters", produces = "application/json", method = RequestMethod.POST)
     public List getRangePosters(@RequestBody Object[] mas) throws IOException {
-        int idUser=(Integer) mas[3];
-        long d=idUser;
-        return posterService.getRangedPosters((Integer)mas[0],(Integer) mas[1],(String) mas[2],d);
+        int idUser = (Integer) mas[3];
+        long d = idUser;
+        return posterService.getRangedPosters((Integer) mas[0], (Integer) mas[1], (String) mas[2], d);
     }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/getPostersSize", produces = "application/json", method = RequestMethod.POST)
-    public int getCitiesSize(@RequestBody long id) {
+    public int getPostersSize(@RequestBody long id) {
         return posterService.getPostersSize(id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deletePoster", produces = "application/json", method = RequestMethod.POST)
+    public long deletePoster(@RequestBody long id){
+        return posterService.deletePoster(id);
     }
 }

@@ -31,6 +31,7 @@ var AddPoster = (function () {
         this.loc = CurLang_1.CurLang.locale;
         this.addInfo = new AddInfo_1.AddInfo();
         this.models = [];
+        this.errors = [];
         swap_data_1.RouteTo.rout = "personal/addPoster";
         for (var i = 2017; i >= 1990; i--) {
             this.years.push(i);
@@ -86,9 +87,48 @@ var AddPoster = (function () {
         newPoster.cost = +document.getElementsByTagName("input")[0].value;
         newPoster.description = document.getElementsByTagName("textarea")[0].value;
         this.postsService.sendPost(newPoster, 'addNewPoster').subscribe(function (answer) {
-            _this.swapData.personalAreaServ.setCurrentPosterID(answer);
-            _this.router.navigate(['poster']);
+            if (answer == 0) {
+                _this.errors.push(100);
+            }
+            else {
+                _this.swapData.personalAreaServ.setCurrentPosterID(answer);
+                _this.swapData.personalAreaServ.setNewPoster(false);
+                _this.router.navigate(['poster']);
+            }
         });
+    };
+    AddPoster.prototype.checkFields = function () {
+        this.errors = [];
+        var model = document.getElementsByTagName("select")[0].value;
+        if (model == "") {
+            this.errors.push(1);
+        }
+        var price = document.getElementsByTagName("input")[0].value;
+        if (price.length > 6 || price.length == 0) {
+            this.errors.push(2);
+        }
+        if (this.errors.length == 0) {
+            this.addPoster();
+        }
+    };
+    AddPoster.prototype.findError = function (block) {
+        for (var i = 0; i < this.errors.length; i++) {
+            if (block == this.errors[i]) {
+                return true;
+            }
+        }
+        return false;
+    };
+    AddPoster.prototype.deleteError = function (block) {
+        var index = this.errors.indexOf(block, 0);
+        if (index > -1) {
+            this.errors.splice(index, 1);
+        }
+    };
+    AddPoster.prototype.close = function () {
+        this.swapData.personalAreaServ.setNewPoster(false);
+        swap_data_1.RouteTo.rout = "personal";
+        this.router.navigate(["help"]);
     };
     return AddPoster;
 }());

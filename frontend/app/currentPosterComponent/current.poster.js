@@ -18,6 +18,7 @@ var posts_service_1 = require("../services/posts.service");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var CurrPoster_1 = require("../dto/CurrPoster");
+var CurLang_1 = require("../Entities/CurLang");
 var CurrentPoster = (function () {
     function CurrentPoster(swapData, postsService, router, sanitizer) {
         var _this = this;
@@ -28,6 +29,7 @@ var CurrentPoster = (function () {
         this.newImage = false;
         this.imgPath = '../../images/noimage.png';
         this.poster = new CurrPoster_1.CurrPoster();
+        this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'poster';
         this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
             _this.poster = answer;
@@ -62,7 +64,9 @@ var CurrentPoster = (function () {
             document.getElementsByClassName('fuel')[0].selectedIndex = 2;
         }
         document.getElementsByClassName('dimension')[0].value = this.poster.dimension;
-        this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
+        if (this.poster.file != null) {
+            this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
+        }
     };
     CurrentPoster.prototype.saveChanges = function () {
         var _this = this;
@@ -111,7 +115,8 @@ var CurrentPoster = (function () {
         });
     };
     CurrentPoster.prototype.exit = function () {
-        this.router.navigate(["personal/posters"]);
+        swap_data_1.RouteTo.rout = "personal/posters";
+        this.router.navigate(["help"]);
     };
     CurrentPoster.prototype.changeCurrency = function (val) {
         if (val == "$") {

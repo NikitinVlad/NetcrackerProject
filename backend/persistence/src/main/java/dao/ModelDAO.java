@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Model;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ModelDAO extends BaseDAO<Model> {
-    public ModelDAO(){
+    public ModelDAO() {
         super(Model.class);
     }
 }

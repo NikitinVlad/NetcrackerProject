@@ -47,19 +47,24 @@ var PosterComponent = (function () {
                 for (var i = 0; i < _this.sizeItems; i++) {
                     _this.options.push(i + 1);
                 }
+                if (_this.sizeItems < _this.currentSelection)
+                    _this.currentSelection = _this.sizeItems;
             }
             _this.setPage(1);
         });
     }
     PosterComponent.prototype.setPage = function (page) {
         var _this = this;
+        this.curPage = page;
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
         this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', this.auth.getUser().id];
+        console.log(this.currentItems);
         this.postsService.sendPost(this.currentItems, 'getRangePosters').subscribe(function (answer) {
             _this.pagedItems = answer;
+            console.log(answer);
         });
     };
     PosterComponent.prototype.setOption = function (sel) {
@@ -104,6 +109,32 @@ var PosterComponent = (function () {
         this.swapData.personalAreaServ.setCurrentPosterID(id);
         swap_data_1.RouteTo.rout = "poster";
         this.router.navigate(["help"]);
+    };
+    PosterComponent.prototype.deletePoster = function (item) {
+        var _this = this;
+        var index = this.pagedItems.indexOf(item, 0);
+        if (index > -1) {
+            this.pagedItems.splice(index, 1);
+        }
+        this.postsService.sendPost(item.id, 'deletePoster').subscribe(function (ans) {
+            _this.postsService.sendPost(_this.auth.getUser().id, 'getPostersSize').subscribe(function (answer) {
+                _this.options = [];
+                _this.sizeItems = answer;
+                if (_this.sizeItems > 20) {
+                    for (var i = 0; i < 20; i++) {
+                        _this.options.push(i + 1);
+                    }
+                }
+                else {
+                    for (var i = 0; i < _this.sizeItems; i++) {
+                        _this.options.push(i + 1);
+                    }
+                    if (_this.sizeItems < _this.currentSelection)
+                        _this.currentSelection = _this.sizeItems;
+                }
+                _this.setPage(_this.curPage);
+            });
+        });
     };
     return PosterComponent;
 }());

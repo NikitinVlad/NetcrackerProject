@@ -22,6 +22,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 
 export class PosterComponent {
+    curPage:number;
     loc: any;
 
 
@@ -40,7 +41,7 @@ export class PosterComponent {
         RouteTo.rout = 'personal/posters';
         this.loc = CurLang.locale;
         console.log("constructor");
-        this.currentSelection = this.swapData.personalAreaServ.getOptionSelected();
+        this.currentSelection = this.swapData.personalAreaServ.getOptionSelected()
         this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(answer=> {
             console.log(answer);
             this.sizeItems = answer;
@@ -53,19 +54,25 @@ export class PosterComponent {
                 for (var i = 0; i < this.sizeItems; i++) {
                     this.options.push(i + 1);
                 }
+                if(this.sizeItems<this.currentSelection)
+                this.currentSelection=this.sizeItems;
             }
+
             this.setPage(1);
         });
     }
 
     setPage(page: number) {
+        this.curPage=page;
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
         this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', this.auth.getUser().id];
+        console.log(this.currentItems);
         this.postsService.sendPost(this.currentItems, 'getRangePosters').subscribe(answer=> {
             this.pagedItems = answer;
+            console.log(answer);
         });
     }
 
@@ -116,4 +123,29 @@ export class PosterComponent {
         this.router.navigate(["help"]);
     }
 
+    deletePoster(item:CurrPoster){
+        var index = this.pagedItems.indexOf(item, 0);
+        if (index > -1) {
+            this.pagedItems.splice(index, 1);
+        }
+        this.postsService.sendPost(item.id,'deletePoster').subscribe(ans=>{
+            this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(answer=> {
+                this.options=[];
+                this.sizeItems = answer;
+                if (this.sizeItems > 20) {
+                    for (var i = 0; i < 20; i++) {
+                        this.options.push(i + 1);
+                    }
+                }
+                else {
+                    for (var i = 0; i < this.sizeItems; i++) {
+                        this.options.push(i + 1);
+                    }
+                    if (this.sizeItems < this.currentSelection)
+                        this.currentSelection = this.sizeItems;
+                }
+                this.setPage(this.curPage);
+            });
+        });
+    }
 }

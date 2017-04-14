@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Bytes} from "../dto/Bytes";
 import {CurrPoster} from "../dto/CurrPoster";
+import {CurLang} from "../Entities/CurLang";
 
 
 @Component({
@@ -18,11 +19,13 @@ import {CurrPoster} from "../dto/CurrPoster";
 })
 
 export class CurrentPoster{
+    loc:any;
     newImage:boolean=false;
     imgPath:any='../../images/noimage.png';
     fileData:FormData;
     poster:CurrPoster=new CurrPoster();
     constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer){
+        this.loc=CurLang.locale;
         RouteTo.rout='poster';
         this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(),'getCurrentPoster').subscribe(answer=>{
             this.poster=answer;
@@ -63,7 +66,9 @@ export class CurrentPoster{
 
         (document.getElementsByClassName('dimension')[0] as HTMLInputElement).value=this.poster.dimension;
 
-        this.imgPath = 'data:image/jpg;base64,'+this.poster.file;
+        if(this.poster.file!=null) {
+            this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
+        }
     }
 
 
@@ -119,7 +124,8 @@ export class CurrentPoster{
     }
 
     exit(){
-        this.router.navigate(["personal/posters"]);
+        RouteTo.rout="personal/posters";
+        this.router.navigate(["help"]);
     }
 
     changeCurrency(val:any){

@@ -1,27 +1,39 @@
 package dto;
 
-/**
- * Created by Влад on 08.04.2017.
- */
+
+import javax.validation.constraints.*;
+
 public class NewPoster {
 
     private long idUser;
+
+    @Min(1)
     private long idModel;
+
     private long idCity;
+
     private String anotherCity;
+
     private String year;
+
+
     private String currency;
+
+    @Min(1)
+    @Max(999999)
     private double cost;
+
     private String description;
 
-    public NewPoster(){}
+    public NewPoster() {
+    }
 
-    public NewPoster(long idUser, long idModel, long idCity, String anotherCity, String year,String currency, double cost, String description) {
+    public NewPoster(long idUser, long idModel, long idCity, String anotherCity, String year, String currency, double cost, String description) {
         this.idUser = idUser;
         this.idModel = idModel;
         this.idCity = idCity;
         this.anotherCity = anotherCity;
-        this.year=year;
+        this.year = year;
         this.currency = currency;
         this.cost = cost;
         this.description = description;

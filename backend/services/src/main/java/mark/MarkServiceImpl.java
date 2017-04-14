@@ -2,10 +2,9 @@ package mark;
 
 import dao.MarkDAO;
 import entity.Mark;
-import org.hibernate.Hibernate;
+import entity.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +21,9 @@ public class MarkServiceImpl implements MarkService {
     }
 
     public List getMarkModels(long id) {
-        Mark mark=markDAO.findByID(id);
-        return mark.getModels();
+        Mark mark = markDAO.findByID(id);
+        List<Model> models = mark.getModels();
+        models.sort((m1, m2) -> m1.getName().compareTo(m2.getName()));
+        return models;
     }
 }

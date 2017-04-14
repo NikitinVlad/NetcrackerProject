@@ -11,6 +11,7 @@ import {Mark} from "../../Entities/Mark";
 import {LocaleAuth} from "../../services/locale.auth";
 import {Router} from "@angular/router";
 import {NewPoster} from "../../dto/NewPoster";
+import {errorObject} from "rxjs/util/errorObject";
 @Component({
     moduleId:module.id,
     selector:"add-poster",
@@ -23,6 +24,7 @@ export class AddPoster{
     loc:any=CurLang.locale;
     addInfo:AddInfo=new AddInfo();
     models:Model[]=[];
+    errors:number[]=[];
 
     constructor(private swapData:SwapData,private postsService:PostsService,private auth:LocaleAuth, private router:Router){
         RouteTo.rout="personal/addPoster";
@@ -83,9 +85,53 @@ export class AddPoster{
         newPoster.cost=+(document.getElementsByTagName("input")[0] as HTMLInputElement).value;
         newPoster.description=(document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement).value;
 
+
         this.postsService.sendPost(newPoster,'addNewPoster').subscribe(answer =>{
-            this.swapData.personalAreaServ.setCurrentPosterID(answer);
-            this.router.navigate(['poster']);
+            if(answer==0){
+                this.errors.push(100);
+            }
+            else {
+                this.swapData.personalAreaServ.setCurrentPosterID(answer);
+                this.swapData.personalAreaServ.setNewPoster(false);
+                this.router.navigate(['poster']);
+            }
         });
+    }
+
+    checkFields(){
+        this.errors=[];
+        var model=(document.getElementsByTagName("select")[0] as HTMLSelectElement).value;
+        if(model==""){
+            this.errors.push(1);
+        }
+        var price = (document.getElementsByTagName("input")[0] as HTMLInputElement).value;
+        if(price.length>6 || price.length==0){
+            this.errors.push(2);
+        }
+        if(this.errors.length==0){
+            this.addPoster();
+        }
+    }
+
+    findError(block:number):boolean{
+        for(var i=0;i<this.errors.length;i++){
+            if(block==this.errors[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+    deleteError(block:number){
+        var index = this.errors.indexOf(block, 0);
+        if (index > -1) {
+            this.errors.splice(index, 1);
+        }
+    }
+
+
+    close(){
+        this.swapData.personalAreaServ.setNewPoster(false);
+        RouteTo.rout="personal";
+        this.router.navigate(["help"]);
     }
 }

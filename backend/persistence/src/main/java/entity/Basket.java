@@ -18,9 +18,11 @@ public class Basket extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "basket")
-    private List<Poster> posters=new ArrayList<Poster>();
-    public Basket(){}
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "basket")
+    private List<Poster> posters = new ArrayList<Poster>();
+
+    public Basket() {
+    }
 
     public Basket(User user) {
         this.user = user;

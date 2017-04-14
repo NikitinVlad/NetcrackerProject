@@ -18,16 +18,16 @@ public class User extends BaseEntity {
     private String name;
 
     @NotNull
-    @Size(min = 3,max = 15)
+    @Size(min = 3, max = 15)
     @Column(unique = true)
     private String login;
 
     @NotNull
-    @Size(min = 4,max = 20)
+    @Size(min = 4, max = 20)
     private String pass;
 
     @NotNull
-    @Size(min = 5,max = 30)
+    @Size(min = 5, max = 30)
     @Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
     private String email;
 
@@ -38,17 +38,19 @@ public class User extends BaseEntity {
     @JsonIgnore
     private Basket basket;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
     @JsonIgnore
-    private List<Poster> posters=new ArrayList<Poster>();
-    public User(){}
+    private List<Poster> posters = new ArrayList<Poster>();
 
-    public User(String login, String pass, String email, String role,Basket basket) {
+    public User() {
+    }
+
+    public User(String login, String pass, String email, String role, Basket basket) {
         this.login = login;
         this.pass = pass;
         this.email = email;
         this.role = role;
-        this.basket=basket;
+        this.basket = basket;
     }
 
     public Basket getBasket() {
@@ -83,11 +85,11 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    public String  getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(String  role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

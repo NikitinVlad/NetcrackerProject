@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 public class ModelServiceImpl implements ModelService {
     @Autowired
     ModelDAO modelDAO;
+
     public Model findModel(long id) {
-       return modelDAO.findByID(id);
+        return modelDAO.findByID(id);
     }
 }

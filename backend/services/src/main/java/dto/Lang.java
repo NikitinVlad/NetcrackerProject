@@ -5,7 +5,9 @@ package dto;
  */
 public class Lang {
     private String lang;
-    public Lang(){}
+
+    public Lang() {
+    }
 
     public Lang(String lang) {
         this.lang = lang;

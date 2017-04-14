@@ -17,11 +17,14 @@ public class City extends BaseEntity {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "city")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "city")
     @JsonIgnore
-    private List<Poster> posters=new ArrayList<Poster>();
+    private List<Poster> posters = new ArrayList<Poster>();
 
-    public City(){};
+    public City() {
+    }
+
+    ;
 
     public City(String name) {
         this.name = name;

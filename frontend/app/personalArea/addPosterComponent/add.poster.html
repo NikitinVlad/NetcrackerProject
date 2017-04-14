@@ -1,3 +1,4 @@
+<img class="close" src="../../../images/close.png" (click)="close()">
 <h1>{{loc.new_poster}}</h1>
 
 <div class="container form-add">
@@ -5,11 +6,12 @@
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_mark}}*</label></div>
         <div class="form-cont">
-            <select (change)="getModels($event.target.value)">
+            <select (focus)="deleteError(1)" (change)="getModels($event.target.value)">
                 <option selected></option>
             <option #opt *ngFor="let mark of addInfo.marks">{{mark.name}}</option>
             </select><br/>
             </div>
+        <label *ngIf="findError(1)" class="error">Модель не выбрана</label>
     </div>
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_model}}*</label></div>
@@ -29,8 +31,8 @@
     </div>
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_cost}}*</label></div>
-        <div class="form-cont">
-           <input type="number">
+        <div class="form-cont" >
+           <input oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="6">
         </div>
         <div class="currency">
             <select>
@@ -38,6 +40,8 @@
                 <option >{{loc.new_blr}}</option>
             </select><br/>
         </div>
+        <label *ngIf="findError(2)"  class="error">Поле заполнено неправильно</label>
+
     </div>
     <div class="form-item">
         <div class="form-label"><label>{{loc.new_city}}*</label></div>
@@ -56,6 +60,7 @@
            <textarea rows="10" cols="70"></textarea>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="addPoster()">{{loc.new_go}}</button>
+    <button type="button" class="btn btn-primary" (click)="checkFields()">{{loc.new_go}}</button>
+    <h4 class="error" *ngIf="errors.length>0">Данные заполнены некорректно</h4>
 </div>
 

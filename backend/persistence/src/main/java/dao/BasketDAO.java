@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Basket;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class BasketDAO extends BaseDAO<Basket> {
-    public BasketDAO(){
+    public BasketDAO() {
         super(Basket.class);
     }
 }

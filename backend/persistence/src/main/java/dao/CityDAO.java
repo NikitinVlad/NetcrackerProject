@@ -1,7 +1,6 @@
 package dao;
 
 import entity.City;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CityDAO extends BaseDAO<City> {
-    public CityDAO(){
+    public CityDAO() {
         super(City.class);
     }
 }

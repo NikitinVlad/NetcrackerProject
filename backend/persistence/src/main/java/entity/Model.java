@@ -16,7 +16,8 @@ public class Model extends BaseEntity {
     @JoinColumn(name = "id_mark")
     @JsonIgnore
     private Mark mark;
-    public Model(){
+
+    public Model() {
     }
 
     public Model(String name, Mark mark) {

@@ -9,12 +9,14 @@ import javax.persistence.OneToOne;
  * Created by Влад on 27.03.2017.
  */
 @Entity
-public class File extends BaseEntity{
+public class File extends BaseEntity {
     private String filename;
     @OneToOne(mappedBy = "file")
     @JsonIgnore
     private Poster poster;
-    public File(){}
+
+    public File() {
+    }
 
     public File(String filename, Poster poster) {
         this.filename = filename;

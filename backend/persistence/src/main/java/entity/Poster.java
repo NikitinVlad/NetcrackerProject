@@ -1,8 +1,5 @@
 package entity;
 
-import javafx.geometry.Pos;
-import org.hibernate.annotations.Proxy;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,7 +7,7 @@ import java.util.Date;
  * Created by Влад on 27.03.2017.
  */
 @Entity
-public class Poster extends BaseEntity{
+public class Poster extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_basket")
     private Basket basket;
@@ -40,10 +37,11 @@ public class Poster extends BaseEntity{
     private String transmision;
     private Date date;
     private String description;
-    public Poster(){
+
+    public Poster() {
     }
 
-    public Poster(User user,  Model model, City city, int year, String currency, double price, String description, File file) {
+    public Poster(User user, Model model, City city, int year, String currency, double price, String description, File file) {
         this.user = user;
         this.city = city;
         this.model = model;
@@ -51,7 +49,7 @@ public class Poster extends BaseEntity{
         this.price = price;
         this.currency = currency;
         this.year = year;
-        this.description=description;
+        this.description = description;
     }
 
     public Basket getBasket() {

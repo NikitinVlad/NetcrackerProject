@@ -52,7 +52,7 @@ export class RegistrationComponent{
         this.postsService.sendPost(user,'createUser').subscribe(answer=>{
             console.log(answer);
             if(answer>=1){
-                this.showToast('success',this.loc.mess_cong,this.loc.mess_cong_body);
+                this.showToast('success',''+this.loc.mes_cong,''+this.loc.mes_cong_body);
                 this.router.navigate(["main"]);
             }
             else {

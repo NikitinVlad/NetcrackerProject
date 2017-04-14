@@ -8,14 +8,15 @@ import javax.validation.constraints.Size;
  */
 public class UserLogin {
     @NotNull
-    @Size(min = 3,max = 15)
+    @Size(min = 3, max = 15)
     private String login;
 
     @NotNull
-    @Size(min = 4,max = 20)
+    @Size(min = 4, max = 20)
     private String pass;
 
-    public UserLogin(){}
+    public UserLogin() {
+    }
 
     public UserLogin(String login, String pass) {
         this.login = login;

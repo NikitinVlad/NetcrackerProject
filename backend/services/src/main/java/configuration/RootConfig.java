@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * Created by Влад on 27.03.2017.
  */
 @Configuration
-@ComponentScan(basePackages= "beans,dao,currency,user,city,fill,i18n,mark,poster,model,file")
+@ComponentScan(basePackages = "beans,dao,currency,user,city,fill,i18n,mark,poster,model,file,security")
 public class RootConfig {
 }

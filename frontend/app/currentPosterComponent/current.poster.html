@@ -6,7 +6,7 @@
         </div>
         <form enctype="multipart/form-data">
             <label class="btn btn-primary btn-file">
-                Загрузить фото <input  type="file" accept="image/jpeg" hidden (change)="selectFile($event)">
+                {{loc.cur_upload}} <input  type="file" accept="image/jpeg" hidden (change)="selectFile($event)">
             </label>
         </form>
     </div>
@@ -71,7 +71,7 @@
                     <label>Объем:</label>
                 </div>
                 <div class="input-el">
-                    <input type="number" class="dimension" maxlength="4">см.куб.
+                    <input type="number" class="dimension" oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="4">см.куб.
                 </div>
             </div>
 

@@ -9,9 +9,14 @@ import java.util.List;
  */
 public interface CityService {
     List getAllCities();
-    List getRangeCities(int from,int to,String orderField);
+
+    List getRangeCities(int from, int to, String orderField);
+
     int getCitiesSize();
+
     City findCity(long id);
+
     City findCity(String name);
+
     long createCity(City city);
 }

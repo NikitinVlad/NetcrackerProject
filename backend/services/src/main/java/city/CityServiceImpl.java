@@ -14,12 +14,13 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     @Autowired
     CityDAO cityDAO;
+
     public List getAllCities() {
         return cityDAO.getAll();
     }
 
-    public List getRangeCities(int from,int to,String orderField) {
-        return cityDAO.getRange(from,to,orderField);
+    public List getRangeCities(int from, int to, String orderField) {
+        return cityDAO.getRange(from, to, orderField);
     }
 
     public int getCitiesSize() {
@@ -27,10 +28,11 @@ public class CityServiceImpl implements CityService {
     }
 
     public City findCity(long id) {
-       return cityDAO.findByID(id);
+        return cityDAO.findByID(id);
     }
+
     public City findCity(String name) {
-        return cityDAO.findByField("name",name);
+        return cityDAO.findByField("name", name);
     }
 
     public long createCity(City city) {

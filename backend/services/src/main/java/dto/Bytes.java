@@ -5,7 +5,9 @@ package dto;
  */
 public class Bytes {
     private byte[] bytes;
-    public Bytes(){}
+
+    public Bytes() {
+    }
 
     public byte[] getBytes() {
         return bytes;

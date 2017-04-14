@@ -17,7 +17,7 @@ public class LocaleController {
     @Autowired
     SerializableResourceBundleMessageSource messageBundle;
 
-    @RequestMapping(value = "/messageBundle", produces="application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/messageBundle", produces = "application/json", method = RequestMethod.POST)
     @ResponseBody
     public Properties list(@RequestBody Lang lang) {
         System.out.println(lang.getLang());

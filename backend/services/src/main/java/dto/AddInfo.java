@@ -10,10 +10,10 @@ import java.util.List;
  * Created by Влад on 07.04.2017.
  */
 public class AddInfo {
-    private List<City> cities=new ArrayList<City>();
-    private List<Mark> marks=new ArrayList<Mark>();
+    private List<City> cities = new ArrayList<City>();
+    private List<Mark> marks = new ArrayList<Mark>();
 
-    public AddInfo(){
+    public AddInfo() {
     }
 
     public AddInfo(List<City> cities, List<Mark> marks) {

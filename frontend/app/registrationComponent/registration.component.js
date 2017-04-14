@@ -52,7 +52,7 @@ var RegistrationComponent = (function () {
         this.postsService.sendPost(user, 'createUser').subscribe(function (answer) {
             console.log(answer);
             if (answer >= 1) {
-                _this.showToast('success', _this.loc.mess_cong, _this.loc.mess_cong_body);
+                _this.showToast('success', '' + _this.loc.mes_cong, '' + _this.loc.mes_cong_body);
                 _this.router.navigate(["main"]);
             }
             else {

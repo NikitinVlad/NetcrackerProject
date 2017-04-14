@@ -1,8 +1,6 @@
 package dao;
 
-import entity.Basket;
 import entity.Mark;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MarkDAO extends BaseDAO<Mark> {
-    public MarkDAO(){
+    public MarkDAO() {
         super(Mark.class);
     }
 }

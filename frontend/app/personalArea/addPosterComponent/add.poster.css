@@ -35,6 +35,9 @@ input{
     width: 240px;
     height: 38px;
 }
+.currency{
+    display: table-cell;
+}
 .currency select{
     width: 80px;
 }
@@ -42,5 +45,14 @@ input{
     margin-top: 2%;
     margin-left: 84.7%;
     width: 9.4%;
+}
+.close{
+    position: absolute;
+    width: 30px;
+    margin-top: -1%;
+    margin-left: 61%;
+}
+.error{
+    color:red;
 }
 

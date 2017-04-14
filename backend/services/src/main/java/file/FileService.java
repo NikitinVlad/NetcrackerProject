@@ -10,6 +10,10 @@ import java.io.IOException;
  */
 public interface FileService {
     Bytes uploadFile(MultipartFile file) throws IOException;
-    byte[] getFile(String filename) throws  IOException;
-    void saveFile(MultipartFile file,String filename);
+
+    byte[] getFile(String filename) throws IOException;
+
+    void saveFile(MultipartFile file, String filename);
+
+    void deleteFile(long id);
 }

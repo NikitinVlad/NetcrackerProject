@@ -9,9 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Влад on 28.03.2017.
@@ -20,8 +18,8 @@ import java.util.List;
 public class ExchangeRatesImpl implements ExchangeRates {
     public void getCourse() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String now=dateFormat.format(new Date());
-        if(Currency.UsdBuy==0 || !now.equals(dateFormat.format(Currency.date))) {
+        String now = dateFormat.format(new Date());
+        if (Currency.UsdBuy == 0 || !now.equals(dateFormat.format(Currency.date))) {
             try {
                 System.out.println("there");
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -36,9 +34,9 @@ public class ExchangeRatesImpl implements ExchangeRates {
                 sale = (Element) usd.getElementsByTagName("sale").item(0);
                 String usdBuy = buy.getTextContent();
                 String usdSale = sale.getTextContent();
-                Currency.UsdBuy=Double.parseDouble(usdBuy);
-                Currency.UsdSale=Double.parseDouble(usdSale);
-                Currency.date=new Date();
+                Currency.UsdBuy = Double.parseDouble(usdBuy);
+                Currency.UsdSale = Double.parseDouble(usdSale);
+                Currency.date = new Date();
             } catch (Exception e) {
                 e.printStackTrace();
             }

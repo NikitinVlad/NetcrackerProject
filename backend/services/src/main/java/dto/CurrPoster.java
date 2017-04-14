@@ -23,7 +23,8 @@ public class CurrPoster {
     private String fileName;
     private User user;
 
-    public CurrPoster(){}
+    public CurrPoster() {
+    }
 
     public String getFileName() {
         return fileName;
