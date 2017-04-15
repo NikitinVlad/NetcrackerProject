@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
@@ -123,6 +124,10 @@ public abstract class BaseDAO<T extends BaseEntity> {
     public int getSize() {
         logger.info("Get size of entities");
         return getAll().size();
+    }
+
+    public List findByCriteria(DetachedCriteria detachedCriteria){
+        return detachedCriteria.getExecutableCriteria(getCurrentSession()).list();
     }
 
 

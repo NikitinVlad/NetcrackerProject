@@ -66,6 +66,9 @@ var AppComponent = (function () {
         swap_data_1.RouteTo.rout = page;
         this.router.navigate(["help"]);
     };
+    AppComponent.prototype.goCatalog = function () {
+        this.router.navigate(["catalog"]);
+    };
     AppComponent.prototype.exit = function () {
         this.localeAuth.logOut();
         this.goMainPage();

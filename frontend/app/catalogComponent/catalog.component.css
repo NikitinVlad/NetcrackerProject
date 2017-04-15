@@ -1,0 +1,153 @@
+.pagination{
+    padding-left: 1%;
+}
+.pagination a:hover{
+    cursor: pointer;
+}
+.all{
+    margin-top: -1%;
+    display: table;
+    width: 100%;
+    height: 1000px;
+    background-color: white;
+}
+h1{
+    padding-left: 2%;
+}
+.all-posters{
+    display: table-cell;
+    width: 75%;
+    height: 800px;
+}
+.sort{
+    display: table-cell;
+    width: 25%;
+    height: 800px;
+}
+.poster{
+    display: table;
+    height: 230px;
+}
+.photo-car{
+    float: left;
+    width: 200px;
+    height: 190px;
+}
+.photo-car img{
+    min-height: 190px;
+    min-width: 240px;
+    max-height: 190px;
+    max-width: 240px;
+}
+.item-price{
+   float: left;
+    width: 180px;
+    padding-top: 1%;
+    padding-left: 6%;
+}
+
+.posters-title{
+    color: #1a60ba;
+}
+.posters-title:hover{
+    cursor: pointer;
+}
+
+
+.info{
+
+   float: left;
+    margin-top: -1.5%;
+    margin-left: 5%;
+    height: 200px;
+    width: 54%;
+}
+.characteristics{
+    padding-top: 1%;
+}
+.dop-info{
+    padding-top: 3%;
+    color:rgba(0, 0, 0, 0.5);
+}
+
+.year-car{
+    color: black;
+}
+.main-price{
+    font-size: 110%;
+}
+.second-price{
+    color:rgba(0, 0, 0, 0.5);
+}
+.city-car{
+    color:rgba(0, 0, 0, 0.5);
+}
+
+.characteristics{
+    color: black;
+    font-size: 135%;
+}
+.options{
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-bottom: 2%;
+    height: 30px;
+    width: 20%;
+}
+.basket{
+    float: left;
+}
+.basket img{
+    padding-left: 2%;
+    width: 50px;
+}
+.basket img:hover{
+    cursor: pointer;
+}
+
+
+h4{
+    padding-left: 25%;
+}
+.parametrs{
+    padding-left: 12%;
+    padding-top: 1%;
+}
+.parametrs select{
+    border-radius: 3px;
+    width: 240px;
+    height: 32px;
+}
+select.selectpicker{
+    width: 50px;
+    height: 20px;
+}
+
+.parametrs select option:first-child{
+    color: darkgray;
+}
+.parametr{
+    padding-bottom: 5%;
+}
+
+.parametrs select.from-year{
+    width: 120px;
+}
+.parametrs select.to-year{
+    width: 120px;
+}
+
+.change-currency{
+    margin-left: 45%;
+}
+.change-currency:hover{
+    cursor: pointer;
+}
+.parametrs input{
+    border-radius: 3px;
+    width: 120px;
+    height: 32px;
+}
+.parametrs input.btn-primary{
+    width: 240px;
+}

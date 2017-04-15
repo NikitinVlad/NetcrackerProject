@@ -57,6 +57,17 @@ public class PosterController {
         return posterService.getRangedPosters((Integer) mas[0], (Integer) mas[1], (String) mas[2], d);
     }
 
+
+    @RequestMapping(value = "/getRangeAllPosters", produces = "application/json", method = RequestMethod.POST)
+    public List getRangeAllPosters(@RequestBody Object[] mas) throws IOException {
+        return posterService.getRangedAllPosters((Integer) mas[0], (Integer) mas[1], (String) mas[2]);
+    }
+
+    @RequestMapping(value = "/getAllPostersSize", produces = "application/json", method = RequestMethod.GET)
+    public int getAllPostersSize() {
+        return posterService.getAllPostersSize();
+    }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/getPostersSize", produces = "application/json", method = RequestMethod.POST)
     public int getPostersSize(@RequestBody long id) {

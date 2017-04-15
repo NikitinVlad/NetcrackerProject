@@ -30,6 +30,7 @@ export class LocaleAuth{
             user=Object.assign(new User("","","",""), JSON.parse(localStorage.getItem(this.localeItem)));
             return user;
         }
+        return null;
     }
     getRole():string{
         var user:User=this.getUser();

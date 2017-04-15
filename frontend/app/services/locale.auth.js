@@ -39,6 +39,7 @@ var LocaleAuth = (function () {
             user = Object.assign(new User_1.User("", "", "", ""), JSON.parse(localStorage.getItem(this.localeItem)));
             return user;
         }
+        return null;
     };
     LocaleAuth.prototype.getRole = function () {
         var user = this.getUser();

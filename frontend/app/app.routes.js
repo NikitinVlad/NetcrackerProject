@@ -10,6 +10,7 @@ var poster_component_1 = require("./personalArea/postersComponent/poster.compone
 var basket_component_1 = require("./personalArea/basketComponent/basket.component");
 var add_poster_1 = require("./personalArea/addPosterComponent/add.poster");
 var current_poster_1 = require("./currentPosterComponent/current.poster");
+var catalog_component_1 = require("./catalogComponent/catalog.component");
 exports.routes = [
     { path: "main", component: main_page_1.MainPage },
     { path: "registration", component: registration_component_1.RegistrationComponent },
@@ -26,5 +27,6 @@ exports.routes = [
     },
     { path: "help", component: help_component_1.HelpComponent },
     { path: 'poster', component: current_poster_1.CurrentPoster },
+    { path: 'catalog', component: catalog_component_1.CatalogComponent },
 ];
 //# sourceMappingURL=app.routes.js.map

@@ -12,6 +12,8 @@ import {PosterComponent} from "./personalArea/postersComponent/poster.component"
 import {BasketComponent} from "./personalArea/basketComponent/basket.component";
 import {AddPoster} from "./personalArea/addPosterComponent/add.poster";
 import {CurrentPoster} from "./currentPosterComponent/current.poster";
+import {CatalogComponent} from "./catalogComponent/catalog.component";
+
 
 
 
@@ -32,4 +34,5 @@ export const routes:Routes=[
     },
     {path:"help",component:HelpComponent},
     {path: 'poster', component: CurrentPoster },
+    {path: 'catalog', component: CatalogComponent },
 ]

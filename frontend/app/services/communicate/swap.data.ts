@@ -10,12 +10,19 @@ export class SwapData{
 class PersonalAreaServ{
     static newPoster=false;
     static optionSelected:number=4;
+    static optionCatalogSelected=1;
     static currentPosterID:number;
     setOptionSelected(num:number){
         PersonalAreaServ.optionSelected=num;
     }
     getOptionSelected():number{
         return PersonalAreaServ.optionSelected;
+    }
+    setOptionCatalogSelected(num:number){
+        PersonalAreaServ.optionCatalogSelected=num;
+    }
+    getOptionCatalogSelected():number{
+        return PersonalAreaServ.optionCatalogSelected;
     }
     getNewPoster():boolean{
         return PersonalAreaServ.newPoster;

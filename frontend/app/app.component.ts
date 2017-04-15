@@ -61,6 +61,9 @@ export class AppComponent{
         RouteTo.rout=page;
         this.router.navigate(["help"]);
     }
+    goCatalog(){
+        this.router.navigate(["catalog"]);
+    }
     exit():void{
         this.localeAuth.logOut();
         this.goMainPage();

@@ -160,6 +160,17 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @SuppressWarnings("unchecked")
+    public List getRangedAllPosters(int from, int to, String orderField) throws IOException {
+        logger.info("Get ranged all posters");
+        List<Poster> posters = posterDAO.getRange(from,to,orderField);
+        List<CurrPoster> currPosters = new ArrayList<CurrPoster>();
+        for (int i = 0; i < posters.size(); i++) {
+            currPosters.add(getCurrentPoster(posters.get(i).getId()));
+        }
+        return currPosters;
+    }
+
+    @SuppressWarnings("unchecked")
     public int getPostersSize(long idUser) {
         logger.info("Get size of posters");
         List<Poster> posters = posterDAO.getAll();
@@ -170,5 +181,10 @@ public class PosterServiceImpl implements PosterService {
             }
         }
         return i;
+    }
+
+    public int getAllPostersSize() {
+        logger.info("Get size of all posters");
+        return posterDAO.getSize();
     }
 }

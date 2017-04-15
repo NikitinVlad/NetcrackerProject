@@ -26,5 +26,9 @@ public interface PosterService {
 
     List getRangedPosters(int from, int to, String orderField, long idUser) throws IOException;
 
+    List getRangedAllPosters(int from, int to, String orderField) throws IOException;
+
     int getPostersSize(long idUser);
+
+    int getAllPostersSize();
 }
