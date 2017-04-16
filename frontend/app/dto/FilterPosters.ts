@@ -9,6 +9,7 @@ export class FilterPosters {
     public currency:string;
     public priceFrom:number;
     public priceTo:number;
+    public fuel:string;
     public dimensionFrom:string;
     public dimensionTo:string;
     public transmission:string;

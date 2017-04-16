@@ -33,6 +33,9 @@ var CatalogComponent = (function () {
         this.priceTo = [];
         this.yearFrom = [];
         this.yearTo = [];
+        this.f = false;
+        this.s = false;
+        this.t = false;
         this.currency = "USD";
         this.options = [];
         this.currentSelection = 4;
@@ -61,20 +64,121 @@ var CatalogComponent = (function () {
     CatalogComponent.prototype.filterPosters = function (flag) {
         var _this = this;
         var filter = new FilterPosters_1.FilterPosters();
-        // var mark=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
-        // if(mark.selectedIndex==0){
-        //     filter.mark="";
-        // }
-        // else{
-        //     filter.mark=mark.value;
-        // }
-        filter.orderField = 'date';
-        var city = document.getElementsByTagName("select")[8];
+        var mark = document.getElementsByTagName("select")[2];
+        if (mark.selectedIndex == 0) {
+            filter.mark = "";
+        }
+        else {
+            filter.mark = mark.value;
+        }
+        var model = document.getElementsByTagName("select")[3];
+        if (model.selectedIndex == 0) {
+            filter.model = "";
+        }
+        else {
+            filter.model = model.value;
+        }
+        var yearFrom = document.getElementsByTagName("select")[4];
+        if (yearFrom.selectedIndex == 0) {
+            filter.yearFrom = 0;
+        }
+        else {
+            filter.yearFrom = +yearFrom.value - 1;
+        }
+        var yearTo = document.getElementsByTagName("select")[5];
+        if (yearTo.selectedIndex == 0) {
+            filter.yearTo = 0;
+        }
+        else {
+            filter.yearTo = +yearTo.value + 1;
+        }
+        filter.currency = this.currency;
+        var priceFrom = document.getElementsByTagName("select")[6];
+        if (priceFrom.selectedIndex == 0) {
+            filter.priceFrom = 0;
+        }
+        else {
+            filter.priceFrom = +priceFrom.value;
+        }
+        var priceTo = document.getElementsByTagName("select")[7];
+        if (priceTo.selectedIndex == 0) {
+            filter.priceTo = 0;
+        }
+        else {
+            filter.priceTo = +priceTo.value;
+        }
+        var dimensionFrom = document.getElementsByTagName("input")[3];
+        if (dimensionFrom.value == "" && +dimensionFrom.value <= 0) {
+            filter.dimensionFrom = "";
+        }
+        else {
+            filter.dimensionFrom = dimensionFrom.value;
+        }
+        var dimensionTo = document.getElementsByTagName("input")[4];
+        if (dimensionTo.value == "" && +dimensionTo.value <= 0) {
+            filter.dimensionTo = "";
+        }
+        else {
+            filter.dimensionTo = dimensionTo.value;
+        }
+        if (filter.dimensionFrom != "" && filter.dimensionTo != "" && +filter.dimensionFrom > +filter.dimensionTo) {
+            filter.dimensionFrom = "";
+            filter.dimensionTo = "";
+        }
+        filter.fuel = "";
+        for (var i = 0; i < 3; i++) {
+            var fuel = document.getElementsByTagName("input")[i];
+            if (fuel.checked) {
+                filter.fuel = fuel.value;
+                break;
+            }
+        }
+        var trans = document.getElementsByTagName("select")[8];
+        if (trans.selectedIndex == 0) {
+            filter.transmission = "";
+        }
+        else {
+            if (trans.selectedIndex == 1) {
+                filter.transmission = "FRONT";
+            }
+            if (trans.selectedIndex == 2) {
+                filter.transmission = "REAR";
+            }
+            if (trans.selectedIndex == 3) {
+                filter.transmission = "FULL";
+            }
+        }
+        var city = document.getElementsByTagName("select")[9];
         if (city.selectedIndex == 0) {
             filter.city = "";
         }
         else {
             filter.city = city.value;
+        }
+        var sort = document.getElementsByTagName("select")[1];
+        if (sort.selectedIndex == 0) {
+            filter.orderField = "date";
+            filter.typeOrder = "DESC";
+        }
+        if (sort.selectedIndex == 1) {
+            filter.orderField = "date";
+            filter.typeOrder = "ASC";
+        }
+        if (sort.selectedIndex == 2) {
+            filter.orderField = "price";
+            filter.typeOrder = "DESC";
+        }
+        if (sort.selectedIndex == 3) {
+            filter.orderField = "price";
+            filter.typeOrder = "ASC";
+        }
+        if (sort.selectedIndex == 4) {
+            filter.orderField = "year";
+            filter.typeOrder = "ASC";
+        }
+        if (sort.selectedIndex == 5) {
+            filter.orderField = "year";
+            filter.typeOrder = "DESC";
         }
         if (flag == true) {
             this.postsService.sendPost(filter, 'getFilterPostersSize').subscribe(function (answer) {
@@ -125,6 +229,7 @@ var CatalogComponent = (function () {
                 this.yearTo.push(i);
             }
         }
+        this.filterPosters(true);
     };
     CatalogComponent.prototype.changePriceFrom = function (val) {
         if (this.currency == 'USD') {
@@ -157,10 +262,11 @@ var CatalogComponent = (function () {
                 }
             }
         }
+        this.filterPosters(true);
     };
     CatalogComponent.prototype.changeMark = function () {
         var _this = this;
-        var mark = document.getElementsByTagName("select")[1];
+        var mark = document.getElementsByTagName("select")[2];
         if (mark.selectedIndex == 0) {
             this.models = [];
         }
@@ -173,6 +279,7 @@ var CatalogComponent = (function () {
                 }
             }
         }
+        this.filterPosters(true);
     };
     CatalogComponent.prototype.setPage = function (page) {
         var _this = this;
@@ -292,6 +399,9 @@ var CatalogComponent = (function () {
                     this.priceTo.push(i);
                     i = i + 2000;
                 }
+                document.getElementsByTagName("select")[6].selectedIndex = 0;
+                document.getElementsByTagName("select")[7].selectedIndex = 0;
+                this.filterPosters(true);
             }
             return 'BLR';
         }
@@ -305,9 +415,42 @@ var CatalogComponent = (function () {
                     this.priceTo.push(i);
                     i = i + 500;
                 }
+                document.getElementsByTagName("select")[6].selectedIndex = 0;
+                document.getElementsByTagName("select")[7].selectedIndex = 0;
+                this.filterPosters(true);
             }
             return 'USD';
         }
+    };
+    CatalogComponent.prototype.radioClick = function (num) {
+        if (num == 0 && this.f == false) {
+            this.f = true;
+            this.t = false;
+            this.s = false;
+        }
+        else if (num == 0 && this.f == true) {
+            this.f = false;
+            document.getElementsByTagName("input")[num].checked = false;
+        }
+        else if (num == 1 && this.s == false) {
+            this.s = true;
+            this.f = false;
+            this.t = false;
+        }
+        else if (num == 1 && this.s == true) {
+            this.s = false;
+            document.getElementsByTagName("input")[num].checked = false;
+        }
+        else if (num == 2 && this.t == false) {
+            this.t = true;
+            this.f = false;
+            this.s = false;
+        }
+        else if (num == 2 && this.t == true) {
+            this.t = false;
+            document.getElementsByTagName("input")[num].checked = false;
+        }
+        this.filterPosters(true);
     };
     return CatalogComponent;
 }());

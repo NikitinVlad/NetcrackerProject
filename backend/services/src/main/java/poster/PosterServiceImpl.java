@@ -10,6 +10,7 @@ import dto.FilterPosters;
 import dto.NewPoster;
 import entity.*;
 import file.FileService;
+import javafx.geometry.Pos;
 import mark.MarkService;
 import model.ModelService;
 import org.apache.commons.lang3.StringUtils;
@@ -107,12 +108,12 @@ public class PosterServiceImpl implements PosterService {
         currentPoster.setCurrency(poster.getCurrency());
         exchangeRates.getCourse();
         if (poster.getCurrency().equals("USD")) {
-            currentPoster.setPriceBlr((int) (Currency.UsdSale * poster.getPrice()));
+            currentPoster.setPriceBlr((int) (Currency.UsdBuy * poster.getPrice()));
             currentPoster.setPriceUsd(poster.getPrice());
         }
         if (poster.getCurrency().equals("BLR")) {
             currentPoster.setPriceBlr(poster.getPrice());
-            currentPoster.setPriceUsd((int) (poster.getPrice() / Currency.UsdBuy));
+            currentPoster.setPriceUsd((int) (poster.getPrice() / Currency.UsdSale));
         }
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         currentPoster.setDate(StringUtils.substring(dateFormat.format(poster.getDate()), 0, 10));
@@ -194,26 +195,172 @@ public class PosterServiceImpl implements PosterService {
 
     public DetachedCriteria getQuery(FilterPosters filter){
         DetachedCriteria query = DetachedCriteria.forClass(Poster.class);
-        if(!filter.getCity().equals("")) {
+        if(!filter.getCity().equals("") ) {
             query.createAlias("city", "ct").add(Restrictions.eq("ct.name", filter.getCity()));
+        }
+        if(!filter.getModel().equals("") ) {
+            query.createAlias("model", "md").add(Restrictions.eq("md.name", filter.getModel()));
+        }
+        if(filter.getYearFrom()!=0){
+            query.add(Restrictions.gt("year",filter.getYearFrom()));
+        }
+        if(filter.getYearTo()!=0){
+            query.add(Restrictions.lt("year",filter.getYearTo()));
+        }
+        if(!filter.getFuel().equals("")){
+            query.add(Restrictions.eq("fuel",filter.getFuel()));
+        }
+        if(!filter.getTransmission().equals("")){
+            query.add(Restrictions.eq("transmision",filter.getTransmission()));
+        }
+        if(!filter.getOrderField().equals("price")) {
+            if(filter.getTypeOrder().equals("DESC")){
+                query.addOrder(Order.desc(filter.getOrderField()));
+            }
+            else {
+                query.addOrder(Order.asc(filter.getOrderField()));
+            }
         }
         return query;
     }
 
+    @SuppressWarnings("unchecked")
     public int getFilterPostersSize(FilterPosters filter) {
-        List posters=posterDAO.findByCriteria(getQuery(filter));
+        List<Poster> posters=posterDAO.findByCriteria(getQuery(filter));
+        posters=otherFilter(posters,filter);
         return posters.size();
+    }
+
+    public List otherFilter(List<Poster> posters, FilterPosters filter){
+        List<Poster> list=new ArrayList<>();
+        if(!filter.getMark().equals("")){
+            for (Poster poster:posters){
+                String mark=poster.getModel().getMark().getName();
+                if(mark.equals(filter.getMark())){
+                    list.add(poster);
+                }
+            }
+            posters.removeAll(posters);
+            posters.addAll(list);
+            list.removeAll(list);
+        }
+        if(filter.getPriceFrom()!=0){
+            exchangeRates.getCourse();
+            if(filter.getCurrency().equals("USD")){
+                for (Poster poster:posters){
+                    if(poster.getCurrency().equals("USD")){
+                        if(poster.getPrice()>=filter.getPriceFrom()){
+                            list.add(poster);
+                        }
+                    }
+                    else{
+                        double priceUSD=poster.getPrice()/Currency.UsdSale;
+                        if(priceUSD>=filter.getPriceFrom()){
+                            list.add(poster);
+                        }
+                    }
+                }
+            }
+            else {
+                for (Poster poster:posters){
+                    if(poster.getCurrency().equals("USD")){
+                        double priceBLR=poster.getPrice()*Currency.UsdBuy;
+                        if(priceBLR>=filter.getPriceFrom()){
+                            list.add(poster);
+                        }
+                    }
+                    else{
+                        if(poster.getPrice()>=filter.getPriceFrom()){
+                            list.add(poster);
+                        }
+                    }
+                }
+            }
+            posters.removeAll(posters);
+            posters.addAll(list);
+            list.removeAll(list);
+        }
+        if(filter.getPriceTo()!=0){
+            exchangeRates.getCourse();
+            if(filter.getCurrency().equals("USD")){
+                for (Poster poster:posters){
+                    if(poster.getCurrency().equals("USD")){
+                        if(poster.getPrice()<=filter.getPriceTo()){
+                            list.add(poster);
+                        }
+                    }
+                    else{
+                        double priceUSD=poster.getPrice()/Currency.UsdSale;
+                        if(priceUSD<=filter.getPriceTo()){
+                            list.add(poster);
+                        }
+                    }
+                }
+            }
+            else {
+                for (Poster poster:posters){
+                    if(poster.getCurrency().equals("USD")){
+                        double priceBLR=poster.getPrice()*Currency.UsdBuy;
+                        if(priceBLR<=filter.getPriceTo()){
+                            list.add(poster);
+                        }
+                    }
+                    else{
+                        if(poster.getPrice()<=filter.getPriceTo()){
+                            list.add(poster);
+                        }
+                    }
+                }
+            }
+            posters.removeAll(posters);
+            posters.addAll(list);
+            list.removeAll(list);
+        }
+        if(!filter.getDimensionFrom().equals("")){
+            for(Poster poster:posters){
+                if(!poster.getDimension().equals("") && poster.getDimension()!=null) {
+                    if (Integer.parseInt(poster.getDimension()) >= Integer.parseInt(filter.getDimensionFrom())) {
+                        list.add(poster);
+                    }
+                }
+            }
+            posters.removeAll(posters);
+            posters.addAll(list);
+            list.removeAll(list);
+        }
+        if(!filter.getDimensionTo().equals("")){
+            for(Poster poster:posters){
+                if(!poster.getDimension().equals("") && poster.getDimension()!=null) {
+                    if (Integer.parseInt(poster.getDimension()) <= Integer.parseInt(filter.getDimensionTo())) {
+                        list.add(poster);
+                    }
+                }
+            }
+            posters.removeAll(posters);
+            posters.addAll(list);
+            list.removeAll(list);
+        }
+        return posters;
     }
 
     @SuppressWarnings("unchecked")
     public List rangeFilterPosters(FilterPosters filter) throws IOException{
         DetachedCriteria query=getQuery(filter);
-        query.addOrder(Order.desc(filter.getOrderField()));
-        List<Poster> posters = posterDAO.rangeByCriteria(query,filter.getFrom(),filter.getTo());
+        List<Poster> posters = posterDAO.findByCriteria(query);
+        posters=otherFilter(posters,filter);
         List<CurrPoster> currPosters=new ArrayList<>();
         for(int i=0;i<posters.size();i++){
             currPosters.add(getCurrentPoster(posters.get(i).getId()));
         }
+        if(filter.getOrderField().equals("price")){
+            if(filter.getTypeOrder().equals("DESC")){
+                currPosters.sort((c1,c2)->(int) c1.getPriceUsd()-(int) c2.getPriceUsd());
+            }
+            else {
+                currPosters.sort((c1,c2)->(int) c2.getPriceUsd()-(int) c1.getPriceUsd());
+            }
+        }
+        currPosters=currPosters.subList(filter.getFrom()-1,filter.getTo());
         return currPosters;
     }
 }

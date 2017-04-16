@@ -28,6 +28,9 @@ export class CatalogComponent{
     yearFrom:number[]=[];
     yearTo:number[]=[];
     models:Model[];
+    f:boolean=false;
+    s:boolean=false;
+    t:boolean=false;
 
     currency:string="USD";
 
@@ -69,21 +72,127 @@ export class CatalogComponent{
 
     filterPosters(flag:boolean):FilterPosters{
         var filter:FilterPosters=new FilterPosters();
-        // var mark=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
-        // if(mark.selectedIndex==0){
-        //     filter.mark="";
-        // }
-        // else{
-        //     filter.mark=mark.value;
-        // }
-        filter.orderField='date';
-        var city=(document.getElementsByTagName("select")[8] as HTMLSelectElement);
+        var mark=(document.getElementsByTagName("select")[2] as HTMLSelectElement);
+        if(mark.selectedIndex==0){
+            filter.mark="";
+        }
+        else{
+            filter.mark=mark.value;
+        }
+        var model=(document.getElementsByTagName("select")[3] as HTMLSelectElement);
+        if(model.selectedIndex==0){
+            filter.model="";
+        }
+        else {
+            filter.model=model.value;
+        }
+        var yearFrom=(document.getElementsByTagName("select")[4] as HTMLSelectElement);
+        if(yearFrom.selectedIndex==0){
+            filter.yearFrom=0;
+        }
+        else {
+            filter.yearFrom=+yearFrom.value-1;
+        }
+        var yearTo=(document.getElementsByTagName("select")[5] as HTMLSelectElement);
+        if(yearTo.selectedIndex==0){
+            filter.yearTo=0;
+        }
+        else {
+            filter.yearTo=+yearTo.value+1;
+        }
+        filter.currency=this.currency;
+        var priceFrom=(document.getElementsByTagName("select")[6] as HTMLSelectElement);
+        if(priceFrom.selectedIndex==0){
+            filter.priceFrom=0;
+        }
+        else {
+            filter.priceFrom=+priceFrom.value;
+        }
+        var priceTo=(document.getElementsByTagName("select")[7] as HTMLSelectElement);
+        if(priceTo.selectedIndex==0){
+            filter.priceTo=0;
+        }
+        else {
+            filter.priceTo=+priceTo.value;
+        }
+        var dimensionFrom=(document.getElementsByTagName("input")[3] as HTMLInputElement);
+
+        if(dimensionFrom.value=="" && +dimensionFrom.value<=0){
+            filter.dimensionFrom="";
+        }
+        else {
+            filter.dimensionFrom = dimensionFrom.value;
+        }
+        var dimensionTo=(document.getElementsByTagName("input")[4] as HTMLInputElement);
+        if(dimensionTo.value=="" && +dimensionTo.value<=0){
+            filter.dimensionTo="";
+        }
+        else {
+            filter.dimensionTo=dimensionTo.value;
+        }
+        if(filter.dimensionFrom!="" && filter.dimensionTo!="" && +filter.dimensionFrom>+filter.dimensionTo){
+            filter.dimensionFrom="";
+            filter.dimensionTo="";
+        }
+        filter.fuel="";
+        for(var i=0;i<3;i++) {
+            var fuel = (document.getElementsByTagName("input")[i] as HTMLInputElement);
+            if(fuel.checked) {
+                filter.fuel = fuel.value;
+                break;
+            }
+        }
+        var trans=(document.getElementsByTagName("select")[8] as HTMLSelectElement);
+        if(trans.selectedIndex==0){
+            filter.transmission="";
+        }
+        else {
+            if(trans.selectedIndex==1){
+                filter.transmission="FRONT";
+            }
+            if(trans.selectedIndex==2){
+                filter.transmission="REAR";
+            }
+            if(trans.selectedIndex==3){
+                filter.transmission="FULL";
+            }
+        }
+        var city=(document.getElementsByTagName("select")[9] as HTMLSelectElement);
         if(city.selectedIndex==0){
             filter.city="";
         }
         else{
             filter.city=city.value;
         }
+        var sort=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
+        if(sort.selectedIndex==0){
+            filter.orderField="date";
+            filter.typeOrder="DESC";
+        }
+        if(sort.selectedIndex==1){
+            filter.orderField="date";
+            filter.typeOrder="ASC";
+        }
+        if(sort.selectedIndex==2){
+            filter.orderField="price";
+            filter.typeOrder="DESC";
+        }
+        if(sort.selectedIndex==3){
+            filter.orderField="price";
+            filter.typeOrder="ASC";
+        }
+        if(sort.selectedIndex==4){
+            filter.orderField="year";
+            filter.typeOrder="ASC";
+        }
+        if(sort.selectedIndex==5){
+            filter.orderField="year";
+            filter.typeOrder="DESC";
+        }
+
+
+
+
         if(flag==true) {
             this.postsService.sendPost(filter, 'getFilterPostersSize').subscribe(answer=> {
                 this.sizeItems = answer;
@@ -132,6 +241,7 @@ export class CatalogComponent{
                 this.yearTo.push(i);
             }
         }
+        this.filterPosters(true);
     }
 
     changePriceFrom(val:string){
@@ -165,9 +275,10 @@ export class CatalogComponent{
                 }
             }
         }
+        this.filterPosters(true);
     }
     changeMark(){
-        var mark=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
+        var mark=(document.getElementsByTagName("select")[2] as HTMLSelectElement);
         if(mark.selectedIndex==0){
             this.models=[];
         }
@@ -180,6 +291,7 @@ export class CatalogComponent{
                 }
             }
         }
+        this.filterPosters(true);
     }
 
     setPage(page: number) {
@@ -312,6 +424,9 @@ export class CatalogComponent{
                     this.priceTo.push(i);
                     i=i+2000;
                 }
+                    (document.getElementsByTagName("select")[6] as HTMLSelectElement).selectedIndex=0;
+                    (document.getElementsByTagName("select")[7] as HTMLSelectElement).selectedIndex=0;
+                this.filterPosters(true);
             }
             return 'BLR';
         }
@@ -325,9 +440,43 @@ export class CatalogComponent{
                     this.priceTo.push(i);
                     i=i+500;
                 }
+                (document.getElementsByTagName("select")[6] as HTMLSelectElement).selectedIndex=0;
+                (document.getElementsByTagName("select")[7] as HTMLSelectElement).selectedIndex=0;
+                this.filterPosters(true);
             }
+
             return 'USD';
         }
 
+    }
+    radioClick(num:number){
+        if(num==0 && this.f==false){
+            this.f=true;
+            this.t=false;
+            this.s=false;
+        }
+        else if(num==0 && this.f==true){
+            this.f=false;
+            (document.getElementsByTagName("input")[num] as HTMLInputElement).checked=false;
+        }
+        else if(num==1 && this.s==false){
+            this.s=true;
+            this.f=false;
+            this.t=false;
+        }
+        else if(num==1 && this.s==true){
+            this.s=false;
+            (document.getElementsByTagName("input")[num] as HTMLInputElement).checked=false;
+        }
+        else if(num==2 && this.t==false){
+            this.t=true;
+            this.f=false;
+            this.s=false;
+        }
+        else if(num==2 && this.t==true){
+            this.t=false;
+            (document.getElementsByTagName("input")[num] as HTMLInputElement).checked=false;
+        }
+        this.filterPosters(true);
     }
 }

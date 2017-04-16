@@ -27,6 +27,7 @@ h1{
 .poster{
     display: table;
     height: 230px;
+    overflow-y:hidden;
 }
 .photo-car{
     float: left;
@@ -88,6 +89,7 @@ h1{
     font-size: 135%;
 }
 .options{
+    float: left;
     padding-top: 1%;
     padding-left: 3%;
     padding-bottom: 2%;
@@ -107,10 +109,10 @@ h1{
 
 
 h4{
-    padding-left: 25%;
+margin-left: 20%;
 }
 .parametrs{
-    padding-left: 12%;
+   margin-left: 10%;
     padding-top: 1%;
 }
 .parametrs select{
@@ -127,6 +129,7 @@ select.selectpicker{
     color: darkgray;
 }
 .parametr{
+   padding-left: 8%;
     padding-bottom: 5%;
 }
 
@@ -138,7 +141,7 @@ select.selectpicker{
 }
 
 .change-currency{
-    margin-left: 45%;
+    margin-left: 48%;
 }
 .change-currency:hover{
     cursor: pointer;
@@ -150,4 +153,11 @@ select.selectpicker{
 }
 .parametrs input.btn-primary{
     width: 240px;
+}
+select.sort-field{
+    height: 25px;
+}
+.sorted{
+    padding-left: 70%;
+    margin-top: 1.5%;
 }

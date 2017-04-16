@@ -130,15 +130,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
         return detachedCriteria.getExecutableCriteria(getCurrentSession()).list();
     }
 
-    public  List rangeByCriteria(DetachedCriteria detachedCriteria,int from,int to){
-        return detachedCriteria.getExecutableCriteria(getCurrentSession()).setFirstResult(from-1).setMaxResults(to-from+1).list();
-    }
 
-
-    //    protected DetachedCriteria createCriteria(){
-//        return DetachedCriteria.forClass(entityClass);
-//
-//    }
     protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
