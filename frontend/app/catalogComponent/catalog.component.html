@@ -13,7 +13,7 @@
             <div class="info"><h3 class="posters-title" align="left" >{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="justify" >{{item.description}}</div>
             <div class="basket" *ngIf="item.user.id!=getAuthID() && getAuthID()!=0" (click)="putToBasket(item.id)"><img title="{{getBasketTitle(item.id)}}" src="{{getBasketImg(item.id)}}"></div>
         </div>
-        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
                 <a (click)="setPage(1)">{{loc.pers_first}}</a>
             </li>
@@ -35,33 +35,39 @@
         <h4>Параметры авто</h4>
         <div class="parametrs">
             <div class="parametr">
-                <select>
+                <select (change)="changeMark()" class="mark-all">
                     <option class="first-option">Марка автомобиля</option>
+                    <option *ngFor="let mark of addInfo.marks">{{mark.name}}</option>
                 </select>
             </div>
             <div class="parametr">
                 <select>
                     <option class="first-option">Модель</option>
+                    <option *ngFor="let model of models">{{model.name}}</option>
                 </select>
             </div>
 
             <div class="parametr">
                 Год выпуска<br/>
-                <select class="from-year">
+                <select class="from-year" (change)="changeYearFrom($event.target.value)">
                     <option class="first-option">С</option>
+                    <option *ngFor="let from of yearFrom">{{from}}</option>
                 </select>
                 <select class="to-year">
                     <option class="first-option">По</option>
+                    <option *ngFor="let to of yearTo">{{to}}</option>
                 </select>
             </div>
 
             <div class="parametr">
                 Цена,{{currency}} <a class="change-currency" (click)="changeCurrency(true)">{{changeCurrency(false)}}</a><br/>
-                <select class="from-year">
+                <select class="from-year" (change)="changePriceFrom($event.target.value)">
                     <option class="first-option">От</option>
+                    <option *ngFor="let from of priceFrom">{{from}}</option>
                 </select>
                 <select class="to-year">
                     <option class="first-option">До</option>
+                    <option *ngFor="let to of priceTo">{{to}}</option>
                 </select>
             </div>
             <div class="parametr">
@@ -92,11 +98,12 @@
                 Местонахождение <br/>
                 <select>
                     <option class="first-option">Выберите город</option>
+                    <option *ngFor="let city of addInfo.cities">{{city.name}}</option>
                 </select>
             </div>
 
             <div class="parametr">
-                <input type="button" class="btn btn-primary" value="Найти">
+                <input type="button" class="btn btn-primary" value="Найти" (click)="filterPosters(true)">
             </div>
         </div>
     </div>

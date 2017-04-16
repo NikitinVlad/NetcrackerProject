@@ -9,6 +9,9 @@ import {Router} from "@angular/router";
 import {LocaleAuth} from "../services/locale.auth";
 import {Mark} from "../Entities/Mark";
 import {City} from "../Entities/City";
+import {AddInfo} from "../dto/AddInfo";
+import {Model} from "../Entities/Model";
+import {FilterPosters} from "../dto/FilterPosters";
 
 
 @Component({
@@ -19,8 +22,12 @@ import {City} from "../Entities/City";
 })
 
 export class CatalogComponent{
-    marks:Mark[];
-    cities:City[];
+    addInfo:AddInfo=new AddInfo();
+    priceFrom:number[]=[];
+    priceTo:number[]=[];
+    yearFrom:number[]=[];
+    yearTo:number[]=[];
+    models:Model[];
 
     currency:string="USD";
 
@@ -29,10 +36,9 @@ export class CatalogComponent{
 
 
     private sizeItems: number;
-    private currentItems: any[];
     options: number[] = [];
 
-    currentSelection: number;
+    currentSelection: number=4;
 
     pager: any = {};
 
@@ -42,7 +48,6 @@ export class CatalogComponent{
     constructor(private auth:LocaleAuth,private postsService: PostsService, private pagerService: PagerService,private sanitizer: DomSanitizer,private swapData:SwapData, private  router:Router){
         RouteTo.rout='catalog';
         this.loc=CurLang.locale;
-        this.currentSelection=this.swapData.personalAreaServ.getOptionCatalogSelected();
         this.postsService.getData('getAllPostersSize').subscribe(answer=> {
             this.sizeItems = answer;
             if (this.sizeItems > 20) {
@@ -62,8 +67,119 @@ export class CatalogComponent{
         this.fillParametrs()
     }
 
+    filterPosters(flag:boolean):FilterPosters{
+        var filter:FilterPosters=new FilterPosters();
+        // var mark=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
+        // if(mark.selectedIndex==0){
+        //     filter.mark="";
+        // }
+        // else{
+        //     filter.mark=mark.value;
+        // }
+        filter.orderField='date';
+        var city=(document.getElementsByTagName("select")[8] as HTMLSelectElement);
+        if(city.selectedIndex==0){
+            filter.city="";
+        }
+        else{
+            filter.city=city.value;
+        }
+        if(flag==true) {
+            this.postsService.sendPost(filter, 'getFilterPostersSize').subscribe(answer=> {
+                this.sizeItems = answer;
+                this.options = [];
+                this.currentSelection=4;
+                if (this.sizeItems > 20) {
+                    for (var i = 0; i < 20; i++) {
+                        this.options.push(i + 1);
+                    }
+                }
+                else {
+                    for (var i = 0; i < this.sizeItems; i++) {
+                        this.options.push(i + 1);
+                    }
+                    if (this.sizeItems < this.currentSelection)
+                        this.currentSelection = this.sizeItems;
+                }
+                this.setPage(1);
+            });
+        }
+        return filter;
+    }
     fillParametrs(){
+        this.postsService.getData('getAddInfo').subscribe(ans=>{
+            this.addInfo=ans;
+        });
+        for(var i=500;i<=60000;) {
+            this.priceFrom.push(i);
+            this.priceTo.push(i);
+            i=i+500;
+        }
+        for(var i=1990;i<=2017;i++){
+            this.yearFrom.push(i);
+            this.yearTo.push(i);
+        }
+    }
+    changeYearFrom(val:string){
+        var value=+val;
+        this.yearTo=[];
+        for(var i=1990;i<=2017;i++){
+            this.yearTo.push(i);
+        }
+        if(value>=1990){
+            this.yearTo=[];
+            for(var i=value;i<=2017;i++){
+                this.yearTo.push(i);
+            }
+        }
+    }
 
+    changePriceFrom(val:string){
+        if(this.currency=='USD') {
+            this.priceTo=[];
+            for (var i = 500; i <= 60000;) {
+                this.priceTo.push(i);
+                i = i + 500;
+            }
+            var value = +val;
+            if (value >= 500) {
+                this.priceTo = [];
+                for (var i = value; i <= 60000;) {
+                    this.priceTo.push(i);
+                    i = i + 500;
+                }
+            }
+        }
+        else{
+            this.priceTo=[];
+            for (var i = 2000; i <= 200000;) {
+                this.priceTo.push(i);
+                i = i + 2000;
+            }
+            var value = +val;
+            if (value >= 2000) {
+                this.priceTo = [];
+                for (var i = value; i <= 200000;) {
+                    this.priceTo.push(i);
+                    i = i + 2000;
+                }
+            }
+        }
+    }
+    changeMark(){
+        var mark=(document.getElementsByTagName("select")[1] as HTMLSelectElement);
+        if(mark.selectedIndex==0){
+            this.models=[];
+        }
+        else {
+            for(var i=0;i<this.addInfo.marks.length;i++){
+                if(mark.value==this.addInfo.marks[i].name){
+                    this.postsService.sendPost(this.addInfo.marks[i].id, 'getModels').subscribe(data=> {
+                        this.models = data;
+                    });
+                }
+            }
+        }
     }
 
     setPage(page: number) {
@@ -71,9 +187,15 @@ export class CatalogComponent{
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
+
+
+
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date'];
-        this.postsService.sendPost(this.currentItems, 'getRangeAllPosters').subscribe(answer=> {
+
+        var filter=this.filterPosters(false);
+        filter.from=this.pager.startIndex + 1;
+        filter.to=this.pager.endIndex+1;
+        this.postsService.sendPost(filter, 'rangeFilterPosters').subscribe(answer=> {
             this.pagedItems = answer;
             for(var i=0;i<this.pagedItems.length;i++){
                 var mas=[this.pagedItems[i].id,false];
@@ -84,8 +206,8 @@ export class CatalogComponent{
 
     setOption(sel: string) {
         var num = +sel;
-        this.swapData.personalAreaServ.setOptionCatalogSelected(num);
-        this.router.navigate(["help"]);
+        this.currentSelection=num;
+        this.setPage(1);
     }
     getTransmission(tr: string): string {
         if (tr == "FRONT") {
@@ -181,16 +303,31 @@ export class CatalogComponent{
 
     changeCurrency(flag:boolean):any{
         if(this.currency=='USD'){
-            if(flag==true)
-            this.currency='BLR';
+            if(flag==true) {
+                this.priceTo=[];
+                this.priceFrom=[];
+                this.currency = 'BLR';
+                for(var i=2000;i<=200000;) {
+                    this.priceFrom.push(i);
+                    this.priceTo.push(i);
+                    i=i+2000;
+                }
+            }
             return 'BLR';
         }
         else {
-            if(flag==true)
-            this.currency='USD';
+            if(flag==true) {
+                this.priceTo=[];
+                this.priceFrom=[];
+                this.currency = 'USD';
+                for(var i=500;i<=60000;) {
+                    this.priceFrom.push(i);
+                    this.priceTo.push(i);
+                    i=i+500;
+                }
+            }
             return 'USD';
         }
+
     }
-
-
 }

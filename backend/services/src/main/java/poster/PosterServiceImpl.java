@@ -6,6 +6,7 @@ import currency.ExchangeRates;
 import dao.PosterDAO;
 import dto.AddInfo;
 import dto.CurrPoster;
+import dto.FilterPosters;
 import dto.NewPoster;
 import entity.*;
 import file.FileService;
@@ -13,6 +14,9 @@ import mark.MarkService;
 import model.ModelService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import user.UserService;
@@ -186,5 +190,30 @@ public class PosterServiceImpl implements PosterService {
     public int getAllPostersSize() {
         logger.info("Get size of all posters");
         return posterDAO.getSize();
+    }
+
+    public DetachedCriteria getQuery(FilterPosters filter){
+        DetachedCriteria query = DetachedCriteria.forClass(Poster.class);
+        if(!filter.getCity().equals("")) {
+            query.createAlias("city", "ct").add(Restrictions.eq("ct.name", filter.getCity()));
+        }
+        return query;
+    }
+
+    public int getFilterPostersSize(FilterPosters filter) {
+        List posters=posterDAO.findByCriteria(getQuery(filter));
+        return posters.size();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List rangeFilterPosters(FilterPosters filter) throws IOException{
+        DetachedCriteria query=getQuery(filter);
+        query.addOrder(Order.desc(filter.getOrderField()));
+        List<Poster> posters = posterDAO.rangeByCriteria(query,filter.getFrom(),filter.getTo());
+        List<CurrPoster> currPosters=new ArrayList<>();
+        for(int i=0;i<posters.size();i++){
+            currPosters.add(getCurrentPoster(posters.get(i).getId()));
+        }
+        return currPosters;
     }
 }

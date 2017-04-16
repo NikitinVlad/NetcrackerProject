@@ -30,11 +30,10 @@ var PosterComponent = (function () {
         this.auth = auth;
         this.sanitizer = sanitizer;
         this.options = [];
+        this.currentSelection = 4;
         this.pager = {};
         swap_data_1.RouteTo.rout = 'personal/posters';
         this.loc = CurLang_1.CurLang.locale;
-        console.log("constructor");
-        this.currentSelection = this.swapData.personalAreaServ.getOptionSelected();
         this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(function (answer) {
             console.log(answer);
             _this.sizeItems = answer;
@@ -69,8 +68,8 @@ var PosterComponent = (function () {
     };
     PosterComponent.prototype.setOption = function (sel) {
         var num = +sel;
-        this.swapData.personalAreaServ.setOptionSelected(num);
-        this.router.navigate(["help"]);
+        this.currentSelection = num;
+        this.setPage(1);
     };
     PosterComponent.prototype.getTransmission = function (tr) {
         if (tr == "FRONT") {

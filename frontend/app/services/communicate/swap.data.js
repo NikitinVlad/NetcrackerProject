@@ -23,18 +23,6 @@ exports.SwapData = SwapData;
 var PersonalAreaServ = (function () {
     function PersonalAreaServ() {
     }
-    PersonalAreaServ.prototype.setOptionSelected = function (num) {
-        PersonalAreaServ.optionSelected = num;
-    };
-    PersonalAreaServ.prototype.getOptionSelected = function () {
-        return PersonalAreaServ.optionSelected;
-    };
-    PersonalAreaServ.prototype.setOptionCatalogSelected = function (num) {
-        PersonalAreaServ.optionCatalogSelected = num;
-    };
-    PersonalAreaServ.prototype.getOptionCatalogSelected = function () {
-        return PersonalAreaServ.optionCatalogSelected;
-    };
     PersonalAreaServ.prototype.getNewPoster = function () {
         return PersonalAreaServ.newPoster;
     };
@@ -50,8 +38,6 @@ var PersonalAreaServ = (function () {
     return PersonalAreaServ;
 }());
 PersonalAreaServ.newPoster = false;
-PersonalAreaServ.optionSelected = 4;
-PersonalAreaServ.optionCatalogSelected = 1;
 var RouteTo = (function () {
     function RouteTo() {
     }

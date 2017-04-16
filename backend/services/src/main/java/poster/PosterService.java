@@ -2,6 +2,7 @@ package poster;
 
 import dto.AddInfo;
 import dto.CurrPoster;
+import dto.FilterPosters;
 import dto.NewPoster;
 import entity.Poster;
 
@@ -31,4 +32,8 @@ public interface PosterService {
     int getPostersSize(long idUser);
 
     int getAllPostersSize();
+
+    int getFilterPostersSize(FilterPosters filter);
+
+    List rangeFilterPosters(FilterPosters filter) throws IOException;
 }

@@ -19,7 +19,7 @@
             </div>
             </div>
         <!-- pager -->
-        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
                 <a (click)="setPage(1)">{{loc.pers_first}}</a>
             </li>

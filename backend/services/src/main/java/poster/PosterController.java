@@ -3,6 +3,7 @@ package poster;
 import currency.ExchangeRates;
 import dto.AddInfo;
 import dto.CurrPoster;
+import dto.FilterPosters;
 import dto.NewPoster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -66,6 +67,17 @@ public class PosterController {
     @RequestMapping(value = "/getAllPostersSize", produces = "application/json", method = RequestMethod.GET)
     public int getAllPostersSize() {
         return posterService.getAllPostersSize();
+    }
+
+    @RequestMapping(value = "/getFilterPostersSize", produces = "application/json", method = RequestMethod.POST)
+    public int getFilterPostersSize(@RequestBody FilterPosters filter) throws IOException {
+        return posterService.getFilterPostersSize(filter);
+    }
+
+
+    @RequestMapping(value = "/rangeFilterPosters", produces = "application/json", method = RequestMethod.POST)
+    public List rangeFilterPosters(@RequestBody FilterPosters filter) throws IOException {
+        return posterService.rangeFilterPosters(filter);
     }
 
     @PreAuthorize("isAuthenticated()")

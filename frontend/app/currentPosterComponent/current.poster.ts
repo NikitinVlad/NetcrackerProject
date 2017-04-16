@@ -32,6 +32,8 @@ export class CurrentPoster{
            this.updatePoster();
         });
     }
+
+
     updatePoster(){
 
         if(this.poster.currency=='USD') {

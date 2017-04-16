@@ -30,7 +30,7 @@ export class PosterComponent {
     private currentItems: any[];
     options: number[] = [];
 
-    currentSelection: number;
+    currentSelection: number=4;
 
     pager: any = {};
 
@@ -40,8 +40,6 @@ export class PosterComponent {
     constructor(private postsService: PostsService, private pagerService: PagerService, private router: Router, private swapData: SwapData, private auth: LocaleAuth, private sanitizer: DomSanitizer) {
         RouteTo.rout = 'personal/posters';
         this.loc = CurLang.locale;
-        console.log("constructor");
-        this.currentSelection = this.swapData.personalAreaServ.getOptionSelected()
         this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(answer=> {
             console.log(answer);
             this.sizeItems = answer;
@@ -78,8 +76,8 @@ export class PosterComponent {
 
     setOption(sel: string) {
         var num = +sel;
-        this.swapData.personalAreaServ.setOptionSelected(num);
-        this.router.navigate(["help"]);
+        this.currentSelection=num;
+        this.setPage(1);
     }
 
     getTransmission(tr: string): string {
