@@ -1,11 +1,10 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,8 @@ public class Basket extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "basket")
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL}, mappedBy = "basket")
+    @Fetch(FetchMode.SELECT)
     private List<Poster> posters = new ArrayList<Poster>();
 
     public Basket() {

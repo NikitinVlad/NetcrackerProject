@@ -3,6 +3,7 @@ package user;
 import dao.UserDAO;
 import dto.UserLogin;
 import entity.Basket;
+import entity.Poster;
 import entity.User;
 import enums.Role;
 import org.apache.log4j.Logger;
@@ -76,4 +77,5 @@ public class UserServiceImpl implements UserService {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getLogin(), userLogin.getPass()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
     }
+
 }

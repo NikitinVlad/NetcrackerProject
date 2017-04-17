@@ -1,9 +1,6 @@
 package poster;
 
-import dto.AddInfo;
-import dto.CurrPoster;
-import dto.FilterPosters;
-import dto.NewPoster;
+import dto.*;
 import entity.Poster;
 
 import java.io.IOException;
@@ -36,4 +33,13 @@ public interface PosterService {
     int getFilterPostersSize(FilterPosters filter);
 
     List rangeFilterPosters(FilterPosters filter) throws IOException;
+
+    long addPosterToBasket(CurrPoster currPoster);
+
+    List getRangePostersInBasket(int from,int to,long userID) throws IOException;
+
+    BasketCount getBasketSize(long idUser) throws IOException;
+
+    long deleteFromBasket(long posterID);
+
 }

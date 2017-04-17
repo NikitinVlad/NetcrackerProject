@@ -22,6 +22,7 @@ export class AppComponent{
     toast : Toast;
     constructor(private postsService:PostsService,private router:Router,private toasterService:ToasterService,private localeAuth:LocaleAuth,private swapData:SwapData){
         this.loc=CurLang.locale;
+
         this.toasterconfig = new ToasterConfig({positionClass: 'center',limit:1});
         this.toast={
             type: 'warning',

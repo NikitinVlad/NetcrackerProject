@@ -27,6 +27,7 @@ export class CurrentPoster{
     fileData:FormData;
     poster:CurrPoster=new CurrPoster();
     curUser:boolean=false;
+    isAdmin=false;
     constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer, private auth:LocaleAuth){
         this.loc=CurLang.locale;
         RouteTo.rout='poster';
@@ -35,13 +36,16 @@ export class CurrentPoster{
             if(this.poster.user.id==this.auth.getUser().id){
                 this.curUser=true;
             }
+            if(this.auth.getUser().role=="ROLE_ADMIN"){
+                this.isAdmin=true;
+            }
            this.updatePoster();
         });
     }
 
 
     updatePoster(){
-        if(this.curUser) {
+        if(this.curUser || this.isAdmin) {
             if (this.poster.currency == 'USD') {
                 (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex = 0;
                 (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceUsd;
@@ -50,8 +54,6 @@ export class CurrentPoster{
                 (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex = 1;
                 (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceBlr;
             }
-
-            console.log("there2");
             if (this.poster.transmission == "FRONT") {
                 (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex = 0;
             }

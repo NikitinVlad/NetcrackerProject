@@ -32,6 +32,7 @@ var CurrentPoster = (function () {
         this.imgPath = '../../images/noimage.png';
         this.poster = new CurrPoster_1.CurrPoster();
         this.curUser = false;
+        this.isAdmin = false;
         this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'poster';
         this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
@@ -39,11 +40,14 @@ var CurrentPoster = (function () {
             if (_this.poster.user.id == _this.auth.getUser().id) {
                 _this.curUser = true;
             }
+            if (_this.auth.getUser().role == "ROLE_ADMIN") {
+                _this.isAdmin = true;
+            }
             _this.updatePoster();
         });
     }
     CurrentPoster.prototype.updatePoster = function () {
-        if (this.curUser) {
+        if (this.curUser || this.isAdmin) {
             if (this.poster.currency == 'USD') {
                 document.getElementsByClassName('cur')[0].selectedIndex = 0;
                 document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceUsd;
@@ -52,7 +56,6 @@ var CurrentPoster = (function () {
                 document.getElementsByClassName('cur')[0].selectedIndex = 1;
                 document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceBlr;
             }
-            console.log("there2");
             if (this.poster.transmission == "FRONT") {
                 document.getElementsByClassName('transmission')[0].selectedIndex = 0;
             }

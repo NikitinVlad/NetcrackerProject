@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var CurrPoster_1 = require("../dto/CurrPoster");
 var posts_service_1 = require("../services/posts.service");
 var pager_service_1 = require("../services/pager.service");
 var platform_browser_1 = require("@angular/platform-browser");
@@ -43,7 +44,10 @@ var CatalogComponent = (function () {
         this.pagedItemsBasket = [];
         swap_data_1.RouteTo.rout = 'catalog';
         this.loc = CurLang_1.CurLang.locale;
-        this.postsService.getData('getAllPostersSize').subscribe(function (answer) {
+        var filter = new FilterPosters_1.FilterPosters();
+        filter.orderField = "date";
+        filter.typeOrder = "DESC";
+        this.postsService.sendPost(filter, 'getFilterPostersSize').subscribe(function (answer) {
             _this.sizeItems = answer;
             if (_this.sizeItems > 20) {
                 for (var i = 0; i < 20; i++) {
@@ -297,6 +301,9 @@ var CatalogComponent = (function () {
                 var mas = [_this.pagedItems[i].id, false];
                 _this.pagedItemsBasket.push(mas);
             }
+            if (_this.pagedItems.length == 0 && page != 1) {
+                _this.setPage(page - 1);
+            }
         });
     };
     CatalogComponent.prototype.setOption = function (sel) {
@@ -337,7 +344,9 @@ var CatalogComponent = (function () {
         }
         return this.sanitizer.bypassSecurityTrustUrl(imgPath);
     };
-    CatalogComponent.prototype.putToBasket = function (idPoster) {
+    CatalogComponent.prototype.putToBasket = function (curPoster) {
+        var _this = this;
+        var idPoster = curPoster.id;
         var inBasket = false;
         for (var i = 0; i < this.pagedItemsBasket.length; i++) {
             if (idPoster == this.pagedItemsBasket[i][0]) {
@@ -350,7 +359,26 @@ var CatalogComponent = (function () {
             }
         }
         if (!inBasket) {
-            console.log("Добавляем в корзину");
+            var poster = new CurrPoster_1.CurrPoster();
+            poster.id = curPoster.id;
+            poster.user.id = this.auth.getUser().id;
+            this.postsService.sendPost(poster, 'addToBasket').subscribe(function (ans) {
+                _this.postsService.sendPost(_this.filterPosters(false), 'getFilterPostersSize').subscribe(function (answer) {
+                    _this.sizeItems = answer;
+                    if (_this.sizeItems > 20) {
+                        for (var i = 0; i < 20; i++) {
+                            _this.options.push(i + 1);
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < _this.sizeItems; i++) {
+                            _this.options.push(i + 1);
+                        }
+                        if (_this.sizeItems < _this.currentSelection)
+                            _this.currentSelection = _this.sizeItems;
+                    }
+                });
+            });
         }
     };
     CatalogComponent.prototype.getBasketImg = function (idPoster) {

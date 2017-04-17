@@ -4,10 +4,7 @@ import city.CityService;
 import currency.Currency;
 import currency.ExchangeRates;
 import dao.PosterDAO;
-import dto.AddInfo;
-import dto.CurrPoster;
-import dto.FilterPosters;
-import dto.NewPoster;
+import dto.*;
 import entity.*;
 import file.FileService;
 import javafx.geometry.Pos;
@@ -194,7 +191,9 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public DetachedCriteria getQuery(FilterPosters filter){
+        logger.info("Get DetachedCriteria query when filter posters");
         DetachedCriteria query = DetachedCriteria.forClass(Poster.class);
+        query.add(Restrictions.isNull("basket"));
         if(!filter.getCity().equals("") ) {
             query.createAlias("city", "ct").add(Restrictions.eq("ct.name", filter.getCity()));
         }
@@ -226,12 +225,14 @@ public class PosterServiceImpl implements PosterService {
 
     @SuppressWarnings("unchecked")
     public int getFilterPostersSize(FilterPosters filter) {
+        logger.info("Get size of filter posters");
         List<Poster> posters=posterDAO.findByCriteria(getQuery(filter));
         posters=otherFilter(posters,filter);
         return posters.size();
     }
 
     public List otherFilter(List<Poster> posters, FilterPosters filter){
+        logger.info("Other filter of posters");
         List<Poster> list=new ArrayList<>();
         if(!filter.getMark().equals("")){
             for (Poster poster:posters){
@@ -345,6 +346,7 @@ public class PosterServiceImpl implements PosterService {
 
     @SuppressWarnings("unchecked")
     public List rangeFilterPosters(FilterPosters filter) throws IOException{
+        logger.info("Get range of filter posters");
         DetachedCriteria query=getQuery(filter);
         List<Poster> posters = posterDAO.findByCriteria(query);
         posters=otherFilter(posters,filter);
@@ -362,5 +364,45 @@ public class PosterServiceImpl implements PosterService {
         }
         currPosters=currPosters.subList(filter.getFrom()-1,filter.getTo());
         return currPosters;
+    }
+
+    public long addPosterToBasket(CurrPoster currPoster) {
+        logger.info("Add poster to basket");
+        User user=userService.findUser(currPoster.getUser().getId());
+        Poster poster=posterDAO.findByID(currPoster.getId());
+        poster.setBasket(user.getBasket());
+        posterDAO.update(poster);
+        return poster.getBasket().getId();
+    }
+
+    public List getRangePostersInBasket(int from,int to,long userID) throws IOException{
+        logger.info("Get ranged posters in basket");
+        List<Poster> posters=userService.findUser(userID).getBasket().getPosters();
+        posters=posters.subList(from-1,to);
+        List<CurrPoster> currPosters=new ArrayList<>();
+        for(Poster poster:posters){
+            currPosters.add(getCurrentPoster(poster.getId()));
+        }
+        return currPosters;
+    }
+
+    public BasketCount getBasketSize(long idUser) throws IOException{
+        logger.info("Get basket size");
+        List<Poster>  posters =userService.findUser(idUser).getBasket().getPosters();
+        BasketCount basketCount=new BasketCount();
+        basketCount.setSize(posters.size());
+        for(Poster poster:posters){
+            CurrPoster currPoster=getCurrentPoster(poster.getId());
+            basketCount.setPriceUsd(basketCount.getPriceUsd()+currPoster.getPriceUsd());
+            basketCount.setPriceBlr(basketCount.getPriceBlr()+currPoster.getPriceBlr());
+        }
+        return basketCount;
+    }
+
+    public long deleteFromBasket(long posterID){
+        Poster poster=posterDAO.findByID(posterID);
+        poster.setBasket(null);
+        posterDAO.update(poster);
+        return poster.getId();
     }
 }

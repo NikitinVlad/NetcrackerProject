@@ -1,10 +1,7 @@
 package poster;
 
 import currency.ExchangeRates;
-import dto.AddInfo;
-import dto.CurrPoster;
-import dto.FilterPosters;
-import dto.NewPoster;
+import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
@@ -74,7 +71,6 @@ public class PosterController {
         return posterService.getFilterPostersSize(filter);
     }
 
-
     @RequestMapping(value = "/rangeFilterPosters", produces = "application/json", method = RequestMethod.POST)
     public List rangeFilterPosters(@RequestBody FilterPosters filter) throws IOException {
         return posterService.rangeFilterPosters(filter);
@@ -90,5 +86,31 @@ public class PosterController {
     @RequestMapping(value = "/deletePoster", produces = "application/json", method = RequestMethod.POST)
     public long deletePoster(@RequestBody long id){
         return posterService.deletePoster(id);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "addToBasket", produces = "application/json", method = RequestMethod.POST)
+    public long addPosterToBasket(@RequestBody CurrPoster currPoster){
+        return posterService.addPosterToBasket(currPoster);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "getRangePostersBasket", produces = "application/json", method = RequestMethod.POST)
+    public List getRangePostersInBasket(@RequestBody Object[] mas) throws IOException{
+        int idUser = (Integer) mas[2];
+        long d = idUser;
+        return posterService.getRangePostersInBasket((Integer) mas[0], (Integer) mas[1], d);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/getBasketSize", produces = "application/json", method = RequestMethod.POST)
+    public BasketCount getBasketSize(@RequestBody long id) throws IOException{
+        return posterService.getBasketSize(id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deleteFromBasket", produces = "application/json", method = RequestMethod.POST)
+    public long deleteFromBasket(@RequestBody long posterID){
+        return posterService.deleteFromBasket(posterID);
     }
 }

@@ -12,6 +12,7 @@ import {City} from "../Entities/City";
 import {AddInfo} from "../dto/AddInfo";
 import {Model} from "../Entities/Model";
 import {FilterPosters} from "../dto/FilterPosters";
+import {User} from "../Entities/User";
 
 
 @Component({
@@ -51,7 +52,10 @@ export class CatalogComponent{
     constructor(private auth:LocaleAuth,private postsService: PostsService, private pagerService: PagerService,private sanitizer: DomSanitizer,private swapData:SwapData, private  router:Router){
         RouteTo.rout='catalog';
         this.loc=CurLang.locale;
-        this.postsService.getData('getAllPostersSize').subscribe(answer=> {
+        var filter:FilterPosters=new FilterPosters();
+        filter.orderField="date";
+        filter.typeOrder="DESC";
+        this.postsService.sendPost(filter,'getFilterPostersSize').subscribe(answer=> {
             this.sizeItems = answer;
             if (this.sizeItems > 20) {
                 for (var i = 0; i < 20; i++) {
@@ -313,6 +317,9 @@ export class CatalogComponent{
                 var mas=[this.pagedItems[i].id,false];
                 this.pagedItemsBasket.push(mas);
             }
+            if(this.pagedItems.length==0 && page!=1){
+                this.setPage(page-1);
+            }
         });
     }
 
@@ -356,7 +363,8 @@ export class CatalogComponent{
         return this.sanitizer.bypassSecurityTrustUrl(imgPath);
     }
 
-    putToBasket(idPoster:number){
+    putToBasket(curPoster:CurrPoster){
+        var idPoster=curPoster.id;
         var inBasket=false;
         for(var i=0;i<this.pagedItemsBasket.length;i++){
             if(idPoster==this.pagedItemsBasket[i][0]){
@@ -369,7 +377,27 @@ export class CatalogComponent{
             }
         }
         if(!inBasket){
-            console.log("Добавляем в корзину");
+            var poster:CurrPoster=new CurrPoster();
+            poster.id=curPoster.id;
+            poster.user.id=this.auth.getUser().id;
+
+            this.postsService.sendPost(poster,'addToBasket').subscribe(ans=>{
+                this.postsService.sendPost(this.filterPosters(false), 'getFilterPostersSize').subscribe(answer=> {
+                    this.sizeItems = answer;
+                    if (this.sizeItems > 20) {
+                        for (var i = 0; i < 20; i++) {
+                            this.options.push(i + 1);
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < this.sizeItems; i++) {
+                            this.options.push(i + 1);
+                        }
+                        if (this.sizeItems < this.currentSelection)
+                            this.currentSelection = this.sizeItems;
+                    }
+                });
+            });
         }
     }
 

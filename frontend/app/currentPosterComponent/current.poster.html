@@ -4,7 +4,7 @@
         <div class="image">
             <img [src]="getImg">
         </div>
-        <form enctype="multipart/form-data" *ngIf="curUser">
+        <form enctype="multipart/form-data" *ngIf="curUser || isAdmin">
             <label class="btn btn-primary btn-file">
                 {{loc.cur_upload}} <input  type="file" accept="image/jpeg" hidden (change)="selectFile($event)">
             </label>
@@ -49,7 +49,7 @@
                         <option>Задний</option>
                         <option>Полный</option>
                     </select>
-                    <label *ngIf="!curUser" class="trans"></label>
+                    <label *ngIf="!curUser && !isAdmin" class="trans"></label>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                         <option>Дизель</option>
                         <option>Гибридный</option>
                     </select>
-                    <label *ngIf="!curUser" class="fuel2"></label>
+                    <label *ngIf="!curUser && !isAdmin" class="fuel2"></label>
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                     <label>Объем:</label>
                 </div>
                 <div class="input-el">
-                    <label *ngIf="!curUser">{{poster.dimension}} </label>
+                    <label *ngIf="!curUser && !isAdmin">{{poster.dimension}} </label>
                     <input   type="number" class="dimension"  oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="4">см.куб.
                 </div>
             </div>
@@ -88,11 +88,10 @@
                         <option>$</option>
                         <option>бел.руб.</option>
                     </select>
-                    <label *ngIf="!curUser">{{poster.priceUsd}} $</label><br/>
-                    <label *ngIf="!curUser">{{poster.priceBlr}} бел.руб.</label>
+                    <label *ngIf="!curUser && !isAdmin">{{poster.priceUsd}} $</label><br/>
+                    <label *ngIf="!curUser && !isAdmin">{{poster.priceBlr}} бел.руб.</label>
                 </div>
             </div>
-
             <div class="item-info">
                 <div class="label-to">
                     <label>Город:</label>
@@ -101,14 +100,13 @@
                     <label>{{poster.city}}</label>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="area">
-        <textarea *ngIf="curUser" cols="90" rows="8" placeholder="Текст объявления">{{poster.description}}</textarea>
-        <p *ngIf="!curUser" class="descript">{{poster.description}}</p>
+        <textarea *ngIf="curUser || isAdmin" cols="90" rows="8" placeholder="Текст объявления">{{poster.description}}</textarea>
+        <p *ngIf="!curUser && !isAdmin" class="descript">{{poster.description}}</p>
     </div>
     <img src="../../images/close.png" class="myclose" (click)="exit()">
-    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}}</label> <label *ngIf="curUser"> пользователем {{poster.user.login}}</label></div>
-        <div class="submit-form"><button *ngIf="curUser" type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
+    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}}</label> <label *ngIf="curUser || isAdmin"> пользователем {{poster.user.login}}</label></div>
+        <div class="submit-form"><button *ngIf="curUser || isAdmin" type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
 </div>
