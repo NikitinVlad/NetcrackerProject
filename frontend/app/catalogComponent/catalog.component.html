@@ -21,7 +21,7 @@
         <div class="container poster well" *ngFor="let item of pagedItems">
             <div class="photo-car"><img [src]="getImg(item.file)"></div>
             <div class="item-price"><p class="year-car" align="left">{{item.year}}<p class="main-price" align="left"><b>{{item.priceBlr}} р</b><p class="second-price" align="left">{{item.priceUsd}} $<p class="city-car" align="left">{{item.city}}</div>
-            <div class="info"><h3 class="posters-title" align="left" >{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="justify" >{{item.description}}</div>
+            <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="justify" >{{item.description}}</div>
             <div class="basket" *ngIf="item.user.id!=getAuthID() && getAuthID()!=0" (click)="putToBasket(item.id)"><img title="{{getBasketTitle(item.id)}}" src="{{getBasketImg(item.id)}}"></div>
         </div>
         <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">

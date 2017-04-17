@@ -479,4 +479,10 @@ export class CatalogComponent{
         }
         this.filterPosters(true);
     }
+
+    goPoster(id:number){
+        this.swapData.personalAreaServ.setCurrentPosterID(id);
+        RouteTo.routBeforeCurPoster="catalog";
+        this.router.navigate(["poster"]);
+    }
 }

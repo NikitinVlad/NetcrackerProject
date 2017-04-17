@@ -27,5 +27,6 @@ class PersonalAreaServ{
 
 export class RouteTo{
     static rout:string;
+    static routBeforeCurPoster:string;
 }
 

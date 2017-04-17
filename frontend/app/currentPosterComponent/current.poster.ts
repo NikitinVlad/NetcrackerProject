@@ -9,6 +9,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {Bytes} from "../dto/Bytes";
 import {CurrPoster} from "../dto/CurrPoster";
 import {CurLang} from "../Entities/CurLang";
+import {User} from "../Entities/User";
+import {LocaleAuth} from "../services/locale.auth";
 
 
 @Component({
@@ -24,49 +26,82 @@ export class CurrentPoster{
     imgPath:any='../../images/noimage.png';
     fileData:FormData;
     poster:CurrPoster=new CurrPoster();
-    constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer){
+    curUser:boolean=false;
+    constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer, private auth:LocaleAuth){
         this.loc=CurLang.locale;
         RouteTo.rout='poster';
         this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(),'getCurrentPoster').subscribe(answer=>{
             this.poster=answer;
+            if(this.poster.user.id==this.auth.getUser().id){
+                this.curUser=true;
+            }
            this.updatePoster();
         });
     }
 
 
     updatePoster(){
+        if(this.curUser) {
+            if (this.poster.currency == 'USD') {
+                (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex = 0;
+                (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceUsd;
+            }
+            else {
+                (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex = 1;
+                (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceBlr;
+            }
 
-        if(this.poster.currency=='USD') {
-            (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex=0;
-            (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceUsd;
+            console.log("there2");
+            if (this.poster.transmission == "FRONT") {
+                (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex = 0;
+            }
+            else if (this.poster.transmission == "REAR") {
+                (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex = 1;
+            }
+            else {
+                (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex = 2;
+            }
+
+            if (this.poster.fuel == "PETROL") {
+                (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex = 0;
+            }
+            else if (this.poster.fuel == "DIESEL") {
+                (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex = 1;
+            }
+            else {
+                (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex = 2;
+            }
+
+            (document.getElementsByClassName('dimension')[0] as HTMLInputElement).value = this.poster.dimension;
         }
-        else {
-            (document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex=1;
-            (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).value = '' + this.poster.priceBlr;
+        else{
+            (document.getElementsByClassName('cur')[0] as HTMLSelectElement).className="invisible";
+            (document.getElementsByClassName("cur-input")[0] as HTMLInputElement).className="invisible";
+            (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).className="invisible";
+            (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).className="invisible";
+            (document.getElementsByClassName('dimension')[0] as HTMLInputElement).className="invisible";
+            var trans=(document.getElementsByClassName("trans")[0] as HTMLLabelElement);
+            if(this.poster.transmission=="FRONT"){
+                trans.innerHTML="Передний";
+            }
+            else if(this.poster.transmission=="REAR"){
+                trans.innerHTML="Задний";
+            }
+            else if(this.poster.transmission=="FULL"){
+                trans.innerHTML="Полный";
+            }
+            var fuel=(document.getElementsByClassName("fuel2")[0] as HTMLLabelElement);
+            if(this.poster.fuel=="PETROL"){
+                fuel.innerHTML="Бензин";
+            }
+            else if(this.poster.fuel=="DIESEL"){
+                fuel.innerHTML="Дизель";
+            }
+            else if(this.poster.fuel=="HYBRID"){
+                fuel.innerHTML="Гибридный";
+            }
         }
 
-        if(this.poster.transmission=="FRONT"){
-            (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex=0;
-        }
-        else if(this.poster.transmission=="REAR"){
-            (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex=1;
-        }
-        else {
-            (document.getElementsByClassName('transmission')[0] as HTMLSelectElement).selectedIndex=2;
-        }
-
-
-        if(this.poster.fuel=="PETROL"){
-            (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex=0;
-        }
-        else if(this.poster.fuel=="DIESEL"){
-            (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex=1;
-        }
-        else {
-            (document.getElementsByClassName('fuel')[0] as HTMLSelectElement).selectedIndex=2;
-        }
-
-        (document.getElementsByClassName('dimension')[0] as HTMLInputElement).value=this.poster.dimension;
 
         if(this.poster.file!=null) {
             this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
@@ -124,10 +159,8 @@ export class CurrentPoster{
             this.exit();
         });
     }
-
     exit(){
-        RouteTo.rout="personal/posters";
-        this.router.navigate(["help"]);
+        this.router.navigate([RouteTo.routBeforeCurPoster]);
     }
 
     changeCurrency(val:any){

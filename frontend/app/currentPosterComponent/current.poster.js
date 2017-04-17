@@ -19,51 +19,87 @@ var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var CurrPoster_1 = require("../dto/CurrPoster");
 var CurLang_1 = require("../Entities/CurLang");
+var locale_auth_1 = require("../services/locale.auth");
 var CurrentPoster = (function () {
-    function CurrentPoster(swapData, postsService, router, sanitizer) {
+    function CurrentPoster(swapData, postsService, router, sanitizer, auth) {
         var _this = this;
         this.swapData = swapData;
         this.postsService = postsService;
         this.router = router;
         this.sanitizer = sanitizer;
+        this.auth = auth;
         this.newImage = false;
         this.imgPath = '../../images/noimage.png';
         this.poster = new CurrPoster_1.CurrPoster();
+        this.curUser = false;
         this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'poster';
         this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
             _this.poster = answer;
+            if (_this.poster.user.id == _this.auth.getUser().id) {
+                _this.curUser = true;
+            }
             _this.updatePoster();
         });
     }
     CurrentPoster.prototype.updatePoster = function () {
-        if (this.poster.currency == 'USD') {
-            document.getElementsByClassName('cur')[0].selectedIndex = 0;
-            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceUsd;
+        if (this.curUser) {
+            if (this.poster.currency == 'USD') {
+                document.getElementsByClassName('cur')[0].selectedIndex = 0;
+                document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceUsd;
+            }
+            else {
+                document.getElementsByClassName('cur')[0].selectedIndex = 1;
+                document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceBlr;
+            }
+            console.log("there2");
+            if (this.poster.transmission == "FRONT") {
+                document.getElementsByClassName('transmission')[0].selectedIndex = 0;
+            }
+            else if (this.poster.transmission == "REAR") {
+                document.getElementsByClassName('transmission')[0].selectedIndex = 1;
+            }
+            else {
+                document.getElementsByClassName('transmission')[0].selectedIndex = 2;
+            }
+            if (this.poster.fuel == "PETROL") {
+                document.getElementsByClassName('fuel')[0].selectedIndex = 0;
+            }
+            else if (this.poster.fuel == "DIESEL") {
+                document.getElementsByClassName('fuel')[0].selectedIndex = 1;
+            }
+            else {
+                document.getElementsByClassName('fuel')[0].selectedIndex = 2;
+            }
+            document.getElementsByClassName('dimension')[0].value = this.poster.dimension;
         }
         else {
-            document.getElementsByClassName('cur')[0].selectedIndex = 1;
-            document.getElementsByClassName("cur-input")[0].value = '' + this.poster.priceBlr;
+            document.getElementsByClassName('cur')[0].className = "invisible";
+            document.getElementsByClassName("cur-input")[0].className = "invisible";
+            document.getElementsByClassName('transmission')[0].className = "invisible";
+            document.getElementsByClassName('fuel')[0].className = "invisible";
+            document.getElementsByClassName('dimension')[0].className = "invisible";
+            var trans = document.getElementsByClassName("trans")[0];
+            if (this.poster.transmission == "FRONT") {
+                trans.innerHTML = "Передний";
+            }
+            else if (this.poster.transmission == "REAR") {
+                trans.innerHTML = "Задний";
+            }
+            else if (this.poster.transmission == "FULL") {
+                trans.innerHTML = "Полный";
+            }
+            var fuel = document.getElementsByClassName("fuel2")[0];
+            if (this.poster.fuel == "PETROL") {
+                fuel.innerHTML = "Бензин";
+            }
+            else if (this.poster.fuel == "DIESEL") {
+                fuel.innerHTML = "Дизель";
+            }
+            else if (this.poster.fuel == "HYBRID") {
+                fuel.innerHTML = "Гибридный";
+            }
         }
-        if (this.poster.transmission == "FRONT") {
-            document.getElementsByClassName('transmission')[0].selectedIndex = 0;
-        }
-        else if (this.poster.transmission == "REAR") {
-            document.getElementsByClassName('transmission')[0].selectedIndex = 1;
-        }
-        else {
-            document.getElementsByClassName('transmission')[0].selectedIndex = 2;
-        }
-        if (this.poster.fuel == "PETROL") {
-            document.getElementsByClassName('fuel')[0].selectedIndex = 0;
-        }
-        else if (this.poster.fuel == "DIESEL") {
-            document.getElementsByClassName('fuel')[0].selectedIndex = 1;
-        }
-        else {
-            document.getElementsByClassName('fuel')[0].selectedIndex = 2;
-        }
-        document.getElementsByClassName('dimension')[0].value = this.poster.dimension;
         if (this.poster.file != null) {
             this.imgPath = 'data:image/jpg;base64,' + this.poster.file;
         }
@@ -115,8 +151,7 @@ var CurrentPoster = (function () {
         });
     };
     CurrentPoster.prototype.exit = function () {
-        swap_data_1.RouteTo.rout = "personal/posters";
-        this.router.navigate(["help"]);
+        this.router.navigate([swap_data_1.RouteTo.routBeforeCurPoster]);
     };
     CurrentPoster.prototype.changeCurrency = function (val) {
         if (val == "$") {
@@ -153,7 +188,7 @@ CurrentPoster = __decorate([
         templateUrl: "current.poster.html",
         styleUrls: ["current.poster.css"]
     }),
-    __metadata("design:paramtypes", [swap_data_1.SwapData, posts_service_1.PostsService, router_1.Router, platform_browser_1.DomSanitizer])
+    __metadata("design:paramtypes", [swap_data_1.SwapData, posts_service_1.PostsService, router_1.Router, platform_browser_1.DomSanitizer, locale_auth_1.LocaleAuth])
 ], CurrentPoster);
 exports.CurrentPoster = CurrentPoster;
 //# sourceMappingURL=current.poster.js.map

@@ -452,6 +452,11 @@ var CatalogComponent = (function () {
         }
         this.filterPosters(true);
     };
+    CatalogComponent.prototype.goPoster = function (id) {
+        this.swapData.personalAreaServ.setCurrentPosterID(id);
+        swap_data_1.RouteTo.routBeforeCurPoster = "catalog";
+        this.router.navigate(["poster"]);
+    };
     return CatalogComponent;
 }());
 CatalogComponent = __decorate([

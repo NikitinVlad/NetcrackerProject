@@ -106,8 +106,8 @@ var PosterComponent = (function () {
     };
     PosterComponent.prototype.goPoster = function (id) {
         this.swapData.personalAreaServ.setCurrentPosterID(id);
-        swap_data_1.RouteTo.rout = "poster";
-        this.router.navigate(["help"]);
+        swap_data_1.RouteTo.routBeforeCurPoster = "personal/posters";
+        this.router.navigate(["poster"]);
     };
     PosterComponent.prototype.deletePoster = function (item) {
         var _this = this;

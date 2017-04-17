@@ -117,8 +117,8 @@ export class PosterComponent {
 
     goPoster(id:number){
         this.swapData.personalAreaServ.setCurrentPosterID(id);
-        RouteTo.rout="poster";
-        this.router.navigate(["help"]);
+        RouteTo.routBeforeCurPoster="personal/posters";
+        this.router.navigate(["poster"]);
     }
 
     deletePoster(item:CurrPoster){
