@@ -93,6 +93,7 @@ export class AddPoster{
             else {
                 this.swapData.personalAreaServ.setCurrentPosterID(answer);
                 this.swapData.personalAreaServ.setNewPoster(false);
+                RouteTo.routBeforeCurPoster='personal/posters';
                 this.router.navigate(['poster']);
             }
         });

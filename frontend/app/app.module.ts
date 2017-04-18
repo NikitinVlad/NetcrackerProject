@@ -29,6 +29,7 @@ import {CatalogComponent} from "./catalogComponent/catalog.component";
 
 
 
+
 export function startupServiceFactory(startupService: StartupService): Function {
     return () => startupService.load();
 }

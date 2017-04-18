@@ -1,0 +1,41 @@
+.form-control{
+    width: 600px;
+}
+.has-error{
+    width: 60%;
+}
+.alert{
+    width: 600px;
+}
+.label-field{
+
+}
+form{
+    margin-top: 2%;
+    margin-left: 20%;
+}
+.btn-success{
+    margin-left: 70.3%;
+}
+
+.edit{
+    width: 20px;
+}
+.edit:hover{
+    cursor: pointer;
+}
+.container{
+    margin-left: 3%;
+    width: 900px;
+    height: 470px;
+    overflow: auto;
+}
+.error{
+    color: red;
+}
+.success{
+    color: green;
+}
+.success img{
+    width: 20px;
+}

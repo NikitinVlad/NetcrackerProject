@@ -113,4 +113,10 @@ public class PosterController {
     public long deleteFromBasket(@RequestBody long posterID){
         return posterService.deleteFromBasket(posterID);
     }
+
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/buyCars", produces = "application/json", method = RequestMethod.POST)
+    public long buyCars(@RequestBody long userID){
+        return posterService.buyCars(userID);
+    }
 }

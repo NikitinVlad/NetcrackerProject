@@ -93,6 +93,7 @@ var AddPoster = (function () {
             else {
                 _this.swapData.personalAreaServ.setCurrentPosterID(answer);
                 _this.swapData.personalAreaServ.setNewPoster(false);
+                swap_data_1.RouteTo.routBeforeCurPoster = 'personal/posters';
                 _this.router.navigate(['poster']);
             }
         });

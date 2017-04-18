@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {User} from "../../Entities/User";
 /**
  * Created by Влад on 02.04.2017.
  */
@@ -28,5 +29,9 @@ class PersonalAreaServ{
 export class RouteTo{
     static rout:string;
     static routBeforeCurPoster:string;
+}
+
+export class PersonalUser{
+    static user:User;
 }
 

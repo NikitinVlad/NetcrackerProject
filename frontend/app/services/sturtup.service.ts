@@ -10,6 +10,8 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import {CurLang} from "../Entities/CurLang";
 import {Lang} from "../dto/Lang";
+import {User} from "../Entities/User";
+import {PersonalUser} from "./communicate/swap.data";
 
 @Injectable()
 export class StartupService {
@@ -22,6 +24,12 @@ export class StartupService {
         let bodyString = JSON.stringify(new Lang(CurLang.lang).lang);
         let headers      = new  Headers({'Content-Type': 'application/json' });
         let options       = new RequestOptions({ headers: headers});
+
+        if(localStorage.getItem('currentUser')){
+            var user: User;
+            user=Object.assign(new User("","","",""), JSON.parse(localStorage.getItem('currentUser')));
+            PersonalUser.user=user;
+        }
 
         return this.http.post('http://localhost:8080/messageBundle', bodyString, options)
             .map((res:Response) => res.json())

@@ -49,12 +49,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findUser(String login) {
-        logger.info("find user by field");
+        logger.info("Find user by field");
         return userDAO.findByField("login", login);
     }
 
     public long updateUser(User user) {
-        return userDAO.update(user);
+        logger.info("Update user");
+        User us=userDAO.findByID(user.getId());
+        us.setName(user.getName());
+        us.setPass(user.getPass());
+        us.setEmail(user.getEmail());
+        return userDAO.update(us);
     }
 
     public User checkUser(String login, String pass) {

@@ -1,10 +1,17 @@
+<div class="mes" *ngIf="modal">
+</div>
+<div class="text" *ngIf="modal">
+    <h2 class="header">Поздравяем!</h2>
+    <p class="contains">Вы успешно приобрели авто на сумму {{priceInModal}}$</p>
+    <input type="button" class="btn btn-default" value="OK" (click)="closeModal()">
+</div>
 <div class="container body">
     <div class="text-center">
-        <h1 class="title">Корзина</h1><br/><br/>
+        <h1 *ngIf="sizeItems>0" class="title">Корзина</h1><h1 *ngIf="sizeItems==0" class="title">Ваша корзина пуста</h1><br/><br/>
         <div class="info-posters" *ngIf="sizeItems>0">
             Товаров в корзине: <b>{{basketCount.size}} </b> на сумму <b>{{basketCount.priceUsd}}$({{basketCount.priceBlr}} бел.руб.)</b>
         </div>
-        <div class="options">
+        <div class="options" *ngIf="sizeItems>0">
             <label>{{loc.pers_show}}</label>
             <select class="selectpicker" (change)="setOption($event.target.value)">
                 <option *ngFor="let num of options" class="option" [selected]="num===currentSelection">{{num}}</option>
@@ -21,6 +28,7 @@
                 <div class="delete" (click)="deletePoster(item)">Убрать</div>
             </div>
         </div>
+        <input *ngIf="sizeItems>0"  type="button" class="btn btn-primary" value="Купить все" (click)="buyAll()">
         <!-- pager -->
         <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
@@ -39,5 +47,6 @@
                 <a (click)="setPage(pager.totalPages)">{{loc.pers_last}}</a>
             </li>
         </ul>
+
     </div>
 </div>

@@ -42,4 +42,5 @@ public interface PosterService {
 
     long deleteFromBasket(long posterID);
 
+    long buyCars(long idUser);
 }

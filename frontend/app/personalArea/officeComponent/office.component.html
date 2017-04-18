@@ -1,3 +1,41 @@
-<div class="container">
+<div class="container" >
     <h1>Личные данные</h1>
+    <form [formGroup]="complexForm" class="form" (ngSubmit)="submitForm(complexForm.value)">
+        <div class="form-group row first" [ngClass]="{'has-error':!complexForm.controls['name'].valid && complexForm.controls['name'].touched}">
+            <label for="input-name">{{loc.auth_name}}</label>
+            <img class="edit" src="../../../images/edit.png" (click)="edit(0)">
+            <div>
+                <input (blur)="blur(0)" class="form-control" type="text"  id="input-name" [formControl]="complexForm.controls['name']" disabled>
+                           </div>
+        </div>
+
+        <div class="form-group row">
+        <label for="input-login">{{loc.auth_login}}</label>
+        <div>
+        <input class="form-control" type="text"  id="input-login"  disabled>
+        </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error':!complexForm.controls['pass'].valid && complexForm.controls['pass'].touched}">
+        <label for="input-pass">{{loc.auth_pass}}</label>
+            <img class="edit" src="../../../images/edit.png" (click)="edit(2)">
+        <div>
+        <input (blur)="blur(2)" class="form-control" type="text"  id="input-pass"  [formControl]="complexForm.controls['pass']" disabled>
+        <div *ngIf="complexForm.controls['pass'].hasError('minlength') && complexForm.controls['pass'].touched" class="alert alert-danger">{{loc.err_pass_min}}</div>
+        <div *ngIf="complexForm.controls['pass'].hasError('maxlength') && complexForm.controls['pass'].touched" class="alert alert-danger">{{loc.err_pass_max}}</div>
+        </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+        <label for="input-email">{{loc.auth_email}}</label>
+            <img class="edit" src="../../../images/edit.png" (click)="edit(3)">
+        <div>
+        <input (blur)="blur(3)" class="form-control" type="email"  id="input-email"  [formControl]="complexForm.controls['email']" disabled>
+        <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_min}}</div>
+        <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_max}}</div>
+        <div *ngIf="complexForm.controls['email'].hasError('pattern') && complexForm.controls['email'].touched" class="alert alert-danger">{{loc.err_email_incorrect}}</div>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!complexForm.valid">Сохранить</button>
+        <div *ngIf="!valid" class="error">Некорректный ввод</div>
+        <div *ngIf="success" class="success">Изменения успешно сохранены<img src="../../../images/success.png"></div>
+    </form>
 </div>

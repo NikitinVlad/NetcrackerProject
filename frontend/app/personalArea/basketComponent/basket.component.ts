@@ -2,7 +2,7 @@
  * Created by Влад on 02.04.2017.
  */
 import {Component} from "@angular/core";
-import {SwapData, RouteTo} from "../../services/communicate/swap.data";
+import {SwapData, RouteTo, PersonalUser} from "../../services/communicate/swap.data";
 import {CurrPoster} from "../../dto/CurrPoster";
 import {PostsService} from "../../services/posts.service";
 import {PagerService} from "../../services/pager.service";
@@ -15,12 +15,15 @@ import {BasketCount} from "../../dto/BasketCount";
     moduleId:module.id,
     selector:"basket",
     templateUrl:"basket.component.html",
-    styleUrls:["basket.component.css"]
+    styleUrls:["basket.component.css","modal.window.css"]
 })
 
 export class BasketComponent{
     curPage:number;
     loc: any;
+    modal:boolean=false;
+
+    priceInModal:number;
 
 
     private sizeItems: number;
@@ -142,6 +145,36 @@ export class BasketComponent{
                 }
                 this.setPage(this.curPage);
             });
+        });
+    }
+    closeModal(){
+        this.modal=false;
+    }
+    buyAll(){
+
+        this.postsService.sendPost(this.auth.getUser().id,'buyCars').subscribe(answer=>{
+            if(answer==this.auth.getUser().id){
+                this.modal=true;
+                this.priceInModal=this.basketCount.priceUsd;
+                this.postsService.sendPost(this.auth.getUser().id, 'getBasketSize').subscribe(answer=> {
+                    this.basketCount=answer;
+                    this.options=[];
+                    this.sizeItems = this.basketCount.size;
+                    if (this.sizeItems > 20) {
+                        for (var i = 0; i < 20; i++) {
+                            this.options.push(i + 1);
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < this.sizeItems; i++) {
+                            this.options.push(i + 1);
+                        }
+                        if (this.sizeItems < this.currentSelection)
+                            this.currentSelection = this.sizeItems;
+                    }
+                    this.setPage(this.curPage);
+                });
+            }
         });
     }
 }

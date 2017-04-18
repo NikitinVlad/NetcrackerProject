@@ -162,6 +162,8 @@ export class CurrentPoster{
         });
     }
     exit(){
+        console.log('there');
+        console.log(RouteTo.routBeforeCurPoster);
         this.router.navigate([RouteTo.routBeforeCurPoster]);
     }
 

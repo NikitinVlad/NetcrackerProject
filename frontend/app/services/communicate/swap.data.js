@@ -44,4 +44,10 @@ var RouteTo = (function () {
     return RouteTo;
 }());
 exports.RouteTo = RouteTo;
+var PersonalUser = (function () {
+    function PersonalUser() {
+    }
+    return PersonalUser;
+}());
+exports.PersonalUser = PersonalUser;
 //# sourceMappingURL=swap.data.js.map

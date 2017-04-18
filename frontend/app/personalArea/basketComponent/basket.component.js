@@ -30,6 +30,7 @@ var BasketComponent = (function () {
         this.swapData = swapData;
         this.auth = auth;
         this.sanitizer = sanitizer;
+        this.modal = false;
         this.options = [];
         this.currentSelection = 4;
         this.pager = {};
@@ -136,6 +137,36 @@ var BasketComponent = (function () {
             });
         });
     };
+    BasketComponent.prototype.closeModal = function () {
+        this.modal = false;
+    };
+    BasketComponent.prototype.buyAll = function () {
+        var _this = this;
+        this.postsService.sendPost(this.auth.getUser().id, 'buyCars').subscribe(function (answer) {
+            if (answer == _this.auth.getUser().id) {
+                _this.modal = true;
+                _this.priceInModal = _this.basketCount.priceUsd;
+                _this.postsService.sendPost(_this.auth.getUser().id, 'getBasketSize').subscribe(function (answer) {
+                    _this.basketCount = answer;
+                    _this.options = [];
+                    _this.sizeItems = _this.basketCount.size;
+                    if (_this.sizeItems > 20) {
+                        for (var i = 0; i < 20; i++) {
+                            _this.options.push(i + 1);
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < _this.sizeItems; i++) {
+                            _this.options.push(i + 1);
+                        }
+                        if (_this.sizeItems < _this.currentSelection)
+                            _this.currentSelection = _this.sizeItems;
+                    }
+                    _this.setPage(_this.curPage);
+                });
+            }
+        });
+    };
     return BasketComponent;
 }());
 BasketComponent = __decorate([
@@ -143,7 +174,7 @@ BasketComponent = __decorate([
         moduleId: module.id,
         selector: "basket",
         templateUrl: "basket.component.html",
-        styleUrls: ["basket.component.css"]
+        styleUrls: ["basket.component.css", "modal.window.css"]
     }),
     __metadata("design:paramtypes", [posts_service_1.PostsService, pager_service_1.PagerService, router_1.Router, swap_data_1.SwapData, locale_auth_1.LocaleAuth, platform_browser_1.DomSanitizer])
 ], BasketComponent);

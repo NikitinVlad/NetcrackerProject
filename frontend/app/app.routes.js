@@ -27,6 +27,6 @@ exports.routes = [
     },
     { path: "help", component: help_component_1.HelpComponent },
     { path: 'poster', component: current_poster_1.CurrentPoster },
-    { path: 'catalog', component: catalog_component_1.CatalogComponent },
+    { path: 'catalog', component: catalog_component_1.CatalogComponent }
 ];
 //# sourceMappingURL=app.routes.js.map

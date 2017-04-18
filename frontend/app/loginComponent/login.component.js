@@ -41,7 +41,7 @@ var LoginComponent = (function () {
                 _this.myerror = false;
                 var user = answer;
                 _this.localeAuth.logIn(user);
-                console.log(user);
+                swap_data_1.PersonalUser.user = user;
                 _this.router.navigate(["main"]);
             }
             else {

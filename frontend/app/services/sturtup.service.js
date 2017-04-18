@@ -19,6 +19,8 @@ require("rxjs/add/operator/toPromise");
 require("rxjs/add/operator/catch");
 var CurLang_1 = require("../Entities/CurLang");
 var Lang_1 = require("../dto/Lang");
+var User_1 = require("../Entities/User");
+var swap_data_1 = require("./communicate/swap.data");
 var StartupService = (function () {
     function StartupService(http) {
         this.http = http;
@@ -27,6 +29,11 @@ var StartupService = (function () {
         var bodyString = JSON.stringify(new Lang_1.Lang(CurLang_1.CurLang.lang).lang);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
+        if (localStorage.getItem('currentUser')) {
+            var user;
+            user = Object.assign(new User_1.User("", "", "", ""), JSON.parse(localStorage.getItem('currentUser')));
+            swap_data_1.PersonalUser.user = user;
+        }
         return this.http.post('http://localhost:8080/messageBundle', bodyString, options)
             .map(function (res) { return res.json(); })
             .toPromise()

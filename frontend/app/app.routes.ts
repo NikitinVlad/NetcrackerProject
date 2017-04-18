@@ -18,6 +18,7 @@ import {CatalogComponent} from "./catalogComponent/catalog.component";
 
 
 
+
 export const routes:Routes=[
     {path:"main",component:MainPage},
     {path:"registration",component:RegistrationComponent},
@@ -34,5 +35,5 @@ export const routes:Routes=[
     },
     {path:"help",component:HelpComponent},
     {path: 'poster', component: CurrentPoster },
-    {path: 'catalog', component: CatalogComponent },
+    {path: 'catalog', component: CatalogComponent }
 ]

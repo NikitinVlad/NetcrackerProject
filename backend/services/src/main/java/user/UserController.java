@@ -32,23 +32,26 @@ public class UserController {
         return list;
     }
 
-    @RequestMapping(value = "/findUserByID", produces = "application/json", method = RequestMethod.GET)
-    public @ResponseBody User findUserByID(Long id) {
+    @RequestMapping(value = "/findUserByID", produces = "application/json", method = RequestMethod.POST)
+    public @ResponseBody User findUserByID(@RequestBody Long id) {
         return userService.findUser(id);
     }
 
-    @RequestMapping(value = "/findUserByLogin", produces = "application/json", method = RequestMethod.GET)
-    public @ResponseBody User findUserByLogin(String login) {
+    @RequestMapping(value = "/findUserByLogin", produces = "application/json", method = RequestMethod.POST)
+    public @ResponseBody User findUserByLogin(@RequestBody String login) {
         return userService.findUser(login);
     }
 
-    @RequestMapping(value = "/updateUser", produces = "application/json", method = RequestMethod.GET)
-    public long updateUser(User user) {
+    @RequestMapping(value = "/updateUser", produces = "application/json", method = RequestMethod.POST)
+    public long updateUser(@RequestBody @Valid User user,Errors errors) {
+        if(errors.hasErrors()){
+            return 0L;
+        }
         return userService.updateUser(user);
     }
 
     @RequestMapping(value = "/deleteUser", produces = "application/json", method = RequestMethod.GET)
-    public long deleteUser(Long id) {
+    public long deleteUser(@RequestBody Long id) {
         return userService.deleteUser(id);
     }
 

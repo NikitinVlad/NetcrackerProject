@@ -154,6 +154,8 @@ var CurrentPoster = (function () {
         });
     };
     CurrentPoster.prototype.exit = function () {
+        console.log('there');
+        console.log(swap_data_1.RouteTo.routBeforeCurPoster);
         this.router.navigate([swap_data_1.RouteTo.routBeforeCurPoster]);
     };
     CurrentPoster.prototype.changeCurrency = function (val) {

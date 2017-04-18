@@ -147,6 +147,8 @@ public class PosterServiceImpl implements PosterService {
         if(poster.getFile().getFilename()!=null){
             fileService.deleteFile(id);
         }
+        poster.setBasket(null);
+        posterDAO.update(poster);
         return posterDAO.delete(id);
     }
 
@@ -400,9 +402,21 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public long deleteFromBasket(long posterID){
+        logger.info("Delete from basket");
         Poster poster=posterDAO.findByID(posterID);
         poster.setBasket(null);
         posterDAO.update(poster);
         return poster.getId();
+    }
+
+
+    public long buyCars(long idUser) {
+        logger.info("Buy cars");
+        Basket basket=userService.findUser(idUser).getBasket();
+        List<Poster> posters=basket.getPosters();
+        for(Poster poster:posters){
+            deletePoster(poster.getId());
+        }
+        return idUser;
     }
 }

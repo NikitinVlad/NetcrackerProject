@@ -8,7 +8,7 @@ import {User} from "../Entities/User";
 import {LocaleAuth} from "../services/locale.auth";
 import {Router} from "@angular/router";
 import {UserLogin} from "../dto/UserLogin";
-import {RouteTo} from "../services/communicate/swap.data";
+import {RouteTo, PersonalUser} from "../services/communicate/swap.data";
 import {CurLang} from "../Entities/CurLang";
 @Component({
     moduleId:module.id,
@@ -35,7 +35,8 @@ export class LoginComponent{
                 this.myerror=false;
                 var user: User = answer;
                 this.localeAuth.logIn(user);
-                console.log(user);
+                PersonalUser.user=user;
+
                 this.router.navigate(["main"]);
             }
             else {
