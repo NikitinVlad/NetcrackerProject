@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>Все пользователи</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of pagedItems">
+            <td><a (click)="goCurrentUser(user)">{{user.login}}</a></td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td><a (click)="deleteUser(user)">Удалить</a></td>
+        </tr>
+        </tbody>
+        </table>
+
+    <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(1)">{{loc.pers_first}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(pager.currentPage - 1)"><<</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+            <a (click)="setPage(page)">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.currentPage + 1)">>></a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.totalPages)">{{loc.pers_last}}</a>
+        </li>
+    </ul>
+</div>

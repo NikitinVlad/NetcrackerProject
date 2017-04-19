@@ -1,0 +1,9 @@
+<div class="container office well">
+    <ul class="breadcrumb">
+        <li [routerLink]="['users-control']" routerLinkActive="active" ><a >Управление пользователями</a></li>
+        <li [routerLink]="['models-control']" routerLinkActive="active"><a>Управление моделями</a></li>
+    </ul>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

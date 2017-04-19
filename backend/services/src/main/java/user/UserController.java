@@ -7,6 +7,7 @@ package user;
 import dto.UserLogin;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +51,8 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @RequestMapping(value = "/deleteUser", produces = "application/json", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/deleteUser", produces = "application/json", method = RequestMethod.POST)
     public long deleteUser(@RequestBody Long id) {
         return userService.deleteUser(id);
     }
@@ -63,5 +65,13 @@ public class UserController {
         return userService.checkUser(user.getLogin(), user.getPass());
     }
 
+    @RequestMapping(value = "/getUsersSize", produces = "application/json", method = RequestMethod.GET)
+    public int getUsersSize() {
+        return userService.getUsersSize();
+    }
 
+    @RequestMapping(value = "/getRangeUsers", produces = "application/json", method = RequestMethod.POST)
+    public List getRangeUsers(@RequestBody Object[] mas) {
+        return userService.getRangeUsers((Integer)mas[0],(Integer) mas[1]);
+    }
 }

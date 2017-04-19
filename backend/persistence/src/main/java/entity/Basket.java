@@ -17,7 +17,7 @@ public class Basket extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL}, mappedBy = "basket")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "basket")
     @Fetch(FetchMode.SELECT)
     private List<Poster> posters = new ArrayList<Poster>();
 

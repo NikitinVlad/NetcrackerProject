@@ -13,6 +13,9 @@ import {BasketComponent} from "./personalArea/basketComponent/basket.component";
 import {AddPoster} from "./personalArea/addPosterComponent/add.poster";
 import {CurrentPoster} from "./currentPosterComponent/current.poster";
 import {CatalogComponent} from "./catalogComponent/catalog.component";
+import {AdminComponent} from "./adminComponent/admin.component";
+import {UserControl} from "./adminComponent/userControl/user.control";
+import {ModelControl} from "./adminComponent/modelControl/model.control";
 
 
 
@@ -35,5 +38,13 @@ export const routes:Routes=[
     },
     {path:"help",component:HelpComponent},
     {path: 'poster', component: CurrentPoster },
-    {path: 'catalog', component: CatalogComponent }
+    {path: 'catalog', component: CatalogComponent },
+    {path: 'catalog', component: CatalogComponent },
+    {path: 'administration', component: AdminComponent ,
+        children:[
+            {path:'',redirectTo:'users-control',pathMatch:'full'},
+            {path: 'users-control', component: UserControl },
+            {path: 'models-control', component: ModelControl }
+        ]
+    },
 ]

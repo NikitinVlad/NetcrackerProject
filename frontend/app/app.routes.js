@@ -11,6 +11,9 @@ var basket_component_1 = require("./personalArea/basketComponent/basket.componen
 var add_poster_1 = require("./personalArea/addPosterComponent/add.poster");
 var current_poster_1 = require("./currentPosterComponent/current.poster");
 var catalog_component_1 = require("./catalogComponent/catalog.component");
+var admin_component_1 = require("./adminComponent/admin.component");
+var user_control_1 = require("./adminComponent/userControl/user.control");
+var model_control_1 = require("./adminComponent/modelControl/model.control");
 exports.routes = [
     { path: "main", component: main_page_1.MainPage },
     { path: "registration", component: registration_component_1.RegistrationComponent },
@@ -27,6 +30,14 @@ exports.routes = [
     },
     { path: "help", component: help_component_1.HelpComponent },
     { path: 'poster', component: current_poster_1.CurrentPoster },
-    { path: 'catalog', component: catalog_component_1.CatalogComponent }
+    { path: 'catalog', component: catalog_component_1.CatalogComponent },
+    { path: 'catalog', component: catalog_component_1.CatalogComponent },
+    { path: 'administration', component: admin_component_1.AdminComponent,
+        children: [
+            { path: '', redirectTo: 'users-control', pathMatch: 'full' },
+            { path: 'users-control', component: user_control_1.UserControl },
+            { path: 'models-control', component: model_control_1.ModelControl }
+        ]
+    },
 ];
 //# sourceMappingURL=app.routes.js.map

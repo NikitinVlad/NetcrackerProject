@@ -28,7 +28,7 @@
                 <div class="delete" (click)="deletePoster(item)">Убрать</div>
             </div>
         </div>
-        <input *ngIf="sizeItems>0"  type="button" class="btn btn-primary" value="Купить все" (click)="buyAll()">
+        <input *ngIf="sizeItems>0 && auth.getUser().role!='ROLE_ADMIN'" type="button" class="btn btn-primary" value="Купить все" (click)="buyAll()">
         <!-- pager -->
         <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">

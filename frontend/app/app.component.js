@@ -63,6 +63,9 @@ var AppComponent = (function () {
         this.router.navigate(["login"]);
     };
     AppComponent.prototype.goPersonalArea = function (page) {
+        if (page == 'personal/profile' && this.localeAuth.getUser().role == 'ROLE_ADMIN') {
+            page = 'administration';
+        }
         swap_data_1.RouteTo.rout = page;
         this.router.navigate(["help"]);
     };

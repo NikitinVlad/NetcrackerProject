@@ -1,0 +1,40 @@
+.container{
+    width: 900px;
+    height: 450px;
+    padding-left: 0;
+    margin-left: 1%;
+    margin-top: -2%;
+}
+
+label{
+    font-weight: 400;
+    font-size: 150%;
+}
+
+select{
+    width: 240px;
+    height: 32px;
+}
+.main{
+    margin-left: 35%;
+    margin-top: 2%;
+}
+
+select option:first-child{
+    color: darkgray;
+}
+
+input{
+    width: 240px;
+    height: 32px;
+}
+
+.error{
+    color: red;
+}
+.success{
+    color: green;
+}
+.success img{
+    width: 20px;
+}

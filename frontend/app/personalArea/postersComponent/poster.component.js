@@ -34,7 +34,7 @@ var PosterComponent = (function () {
         this.pager = {};
         swap_data_1.RouteTo.rout = 'personal/posters';
         this.loc = CurLang_1.CurLang.locale;
-        this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(function (answer) {
+        this.postsService.sendPost(swap_data_1.PersonalUser.user.id, 'getPostersSize').subscribe(function (answer) {
             console.log(answer);
             _this.sizeItems = answer;
             if (_this.sizeItems > 20) {
@@ -59,11 +59,9 @@ var PosterComponent = (function () {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', this.auth.getUser().id];
-        console.log(this.currentItems);
+        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', swap_data_1.PersonalUser.user.id];
         this.postsService.sendPost(this.currentItems, 'getRangePosters').subscribe(function (answer) {
             _this.pagedItems = answer;
-            console.log(answer);
         });
     };
     PosterComponent.prototype.setOption = function (sel) {
@@ -116,7 +114,7 @@ var PosterComponent = (function () {
             this.pagedItems.splice(index, 1);
         }
         this.postsService.sendPost(item.id, 'deletePoster').subscribe(function (ans) {
-            _this.postsService.sendPost(_this.auth.getUser().id, 'getPostersSize').subscribe(function (answer) {
+            _this.postsService.sendPost(swap_data_1.PersonalUser.user.id, 'getPostersSize').subscribe(function (answer) {
                 _this.options = [];
                 _this.sizeItems = answer;
                 if (_this.sizeItems > 20) {

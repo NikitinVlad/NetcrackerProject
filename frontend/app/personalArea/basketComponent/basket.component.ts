@@ -43,7 +43,7 @@ export class BasketComponent{
     constructor(private postsService: PostsService, private pagerService: PagerService, private router: Router, private swapData: SwapData, private auth: LocaleAuth, private sanitizer: DomSanitizer) {
         RouteTo.rout = 'personal/basket';
         this.loc = CurLang.locale;
-        this.postsService.sendPost(this.auth.getUser().id, 'getBasketSize').subscribe(answer=> {
+        this.postsService.sendPost(PersonalUser.user.id, 'getBasketSize').subscribe(answer=> {
             this.basketCount=answer;
             this.sizeItems = this.basketCount.size;
             if (this.sizeItems > 20) {
@@ -68,7 +68,7 @@ export class BasketComponent{
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, this.auth.getUser().id];
+        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, PersonalUser.user.id];
         this.postsService.sendPost(this.currentItems, 'getRangePostersBasket').subscribe(answer=> {
             this.pagedItems = answer;
         });
@@ -127,7 +127,7 @@ export class BasketComponent{
             this.pagedItems.splice(index, 1);
         }
         this.postsService.sendPost(item.id,'deleteFromBasket').subscribe(ans=>{
-            this.postsService.sendPost(this.auth.getUser().id, 'getBasketSize').subscribe(answer=> {
+            this.postsService.sendPost(PersonalUser.user.id, 'getBasketSize').subscribe(answer=> {
                 this.basketCount=answer;
                 this.options=[];
                 this.sizeItems = this.basketCount.size;

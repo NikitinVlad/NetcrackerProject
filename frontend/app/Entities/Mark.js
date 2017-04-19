@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var Mark = (function () {
     function Mark(id, name) {
+        this.name = "";
         this.id = id;
         this.name = name;
     }

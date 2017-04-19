@@ -1,11 +1,14 @@
 package user;
 
+import dao.BasketDAO;
+import dao.PosterDAO;
 import dao.UserDAO;
 import dto.UserLogin;
 import entity.Basket;
 import entity.Poster;
 import entity.User;
 import enums.Role;
+import javafx.geometry.Pos;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import poster.PosterService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    BasketDAO basketDAO;
+
+    @Autowired
+    PosterService posterService;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -39,8 +50,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public long deleteUser(long id) {
-        long ans = userDAO.delete(id);
-        return ans;
+        User user=userDAO.findByID(id);
+        List<Poster> postersInBasket=user.getBasket().getPosters();
+        for(Poster poster:postersInBasket){
+            posterService.deleteFromBasket(poster.getId());
+        }
+        List<Poster> userPosters=user.getPosters();
+        for(Poster poster:userPosters){
+            posterService.deletePoster(poster.getId());
+        }
+        Basket basket=user.getBasket();
+        long idBasket=basket.getId();
+        user.setBasket(null);
+        userDAO.update(user);
+        basket.setUser(null);
+        basketDAO.update(basket);
+        long answer=userDAO.delete(id);
+        basketDAO.delete(idBasket);
+        return answer;
     }
 
     public User findUser(long id) {
@@ -81,6 +108,18 @@ public class UserServiceImpl implements UserService {
     public void auth(UserLogin userLogin) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getLogin(), userLogin.getPass()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
+    }
+
+
+    public int getUsersSize() {
+        logger.info("Get users size");
+        return userDAO.getUsersSize();
+    }
+
+
+    public List getRangeUsers(int from, int to) {
+        logger.info("Get range users");
+        return userDAO.getRangeUsers(from,to);
     }
 
 }

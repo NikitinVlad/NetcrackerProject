@@ -15,11 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var swap_data_1 = require("../services/communicate/swap.data");
 var CurLang_1 = require("../Entities/CurLang");
+var locale_auth_1 = require("../services/locale.auth");
+var router_1 = require("@angular/router");
 var PersonalArea = (function () {
-    function PersonalArea(swapData) {
+    function PersonalArea(swapData, localeAuth, router) {
         this.swapData = swapData;
+        this.localeAuth = localeAuth;
+        this.router = router;
         this.newPoster = this.swapData.personalAreaServ.getNewPoster();
         this.loc = CurLang_1.CurLang.locale;
+        this.user = this.localeAuth.getUser();
+        if (this.user.role == "ROLE_ADMIN") {
+            this.sessionUser = swap_data_1.PersonalUser.user;
+            if (this.sessionUser.role == "ROLE_ADMIN") {
+                this.router.navigate(['administration']);
+            }
+        }
         swap_data_1.RouteTo.rout = 'personal';
     }
     PersonalArea.prototype.addPoster = function () {
@@ -39,7 +50,7 @@ PersonalArea = __decorate([
         templateUrl: "personal.area.html",
         styleUrls: ["personal.area.css"]
     }),
-    __metadata("design:paramtypes", [swap_data_1.SwapData])
+    __metadata("design:paramtypes", [swap_data_1.SwapData, locale_auth_1.LocaleAuth, router_1.Router])
 ], PersonalArea);
 exports.PersonalArea = PersonalArea;
 //# sourceMappingURL=personal.area.js.map

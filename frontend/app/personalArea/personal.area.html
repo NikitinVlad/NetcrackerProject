@@ -6,7 +6,8 @@
         <li [routerLink]="['basket']" routerLinkActive="active" ><a  >{{loc.app_basket}}</a></li>
         <li [routerLink]="['addPoster']" routerLinkActive="active" *ngIf="newPoster"><a>*{{loc.new_poster}}</a></li>
     </ul>
-    <div  [routerLink]="['addPoster']" routerLinkActive="active" class="add_poster" (click)="addPoster()"><h4>{{loc.new_add}}</h4></div>
+    <div  *ngIf="user.role!='ROLE_ADMIN'" [routerLink]="['addPoster']" routerLinkActive="active" class="add_poster" (click)="addPoster()"><h4>{{loc.new_add}}</h4></div>
+    <div *ngIf="user.role=='ROLE_ADMIN'"  class="session">Вы находитесь в сессии пользователя {{sessionUser.login}}</div>
     <div class="container">
         <router-outlet></router-outlet>
     </div>

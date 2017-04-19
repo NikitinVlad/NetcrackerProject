@@ -1,13 +1,14 @@
 <div class="all">
     <div class="all-posters">
-        <h1>Автомобили</h1>
-        <div class="options">
+        <h1 *ngIf="sizeItems>0">Автомобили</h1>
+        <h1 *ngIf="sizeItems==0">Ничего не найдено</h1>
+        <div class="options" >
             <label class="for-picker">Показывать по</label>
             <select class="selectpicker" (change)="setOption($event.target.value)">
                 <option *ngFor="let num of options" class="option" [selected]="num===currentSelection">{{num}}</option>
             </select>
         </div>
-        <div class="sorted">
+        <div class="sorted" >
             <label>Сортировать по</label>
             <select class="sort-field" (change)="filterPosters(true)">
                 <option selected>Дате подачи(по возрастанию)</option>

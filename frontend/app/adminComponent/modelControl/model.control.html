@@ -1,0 +1,21 @@
+<div class="container">
+    <h2>Добаление новой модели автомобиля</h2>
+    <div class="main">
+    <label>Выберите марку автомобиля</label><br/>
+    <select (change)="changeMark()" (focus)="noError()">
+        <option>Марка автомобиля</option>
+        <option *ngFor="let mark of marks" >{{mark.name}}</option>
+    </select ><br/><br/>
+        <label>Существующие модели</label><br/>
+        <select (focus)="noError()">
+            <option>Модель</option>
+            <option *ngFor="let model of models" >{{model.name}}</option>
+        </select><br/><br/>
+        <label>Новая модель</label><br/>
+        <input type="text" maxlength="30" placeholder="Новая модель" (focus)="noError()" disabled><br/><br/>
+        <input type="button" class="btn btn-primary" value="Добавить" disabled (click)="addModel()"><br/><br/>
+
+        <h4 class="error" *ngIf="error">Такая модель существует либо поле ввода пустое</h4>
+        <h4 class="success" *ngIf="success">Модель успешно добавлена<img src="../../../images/success.png"></h4>
+        </div>
+</div>

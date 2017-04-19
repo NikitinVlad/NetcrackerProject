@@ -59,6 +59,9 @@ export class AppComponent{
         this.router.navigate(["login"]);
     }
     goPersonalArea(page:string){
+        if(page=='personal/profile' && this.localeAuth.getUser().role=='ROLE_ADMIN'){
+            page='administration';
+        }
         RouteTo.rout=page;
         this.router.navigate(["help"]);
     }

@@ -7,4 +7,6 @@ import entity.Model;
  */
 public interface ModelService {
     Model findModel(long id);
+
+    long addModel(Model model);
 }

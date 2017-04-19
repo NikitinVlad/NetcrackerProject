@@ -7,7 +7,7 @@ import * as _ from 'underscore';
 import {PostsService} from "../../services/posts.service";
 import {Router} from "@angular/router";
 import {routes} from "../../app.routes";
-import {SwapData, RouteTo} from "../../services/communicate/swap.data";
+import {SwapData, RouteTo, PersonalUser} from "../../services/communicate/swap.data";
 import {CurLang} from "../../Entities/CurLang";
 import {LocaleAuth} from "../../services/locale.auth";
 import {audit} from "rxjs/operator/audit";
@@ -40,7 +40,7 @@ export class PosterComponent {
     constructor(private postsService: PostsService, private pagerService: PagerService, private router: Router, private swapData: SwapData, private auth: LocaleAuth, private sanitizer: DomSanitizer) {
         RouteTo.rout = 'personal/posters';
         this.loc = CurLang.locale;
-        this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(answer=> {
+        this.postsService.sendPost(PersonalUser.user.id, 'getPostersSize').subscribe(answer=> {
             console.log(answer);
             this.sizeItems = answer;
             if (this.sizeItems > 20) {
@@ -52,6 +52,7 @@ export class PosterComponent {
                 for (var i = 0; i < this.sizeItems; i++) {
                     this.options.push(i + 1);
                 }
+
                 if(this.sizeItems<this.currentSelection)
                 this.currentSelection=this.sizeItems;
             }
@@ -66,11 +67,9 @@ export class PosterComponent {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', this.auth.getUser().id];
-        console.log(this.currentItems);
+        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, 'date', PersonalUser.user.id];
         this.postsService.sendPost(this.currentItems, 'getRangePosters').subscribe(answer=> {
             this.pagedItems = answer;
-            console.log(answer);
         });
     }
 
@@ -127,7 +126,7 @@ export class PosterComponent {
             this.pagedItems.splice(index, 1);
         }
         this.postsService.sendPost(item.id,'deletePoster').subscribe(ans=>{
-            this.postsService.sendPost(this.auth.getUser().id, 'getPostersSize').subscribe(answer=> {
+            this.postsService.sendPost(PersonalUser.user.id, 'getPostersSize').subscribe(answer=> {
                 this.options=[];
                 this.sizeItems = answer;
                 if (this.sizeItems > 20) {

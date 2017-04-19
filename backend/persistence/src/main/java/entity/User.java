@@ -1,6 +1,8 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,7 +40,8 @@ public class User extends BaseEntity {
     @JsonIgnore
     private Basket basket;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private List<Poster> posters = new ArrayList<Poster>();
 

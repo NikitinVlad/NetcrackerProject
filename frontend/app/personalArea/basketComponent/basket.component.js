@@ -37,7 +37,7 @@ var BasketComponent = (function () {
         this.basketCount = new BasketCount_1.BasketCount();
         swap_data_1.RouteTo.rout = 'personal/basket';
         this.loc = CurLang_1.CurLang.locale;
-        this.postsService.sendPost(this.auth.getUser().id, 'getBasketSize').subscribe(function (answer) {
+        this.postsService.sendPost(swap_data_1.PersonalUser.user.id, 'getBasketSize').subscribe(function (answer) {
             _this.basketCount = answer;
             _this.sizeItems = _this.basketCount.size;
             if (_this.sizeItems > 20) {
@@ -62,7 +62,7 @@ var BasketComponent = (function () {
             return;
         }
         this.pager = this.pagerService.getPager(this.sizeItems, page, this.currentSelection);
-        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, this.auth.getUser().id];
+        this.currentItems = [this.pager.startIndex + 1, this.pager.endIndex + 1, swap_data_1.PersonalUser.user.id];
         this.postsService.sendPost(this.currentItems, 'getRangePostersBasket').subscribe(function (answer) {
             _this.pagedItems = answer;
         });
@@ -117,7 +117,7 @@ var BasketComponent = (function () {
             this.pagedItems.splice(index, 1);
         }
         this.postsService.sendPost(item.id, 'deleteFromBasket').subscribe(function (ans) {
-            _this.postsService.sendPost(_this.auth.getUser().id, 'getBasketSize').subscribe(function (answer) {
+            _this.postsService.sendPost(swap_data_1.PersonalUser.user.id, 'getBasketSize').subscribe(function (answer) {
                 _this.basketCount = answer;
                 _this.options = [];
                 _this.sizeItems = _this.basketCount.size;

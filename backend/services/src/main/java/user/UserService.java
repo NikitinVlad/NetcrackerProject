@@ -24,4 +24,8 @@ public interface UserService {
     List findAll();
 
     void auth(UserLogin userLogin);
+
+    int getUsersSize();
+
+    List getRangeUsers(int from,int to);
 }

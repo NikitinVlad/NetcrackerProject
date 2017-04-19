@@ -107,6 +107,6 @@
         <p *ngIf="!curUser && !isAdmin" class="descript">{{poster.description}}</p>
     </div>
     <img src="../../images/close.png" class="myclose" (click)="exit()">
-    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}}</label> <label *ngIf="curUser || isAdmin"> пользователем {{poster.user.login}}</label></div>
+    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}}</label> <label *ngIf="curUser || isAdmin" (click)="goCurrentUser(poster.user)"> пользователем {{poster.user.login}}</label></div>
         <div class="submit-form"><button *ngIf="curUser || isAdmin" type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
 </div>

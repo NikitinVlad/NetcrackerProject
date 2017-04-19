@@ -1,7 +1,9 @@
 package model;
 
 
+import dao.MarkDAO;
 import dao.ModelDAO;
+import entity.Mark;
 import entity.Model;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,24 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     ModelDAO modelDAO;
 
+    @Autowired
+    MarkDAO markDAO;
+
+
     public Model findModel(long id) {
         logger.info("Find model by ID");
         return modelDAO.findByID(id);
+    }
+
+
+    public long addModel(Model model) {
+        logger.info("Add model");
+        Model check=modelDAO.findByField("name",model.getName());
+        if(check==null) {
+            Mark mark = markDAO.findByID(model.getId());
+            Model nModel = new Model(model.getName(), mark);
+            return modelDAO.create(nModel);
+        }
+        return 0L;
     }
 }

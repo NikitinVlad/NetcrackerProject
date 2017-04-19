@@ -2,7 +2,7 @@
  * Created by Влад on 08.04.2017.
  */
 import {Component, Sanitizer, SecurityContext} from "@angular/core";
-import {RouteTo, SwapData} from "../services/communicate/swap.data";
+import {RouteTo, SwapData, PersonalUser} from "../services/communicate/swap.data";
 import {PostsService} from "../services/posts.service";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -29,18 +29,23 @@ export class CurrentPoster{
     curUser:boolean=false;
     isAdmin=false;
     constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer, private auth:LocaleAuth){
-        this.loc=CurLang.locale;
-        RouteTo.rout='poster';
-        this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(),'getCurrentPoster').subscribe(answer=>{
-            this.poster=answer;
-            if(this.poster.user.id==this.auth.getUser().id){
-                this.curUser=true;
-            }
-            if(this.auth.getUser().role=="ROLE_ADMIN"){
-                this.isAdmin=true;
-            }
-           this.updatePoster();
-        });
+        if(this.swapData.personalAreaServ.getCurrentPosterID()==null){
+            this.router.navigate(['main']);
+        }
+        else {
+            this.loc = CurLang.locale;
+            RouteTo.rout = 'poster';
+            this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(answer=> {
+                this.poster = answer;
+                if (this.poster.user.id == this.auth.getUser().id) {
+                    this.curUser = true;
+                }
+                if (this.auth.getUser().role == "ROLE_ADMIN") {
+                    this.isAdmin = true;
+                }
+                this.updatePoster();
+            });
+        }
     }
 
 
@@ -187,5 +192,10 @@ export class CurrentPoster{
     }
     get getImg() {
         return this.sanitizer.bypassSecurityTrustUrl(this.imgPath);
+    }
+
+    goCurrentUser(user:User){
+        PersonalUser.user=user;
+        this.router.navigate(["personal"]);
     }
 }

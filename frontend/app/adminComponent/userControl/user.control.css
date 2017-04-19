@@ -1,0 +1,22 @@
+.container{
+    width: 900px;
+    height: 450px;
+    padding-left: 0;
+    margin-left: 1%;
+    margin-top: -2%;
+}
+.table{
+    margin-left: 6%;
+    margin-top: 3%;
+}
+
+tbody a:hover{
+    cursor: pointer;
+}
+
+.pagination{
+    margin-left:6%;
+}
+.pagination li:hover{
+    cursor: pointer;
+}

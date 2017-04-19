@@ -33,18 +33,23 @@ var CurrentPoster = (function () {
         this.poster = new CurrPoster_1.CurrPoster();
         this.curUser = false;
         this.isAdmin = false;
-        this.loc = CurLang_1.CurLang.locale;
-        swap_data_1.RouteTo.rout = 'poster';
-        this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
-            _this.poster = answer;
-            if (_this.poster.user.id == _this.auth.getUser().id) {
-                _this.curUser = true;
-            }
-            if (_this.auth.getUser().role == "ROLE_ADMIN") {
-                _this.isAdmin = true;
-            }
-            _this.updatePoster();
-        });
+        if (this.swapData.personalAreaServ.getCurrentPosterID() == null) {
+            this.router.navigate(['main']);
+        }
+        else {
+            this.loc = CurLang_1.CurLang.locale;
+            swap_data_1.RouteTo.rout = 'poster';
+            this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
+                _this.poster = answer;
+                if (_this.poster.user.id == _this.auth.getUser().id) {
+                    _this.curUser = true;
+                }
+                if (_this.auth.getUser().role == "ROLE_ADMIN") {
+                    _this.isAdmin = true;
+                }
+                _this.updatePoster();
+            });
+        }
     }
     CurrentPoster.prototype.updatePoster = function () {
         if (this.curUser || this.isAdmin) {
@@ -184,6 +189,10 @@ var CurrentPoster = (function () {
         enumerable: true,
         configurable: true
     });
+    CurrentPoster.prototype.goCurrentUser = function (user) {
+        swap_data_1.PersonalUser.user = user;
+        this.router.navigate(["personal"]);
+    };
     return CurrentPoster;
 }());
 CurrentPoster = __decorate([

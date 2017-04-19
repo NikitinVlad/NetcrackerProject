@@ -84,7 +84,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
     }
 
     public long delete(T entity) {
-        logger.info("Delete enity entity by entity");
+        logger.info("Delete  entity by entity");
         try {
             long id = entity.getId();
             getCurrentSession().delete(entity);
