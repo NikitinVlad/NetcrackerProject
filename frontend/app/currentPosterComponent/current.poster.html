@@ -74,7 +74,7 @@
                 </div>
                 <div class="input-el">
                     <label *ngIf="!curUser && !isAdmin">{{poster.dimension}} </label>
-                    <input   type="number" class="dimension"  oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="4">{{loc.cur_sm}}
+                    <input   type="number" class="dimension"  oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number"  maxlength="4">{{loc.cur_sm}}
                 </div>
             </div>
 
@@ -103,7 +103,7 @@
         </div>
     </div>
     <div class="area">
-        <textarea *ngIf="curUser || isAdmin" cols="90" rows="8" placeholder="{{loc.cur_placeholder}}">{{poster.description}}</textarea>
+        <textarea *ngIf="curUser || isAdmin" cols="90" rows="8" maxlength="255" placeholder="{{loc.cur_placeholder}}">{{poster.description}}</textarea>
         <p *ngIf="!curUser && !isAdmin" class="descript">{{poster.description}}</p>
     </div>
     <img src="../../images/close.png" class="myclose" (click)="exit()">

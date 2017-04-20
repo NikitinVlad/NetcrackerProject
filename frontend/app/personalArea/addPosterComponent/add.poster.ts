@@ -87,6 +87,7 @@ export class AddPoster{
 
 
         this.postsService.sendPost(newPoster,'addNewPoster').subscribe(answer =>{
+            console.log(newPoster.description.length);
             if(answer==0){
                 this.errors.push(100);
             }

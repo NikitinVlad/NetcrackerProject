@@ -87,6 +87,7 @@ var AddPoster = (function () {
         newPoster.cost = +document.getElementsByTagName("input")[0].value;
         newPoster.description = document.getElementsByTagName("textarea")[0].value;
         this.postsService.sendPost(newPoster, 'addNewPoster').subscribe(function (answer) {
+            console.log(newPoster.description.length);
             if (answer == 0) {
                 _this.errors.push(100);
             }

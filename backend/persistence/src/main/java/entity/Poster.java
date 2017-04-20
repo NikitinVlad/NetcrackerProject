@@ -1,6 +1,9 @@
 package entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -36,6 +39,8 @@ public class Poster extends BaseEntity {
     private String dimension;
     private String transmision;
     private Date date;
+
+    @Length(max = 255)
     private String description;
 
     public Poster() {

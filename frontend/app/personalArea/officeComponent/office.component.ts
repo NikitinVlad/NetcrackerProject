@@ -22,7 +22,7 @@ export class OfficeComponent{
         var NAME_REGEXP = '[A-Za-zА-Яа-я]+';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         this.complexForm = fb.group({
-            'name' : [null,Validators.compose([Validators.required, Validators.pattern(NAME_REGEXP)])],
+            'name' : [Validators.compose([Validators.required, Validators.pattern(NAME_REGEXP)])],
             'pass' : [null, Validators.compose([ Validators.minLength(4), Validators.maxLength(20)])],
             'email' : [null, Validators.compose([Validators.minLength(5), Validators.pattern(EMAIL_REGEXP),Validators.maxLength(30)])]
         });
@@ -55,7 +55,7 @@ export class OfficeComponent{
                 (document.getElementsByTagName("input")[3] as HTMLInputElement).value=user.email;
                 PersonalUser.user=user;
                 for(var i=0;i<4;i++){
-                    (document.getElementsByTagName("input")[0] as HTMLInputElement).disabled=true;
+                    (document.getElementsByTagName("input")[i] as HTMLInputElement).disabled=true;
                 }
          }
         });
