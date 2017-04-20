@@ -28,8 +28,9 @@ var LoginComponent = (function () {
         this.myerror = false;
         this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'login';
+        var LOGIN_REGEXP = '[A-Za-z0-9_-]+';
         this.complexForm = fb.group({
-            'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],
+            'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15), forms_1.Validators.pattern(LOGIN_REGEXP)])],
             'pass': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(4), forms_1.Validators.maxLength(20)])]
         });
     }

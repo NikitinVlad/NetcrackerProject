@@ -1,10 +1,10 @@
 <div class="container body">
     <div class="text-center">
         <h1 *ngIf="sizeItems>0" class="title">{{loc.pers_posts}}</h1>
-        <h1 *ngIf="sizeItems==0" class="title">{{loc_noposters}}</h1>
-        <div class="options">
+        <h1 *ngIf="sizeItems==0" class="title">{{loc.pers_noposters}}</h1>
+        <div *ngIf="sizeItems>0" class="options">
             <label>{{loc.pers_show}}</label>
-            <select *ngIf="sizeItems>0" class="selectpicker" (change)="setOption($event.target.value)">
+            <select  class="selectpicker" (change)="setOption($event.target.value)">
                 <option *ngFor="let num of options" class="option" [selected]="num===currentSelection">{{num}}</option>
             </select>
         </div>

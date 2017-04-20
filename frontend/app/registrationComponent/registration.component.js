@@ -27,10 +27,12 @@ var RegistrationComponent = (function () {
         this.toasterService = toasterService;
         this.loc = CurLang_1.CurLang.locale;
         swap_data_1.RouteTo.rout = 'registration';
+        var NAME_REGEXP = '[A-Za-zА-Яа-я]+';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var LOGIN_REGEXP = '[A-Za-z0-9_-]+';
         this.complexForm = fb.group({
-            'name': [null, forms_1.Validators.required],
-            'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],
+            'name': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(NAME_REGEXP)])],
+            'login': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(LOGIN_REGEXP), forms_1.Validators.minLength(3), forms_1.Validators.maxLength(15)])],
             'pass': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(4), forms_1.Validators.maxLength(20)])],
             'email': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(5), forms_1.Validators.pattern(EMAIL_REGEXP), forms_1.Validators.maxLength(30)])]
         });

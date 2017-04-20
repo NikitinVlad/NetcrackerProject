@@ -17,10 +17,13 @@ import java.util.List;
 @Entity
 public class User extends BaseEntity {
     @NotNull
+    @Size(min=1,max=30)
+    @Pattern(regexp = "[A-Za-zА-Яа-я]+")
     private String name;
 
     @NotNull
     @Size(min = 3, max = 15)
+    @Pattern(regexp = "[A-Za-z0-9_-]+")
     @Column(unique = true)
     private String login;
 

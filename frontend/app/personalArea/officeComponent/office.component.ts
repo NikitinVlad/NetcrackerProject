@@ -19,9 +19,10 @@ export class OfficeComponent{
     constructor(private swapData:SwapData,fb:FormBuilder, private postsService:PostsService){
         RouteTo.rout='personal/profile';
         this.loc=CurLang.locale;
+        var NAME_REGEXP = '[A-Za-zА-Яа-я]+';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         this.complexForm = fb.group({
-            'name' : [null],
+            'name' : [null,Validators.compose([Validators.required, Validators.pattern(NAME_REGEXP)])],
             'pass' : [null, Validators.compose([ Validators.minLength(4), Validators.maxLength(20)])],
             'email' : [null, Validators.compose([Validators.minLength(5), Validators.pattern(EMAIL_REGEXP),Validators.maxLength(30)])]
         });

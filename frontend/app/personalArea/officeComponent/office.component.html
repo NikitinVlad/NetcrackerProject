@@ -5,7 +5,8 @@
             <label for="input-name">{{loc.auth_name}}</label>
             <img class="edit" src="../../../images/edit.png" (click)="edit(0)">
             <div>
-                <input (blur)="blur(0)" class="form-control" type="text"  id="input-name" [formControl]="complexForm.controls['name']" disabled>
+                <input (blur)="blur(0)" class="form-control" type="text"  maxlength="30" id="input-name" [formControl]="complexForm.controls['name']" disabled>
+                <div *ngIf="complexForm.controls['name'].hasError('pattern') && complexForm.controls['name'].touched" class="alert alert-danger">{{loc.err_format}}</div>
                            </div>
         </div>
 

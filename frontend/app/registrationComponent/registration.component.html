@@ -5,8 +5,9 @@
     <div class="form-group row first" [ngClass]="{'has-error':!complexForm.controls['name'].valid && complexForm.controls['name'].touched}">
         <label for="input-name">{{loc.auth_name}}</label>
         <div>
-            <input class="form-control" type="text"  id="input-name" [formControl]="complexForm.controls['name']">
+            <input maxlength="30" class="form-control" type="text"  id="input-name" [formControl]="complexForm.controls['name']">
             <div *ngIf="complexForm.controls['name'].hasError('required') && complexForm.controls['name'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
+            <div *ngIf="complexForm.controls['name'].hasError('pattern') && complexForm.controls['name'].touched" class="alert alert-danger">{{loc.err_format}}</div>
         </div>
     </div>
     <div class="form-group row"  [ngClass]="{'has-error':!complexForm.controls['login'].valid && complexForm.controls['login'].touched}">
@@ -16,6 +17,7 @@
             <div *ngIf="complexForm.controls['login'].hasError('required') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_empty}}</div>
             <div *ngIf="complexForm.controls['login'].hasError('minlength') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_login_min}}</div>
             <div *ngIf="complexForm.controls['login'].hasError('maxlength') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_login_max}}</div>
+            <div *ngIf="complexForm.controls['login'].hasError('pattern') && complexForm.controls['login'].touched" class="alert alert-danger">{{loc.err_format}}</div>
         </div>
     </div>
     <div class="form-group row" [ngClass]="{'has-error':!complexForm.controls['pass'].valid && complexForm.controls['pass'].touched}">

@@ -28,10 +28,12 @@ export class RegistrationComponent{
     constructor(private postsService:PostsService, private router:Router,private toasterService:ToasterService,fb:FormBuilder){
         this.loc=CurLang.locale;
         RouteTo.rout='registration';
+        var NAME_REGEXP = '[A-Za-zА-Яа-я]+';
         var EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var LOGIN_REGEXP='[A-Za-z0-9_-]+';
         this.complexForm = fb.group({
-            'name' : [null, Validators.required],
-            'login': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(15)])],
+            'name' : [null,Validators.compose([Validators.required, Validators.pattern(NAME_REGEXP)])],
+            'login': [null, Validators.compose([Validators.required, Validators.pattern(LOGIN_REGEXP), Validators.minLength(3), Validators.maxLength(15)])],
             'pass' : [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
             'email' : [null, Validators.compose([Validators.required,Validators.minLength(5), Validators.pattern(EMAIL_REGEXP),Validators.maxLength(30)])]
         });

@@ -23,8 +23,10 @@ export class LoginComponent{
     constructor(private postsService:PostsService,fb:FormBuilder,private localeAuth:LocaleAuth,private router:Router){
         this.loc=CurLang.locale;
         RouteTo.rout='login';
+
+        var LOGIN_REGEXP='[A-Za-z0-9_-]+';
         this.complexForm = fb.group({
-            'login': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(15)])],
+            'login': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(15),Validators.pattern(LOGIN_REGEXP)])],
             'pass' : [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])]
         });
     }
