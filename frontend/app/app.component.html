@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav mydrop">
                 <li><a (click)="goMainPage()"  value>{{loc.app_home}}</a></li>
                 <li><a (click)="goCatalog()">{{loc.app_catalog}}</a></li>
-                <li><a>{{loc.app_map}}</a></li>
+                <li><a (click)="goMap()">{{loc.app_map}}</a></li>
             </ul>
             <div [ngClass]="{'active-lang': active=='ru'}" class="lang" (click)="changeLang('ru')">RU</div>
             <div [ngClass]="{'active-lang': active=='en'}" class="lang2" (click)="changeLang('en')">EN</div>

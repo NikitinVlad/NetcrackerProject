@@ -1,0 +1,59 @@
+.sebm-google-map-container {
+    height: 600px;
+}
+.card{
+    position: absolute;
+    z-index: 2;
+    margin-left: 65%;
+    margin-top: 4%;
+    width: 400px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.6);
+}
+h1{
+    font-weight: bolder;
+    margin-left: 2%;
+    color:honeydew;
+}
+h2{
+    font-size: 280%;
+    color:darkslategray;
+    margin-left: 8%;
+}
+h3{
+    margin-top: 7%;
+    font-weight: bold;
+}
+h3:hover{
+    cursor: pointer;
+}
+h5{
+    margin-left: 8%;
+    line-height: 2;
+}
+
+img{
+    padding-right: 3%;
+    width: 8%;
+}
+.weekends{
+    margin-top: -5%;
+    margin-left: 15%;
+}
+.copyright{
+    padding-right: 1%;
+    width:2.5%;
+}
+.mecontainer{
+    opacity: 0.6;
+    margin-top: 1%;
+}
+.copyright-text{
+    color: gainsboro;
+    font-size: 120%;
+}
+
+.form-control{
+    margin-left: 35%;
+    width: 500px;
+}

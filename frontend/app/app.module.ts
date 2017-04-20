@@ -29,6 +29,9 @@ import {CatalogComponent} from "./catalogComponent/catalog.component";
 import {AdminComponent} from "./adminComponent/admin.component";
 import {UserControl} from "./adminComponent/userControl/user.control";
 import {ModelControl} from "./adminComponent/modelControl/model.control";
+import {AgmCoreModule} from 'angular2-google-maps/core';
+import {GoogleMap} from "./googleMap/google.map.component";
+
 
 
 
@@ -38,9 +41,11 @@ export function startupServiceFactory(startupService: StartupService): Function 
 }
 
 @NgModule({
-    imports:[BrowserModule,FormsModule,ReactiveFormsModule,HttpModule,ToasterModule,RouterModule.forRoot(routes)],
+    imports:[BrowserModule,FormsModule,ReactiveFormsModule,HttpModule,ToasterModule,AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyCpW3itKX63qjTBrU_EaFpBsRu24lb5GLE',libraries: ["places"]
+    }),RouterModule.forRoot(routes)],
     declarations:[AppComponent,MainPage,RegistrationComponent,CatalogComponent,LoginComponent,PersonalArea,PosterComponent,BasketComponent,OfficeComponent,HelpComponent,
-        AddPoster,CurrentPoster,AdminComponent,UserControl,ModelControl],
+        AddPoster,CurrentPoster,AdminComponent,UserControl,ModelControl,GoogleMap],
     providers:[StartupService,PostsService,LocaleAuth,PagerService,SwapData,{provide: APP_INITIALIZER,
         useFactory: startupServiceFactory,
         deps: [StartupService],

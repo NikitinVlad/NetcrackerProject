@@ -68,6 +68,9 @@ export class AppComponent{
     goCatalog(){
         this.router.navigate(["catalog"]);
     }
+    goMap(){
+        this.router.navigate(["map"]);
+    }
     exit():void{
         this.localeAuth.logOut();
         this.goMainPage();

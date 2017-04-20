@@ -16,6 +16,7 @@ import {CatalogComponent} from "./catalogComponent/catalog.component";
 import {AdminComponent} from "./adminComponent/admin.component";
 import {UserControl} from "./adminComponent/userControl/user.control";
 import {ModelControl} from "./adminComponent/modelControl/model.control";
+import {GoogleMap} from "./googleMap/google.map.component";
 
 
 
@@ -47,4 +48,5 @@ export const routes:Routes=[
             {path: 'models-control', component: ModelControl }
         ]
     },
+    {path:"map",component:GoogleMap}
 ]

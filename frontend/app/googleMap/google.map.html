@@ -1,0 +1,22 @@
+<h1>Контакты</h1>
+<div class="form-group">
+    <input placeholder="Поиск местоположения" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+</div>
+<div class="container card">
+    <h3 (click)="go()" align="center">{{title}}</h3>
+    <h2 >8 017 <b>{{number1}}</b></h2>
+    <h2>8 029 <b>{{number2}}</b></h2>
+    <h2>8 033 <b>{{number3}}</b></h2>
+    <h5><img src="../../images/icons/ic_place_black_48dp.png">{{adress}}</h5>
+    <h5><img src="../../images/icons/ic_local_phone_black_48dp.png">{{time1}}</h5>
+    <h5 class="weekends">{{timeWeekend}}</h5>
+    <h5><img src="../../images/icons/ic_local_post_office_black_48dp.png">{{email}}</h5>
+</div>
+<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+    <sebm-google-map-marker (markerClick)="clickMarker()" [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+</sebm-google-map>
+<div class="container mecontainer">
+    <p class="copyright-text"><img class="copyright" src="../../images/icons/copyright.svg">2017 «СмартАвто»</p>
+</div>
+
+

@@ -14,6 +14,7 @@ var catalog_component_1 = require("./catalogComponent/catalog.component");
 var admin_component_1 = require("./adminComponent/admin.component");
 var user_control_1 = require("./adminComponent/userControl/user.control");
 var model_control_1 = require("./adminComponent/modelControl/model.control");
+var google_map_component_1 = require("./googleMap/google.map.component");
 exports.routes = [
     { path: "main", component: main_page_1.MainPage },
     { path: "registration", component: registration_component_1.RegistrationComponent },
@@ -39,5 +40,6 @@ exports.routes = [
             { path: 'models-control', component: model_control_1.ModelControl }
         ]
     },
+    { path: "map", component: google_map_component_1.GoogleMap }
 ];
 //# sourceMappingURL=app.routes.js.map

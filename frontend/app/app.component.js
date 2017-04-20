@@ -72,6 +72,9 @@ var AppComponent = (function () {
     AppComponent.prototype.goCatalog = function () {
         this.router.navigate(["catalog"]);
     };
+    AppComponent.prototype.goMap = function () {
+        this.router.navigate(["map"]);
+    };
     AppComponent.prototype.exit = function () {
         this.localeAuth.logOut();
         this.goMainPage();
