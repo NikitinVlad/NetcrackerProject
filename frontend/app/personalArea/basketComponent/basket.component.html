@@ -1,15 +1,15 @@
 <div class="mes" *ngIf="modal">
 </div>
 <div class="text" *ngIf="modal">
-    <h2 class="header">Поздравяем!</h2>
-    <p class="contains">Вы успешно приобрели авто на сумму {{priceInModal}}$</p>
+    <h2 class="header">{{loc.basket_cong}}!</h2>
+    <p class="contains">{{loc.basket_body}} {{priceInModal}}$</p>
     <input type="button" class="btn btn-default" value="OK" (click)="closeModal()">
 </div>
 <div class="container body">
     <div class="text-center">
-        <h1 *ngIf="sizeItems>0" class="title">Корзина</h1><h1 *ngIf="sizeItems==0" class="title">Ваша корзина пуста</h1><br/><br/>
+        <h1 *ngIf="sizeItems>0" class="title">{{loc.bask_basket}}</h1><h1 *ngIf="sizeItems==0" class="title">{{loc.bask_empty}}</h1><br/><br/>
         <div class="info-posters" *ngIf="sizeItems>0">
-            Товаров в корзине: <b>{{basketCount.size}} </b> на сумму <b>{{basketCount.priceUsd}}$({{basketCount.priceBlr}} бел.руб.)</b>
+            {{loc.bask_goods}}: <b>{{basketCount.size}} </b> {{loc.bask_price}} <b>{{basketCount.priceUsd}}$({{basketCount.priceBlr}} {{loc.cur_rub}})</b>
         </div>
         <div class="options" *ngIf="sizeItems>0">
             <label>{{loc.pers_show}}</label>
@@ -24,11 +24,11 @@
             <div class="container poster well" *ngFor="let item of pagedItems">
                 <div class="photo-car"><img [src]="getImg(item.file)"></div>
                 <div class="item-price"><p class="year-car" align="left">{{item.year}}<p class="main-price" align="left"><b>{{item.priceBlr}} р</b><p class="second-price" align="left">{{item.priceUsd}} $<p class="city-car" align="left">{{item.city}}</div>
-                <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="justify" >{{item.description}}</div>
-                <div class="delete" (click)="deletePoster(item)">Убрать</div>
+                <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} {{loc.pers_year}}<p class="dop-info" align="justify" >{{item.description}}</div>
+                <div class="delete" (click)="deletePoster(item)">{{loc.bask_delete}}</div>
             </div>
         </div>
-        <input *ngIf="sizeItems>0 && auth.getUser().role!='ROLE_ADMIN'" type="button" class="btn btn-primary" value="Купить все" (click)="buyAll()">
+        <input *ngIf="sizeItems>0 && auth.getUser().role!='ROLE_ADMIN'" type="button" class="btn btn-primary" value="{{loc.bask_buy}}" (click)="buyAll()">
         <!-- pager -->
         <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">

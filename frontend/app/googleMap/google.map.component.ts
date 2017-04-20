@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import { MapsAPILoader } from 'angular2-google-maps/core';
 import {FormControl} from "@angular/forms";
 import {ViewChild} from "@angular/core";
+import {CurLang} from "../Entities/CurLang";
+import {RouteTo} from "../services/communicate/swap.data";
 
 
 @Component({
@@ -26,7 +28,7 @@ export class GoogleMap implements OnInit{
     time1:string;
     timeWeekend:string;
     email:string;
-    addr:string;
+    loc:any;
 
 
     public searchControl: FormControl;
@@ -35,14 +37,15 @@ export class GoogleMap implements OnInit{
     public searchElementRef: ElementRef;
 
     constructor(private router:Router,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
-
-        this.title="Автохаус «СмартАвто» ждет вас";
+        this.loc=CurLang.locale;
+        RouteTo.rout='map';
+        this.title=this.loc.map_title;
         this.number1="376 60 52";
         this.number2="668 60 57";
         this.number3="686 60 57";
-        this.adress="проспект Победителей 1, Минск, Беларусь";
-        this.time1="Пн-пт: c 7:00 до 23:00";
-        this.timeWeekend="Сб-вс и праздничные дни: c 9:00 до 21:00";
+        this.adress=this.loc.map_address;
+        this.time1=this.loc.map_time1;
+        this.timeWeekend=this.loc.map_time2;
         this.email="smart-avto@mail.ru";
     }
     clickMarker(){

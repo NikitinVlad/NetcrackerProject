@@ -1,28 +1,28 @@
 <div class="all">
     <div class="all-posters">
-        <h1 *ngIf="sizeItems>0">Автомобили</h1>
-        <h1 *ngIf="sizeItems==0">Ничего не найдено</h1>
+        <h1 *ngIf="sizeItems>0">{{loc.cat_cars}}</h1>
+        <h1 *ngIf="sizeItems==0">{{loc.cat_nocars}}</h1>
         <div class="options" >
-            <label class="for-picker">Показывать по</label>
+            <label class="for-picker">{{loc.pers_show}}</label>
             <select class="selectpicker" (change)="setOption($event.target.value)">
                 <option *ngFor="let num of options" class="option" [selected]="num===currentSelection">{{num}}</option>
             </select>
         </div>
         <div class="sorted" >
-            <label>Сортировать по</label>
+            <label>{{loc.cat_sorted}}</label>
             <select class="sort-field" (change)="filterPosters(true)">
-                <option selected>Дате подачи(по возрастанию)</option>
-                <option>Дате подачи(по убыванию)</option>
-                <option>Цене(по возрастанию)</option>
-                <option>Цене(по убыванию)</option>
-                <option>Году выпуска(по возрастанию)</option>
-                <option>Году выпуска(по убыванию)</option>
+                <option selected>{{loc.cat_sort1}}</option>
+                <option>{{loc.cat_sort2}}</option>
+                <option>{{loc.cat_sort3}}</option>
+                <option>{{loc.cat_sort4}}</option>
+                <option>{{loc.cat_sort5}}</option>
+                <option>{{loc.cat_sort6}}</option>
             </select>
         </div>
         <div class="container poster well" *ngFor="let item of pagedItems">
             <div class="photo-car"><img [src]="getImg(item.file)"></div>
             <div class="item-price"><p class="year-car" align="left">{{item.year}}<p class="main-price" align="left"><b>{{item.priceBlr}} р</b><p class="second-price" align="left">{{item.priceUsd}} $<p class="city-car" align="left">{{item.city}}</div>
-            <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} год<p class="dop-info" align="justify" >{{item.description}}</div>
+            <div class="info"><h3 class="posters-title" align="left" (click)="goPoster(item.id)">{{item.markName}} {{item.modelName}}</h3><p  class="characteristics" align="left">{{getTransmission(item.transmission)}}{{getFuel(item.fuel)}} {{item.year}} {{loc.pers_year}}<p class="dop-info" align="justify" >{{item.description}}</div>
             <div class="basket" *ngIf="item.user.id!=getAuthID() && getAuthID()!=0" (click)="putToBasket(item)"><img title="{{getBasketTitle(item.id)}}" src="{{getBasketImg(item.id)}}"></div>
         </div>
         <ul *ngIf="sizeItems!=0 && pager.pages && pager.pages.length" class="pagination">
@@ -45,77 +45,77 @@
     </div>
     <div class="sort well">
         <div class="parametrs">
-            <h4>Параметры авто</h4>
+            <h4>{{loc.cat_parametrs}}</h4>
             <div class="parametr">
                 <select (change)="changeMark()" class="mark-all">
-                    <option class="first-option">Марка автомобиля</option>
+                    <option class="first-option">{{loc.cat_mark}}</option>
                     <option *ngFor="let mark of addInfo.marks">{{mark.name}}</option>
                 </select>
             </div>
             <div class="parametr">
                 <select (change)="filterPosters(true)">
-                    <option class="first-option">Модель</option>
+                    <option class="first-option">{{loc.cat_model}}</option>
                     <option *ngFor="let model of models">{{model.name}}</option>
                 </select>
             </div>
 
             <div class="parametr">
-                Год выпуска<br/>
+                {{loc.cat_year}}<br/>
                 <select class="from-year" (change)="changeYearFrom($event.target.value)">
-                    <option class="first-option">С</option>
+                    <option class="first-option">{{loc.cat_from}}</option>
                     <option *ngFor="let from of yearFrom">{{from}}</option>
                 </select>
                 <select class="to-year" (change)="filterPosters(true)">
-                    <option class="first-option">По</option>
+                    <option class="first-option">{{loc.cat_to}}</option>
                     <option *ngFor="let to of yearTo">{{to}}</option>
                 </select>
             </div>
 
             <div class="parametr">
-                Цена,{{currency}} <a class="change-currency" (click)="changeCurrency(true)">{{changeCurrency(false)}}</a><br/>
+                {{loc.cat_price}},{{currency}} <a class="change-currency" (click)="changeCurrency(true)">{{changeCurrency(false)}}</a><br/>
                 <select class="from-year" (change)="changePriceFrom($event.target.value)">
-                    <option class="first-option">От</option>
+                    <option class="first-option">{{loc.cat_from}}</option>
                     <option *ngFor="let from of priceFrom">{{from}}</option>
                 </select>
                 <select class="to-year" (change)="filterPosters(true)">
-                    <option class="first-option">До</option>
+                    <option class="first-option">{{loc.cat_to}}</option>
                     <option *ngFor="let to of priceTo">{{to}}</option>
                 </select>
             </div>
             <div class="parametr">
                 <input type="radio" id="petrol" name="radios" value="PETROL" (click)="radioClick(0)">
-                <label for="petrol">Бензин</label>
+                <label for="petrol">{{loc.fuel_petrol}}</label>
                 <input type="radio" id="diesel" name="radios"value="DIESEL" (click)="radioClick(1)">
-                <label for="diesel">Дизель</label>
+                <label for="diesel">{{loc.fuel_diesel}}</label>
                 <input type="radio" id="hybrid" name="radios" value="HYBRID" (click)="radioClick(2)">
-                <label for="hybrid">Гибрид</label>
+                <label for="hybrid">{{loc.fuel_hybrid}}</label>
             </div>
 
             <div class="parametr">
-                Объем двигателя,см.куб.<br/>
-                <input (keyup.enter)="filterPosters(true)" (blur)="filterPosters(true)" oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="4" type="number" placeholder="от">
-                <input (keyup.enter)="filterPosters(true)" (blur)="filterPosters(true)" oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="4" type="number" placeholder="до">
+                {{loc.cat_dimension}}<br/>
+                <input (keyup.enter)="filterPosters(true)" (blur)="filterPosters(true)" oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="4" type="number" placeholder="{{loc.cat_from}}">
+                <input (keyup.enter)="filterPosters(true)" (blur)="filterPosters(true)" oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="4" type="number" placeholder="{{loc.cat_to}}">
             </div>
 
             <div class="parametr">
                 <select (change)="filterPosters(true)">
-                    <option class="first-option">Привод</option>
-                    <option>Передний</option>
-                    <option>Задний</option>
-                    <option>Полный</option>
+                    <option class="first-option">{{loc.cur_trans}}</option>
+                    <option>{{loc.trans_front}}</option>
+                    <option>{{loc.trans_back}}</option>
+                    <option>{{loc.trans_full}}</option>
                 </select>
             </div>
 
             <div class="parametr">
-                Местонахождение <br/>
+               {{loc.cat_place}} <br/>
                 <select (change)="filterPosters(true)">
-                    <option class="first-option">Выберите город</option>
+                    <option class="first-option">{{loc.cat_city}}</option>
                     <option *ngFor="let city of addInfo.cities">{{city.name}}</option>
                 </select>
             </div>
 
             <div class="parametr">
-                <input type="button" class="btn btn-primary" value="Найдено: {{sizeItems}}">
+                <input type="button" class="btn btn-primary" value="{{loc.cat_search}}: {{sizeItems}}">
             </div>
         </div>
     </div>

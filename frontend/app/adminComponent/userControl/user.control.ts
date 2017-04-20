@@ -28,7 +28,7 @@ export class UserControl{
         RouteTo.rout = 'administration/users-control';
         this.loc = CurLang.locale;
 
-        this.postsService.getData('getUsersSize').subscribe(answer=> {
+        this.postsService.getData('admin/getUsersSize').subscribe(answer=> {
             this.sizeItems = answer;
             if(this.sizeItems<4){
                 this.how=this.sizeItems;

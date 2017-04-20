@@ -33,11 +33,11 @@ var CurrentPoster = (function () {
         this.poster = new CurrPoster_1.CurrPoster();
         this.curUser = false;
         this.isAdmin = false;
+        this.loc = CurLang_1.CurLang.locale;
         if (this.swapData.personalAreaServ.getCurrentPosterID() == null) {
             this.router.navigate(['main']);
         }
         else {
-            this.loc = CurLang_1.CurLang.locale;
             swap_data_1.RouteTo.rout = 'poster';
             this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(function (answer) {
                 _this.poster = answer;
@@ -135,14 +135,21 @@ var CurrentPoster = (function () {
             this.poster.fuel = "HYBRID";
         }
         this.poster.dimension = document.getElementsByClassName('dimension')[0].value;
+        if (+this.poster.dimension <= 0) {
+            this.poster.dimension = "";
+        }
         var currency = document.getElementsByClassName('cur')[0].selectedIndex;
+        var price = +document.getElementsByClassName('cur-input')[0].value;
+        if (price <= 0) {
+            price = 1;
+        }
         if (currency == 0) {
             this.poster.currency = "USD";
-            this.poster.priceUsd = +document.getElementsByClassName('cur-input')[0].value;
+            this.poster.priceUsd = price;
         }
         else {
             this.poster.currency = "BLR";
-            this.poster.priceBlr = +document.getElementsByClassName('cur-input')[0].value;
+            this.poster.priceBlr = price;
         }
         this.poster.description = document.getElementsByTagName("textarea")[0].value;
         if (this.newImage) {

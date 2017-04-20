@@ -321,9 +321,11 @@ public class PosterServiceImpl implements PosterService {
         }
         if(!filter.getDimensionFrom().equals("")){
             for(Poster poster:posters){
-                if(!poster.getDimension().equals("") && poster.getDimension()!=null) {
-                    if (Integer.parseInt(poster.getDimension()) >= Integer.parseInt(filter.getDimensionFrom())) {
-                        list.add(poster);
+                if(poster.getDimension()!=null) {
+                    if (!poster.getDimension().equals("")) {
+                        if (Integer.parseInt(poster.getDimension()) >= Integer.parseInt(filter.getDimensionFrom())) {
+                            list.add(poster);
+                        }
                     }
                 }
             }
@@ -333,9 +335,11 @@ public class PosterServiceImpl implements PosterService {
         }
         if(!filter.getDimensionTo().equals("")){
             for(Poster poster:posters){
-                if(!poster.getDimension().equals("") && poster.getDimension()!=null) {
-                    if (Integer.parseInt(poster.getDimension()) <= Integer.parseInt(filter.getDimensionTo())) {
-                        list.add(poster);
+                if(poster.getDimension()!=null) {
+                    if (!poster.getDimension().equals("")) {
+                        if (Integer.parseInt(poster.getDimension()) <= Integer.parseInt(filter.getDimensionTo())) {
+                            list.add(poster);
+                        }
                     }
                 }
             }

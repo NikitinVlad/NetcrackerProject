@@ -106,7 +106,7 @@ export class AddPoster{
             this.errors.push(1);
         }
         var price = (document.getElementsByTagName("input")[0] as HTMLInputElement).value;
-        if(price.length>6 || price.length==0){
+        if(price.length>6 || price.length==0 || price=='' || +price<1){
             this.errors.push(2);
         }
         if(this.errors.length==0){

@@ -1,6 +1,6 @@
-<h1>Контакты</h1>
+<h1>{{loc.map_contacts}}</h1>
 <div class="form-group">
-    <input placeholder="Поиск местоположения" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    <input placeholder="{{loc.map_search}}" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
 </div>
 <div class="container card">
     <h3 (click)="go()" align="center">{{title}}</h3>
@@ -16,7 +16,7 @@
     <sebm-google-map-marker (markerClick)="clickMarker()" [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
 </sebm-google-map>
 <div class="container mecontainer">
-    <p class="copyright-text"><img class="copyright" src="../../images/icons/copyright.svg">2017 «СмартАвто»</p>
+    <p class="copyright-text"><img class="copyright" src="../../images/icons/copyright.svg">2017 «{{loc.map_logo}}»</p>
 </div>
 
 

@@ -74,26 +74,26 @@ var BasketComponent = (function () {
     };
     BasketComponent.prototype.getTransmission = function (tr) {
         if (tr == "FRONT") {
-            return "привод:передний, ";
+            return this.loc.pers_front + ", ";
         }
         else if (tr == "REAR") {
-            return "привод:задний, ";
+            return this.loc.pers_back + ", ";
         }
         else if (tr == "FULL") {
-            return "привод:полный, ";
+            return this.loc.pers_full + ", ";
         }
         else
             return "";
     };
     BasketComponent.prototype.getFuel = function (fl) {
         if (fl == "PETROL") {
-            return "бензин, ";
+            return this.loc.pers_petrol + ", ";
         }
         else if (fl == "DIESEL") {
-            return "дизель, ";
+            return this.loc.pers_diesel + ", ";
         }
         else if (fl == "HYBRID") {
-            return "гибрид, ";
+            return this.loc.pers_hybrid + ", ";
         }
         else
             return "";

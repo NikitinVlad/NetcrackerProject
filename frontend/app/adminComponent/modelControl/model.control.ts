@@ -5,6 +5,8 @@ import {Component} from "@angular/core";
 import {PostsService} from "../../services/posts.service";
 import {Mark} from "../../Entities/Mark";
 import {Model} from "../../Entities/Model";
+import {CurLang} from "../../Entities/CurLang";
+import {RouteTo} from "../../services/communicate/swap.data";
 @Component({
     moduleId:module.id,
     selector:"model-control",
@@ -16,8 +18,11 @@ export class ModelControl{
     success:boolean=false;
     marks:Mark[]=[];
     models:Model[]=[];
+    loc:any;
     constructor(private postsService:PostsService){
-        this.postsService.getData('getAddInfo').subscribe(ans=>{
+        this.loc=CurLang.locale;
+        RouteTo.rout="administration/models-control";
+        this.postsService.getData('admin/getAddInfo').subscribe(ans=>{
             this.marks=ans.marks;
         });
     }

@@ -13,6 +13,8 @@ import {LocaleAuth} from "../../services/locale.auth";
 import {audit} from "rxjs/operator/audit";
 import {CurrPoster} from "../../dto/CurrPoster";
 import {DomSanitizer} from "@angular/platform-browser";
+import {error} from "util";
+import {logError} from "typings/dist/support/cli";
 
 @Component({
     moduleId:module.id,
@@ -41,23 +43,27 @@ export class PosterComponent {
         RouteTo.rout = 'personal/posters';
         this.loc = CurLang.locale;
         this.postsService.sendPost(PersonalUser.user.id, 'getPostersSize').subscribe(answer=> {
-            console.log(answer);
-            this.sizeItems = answer;
-            if (this.sizeItems > 20) {
-                for (var i = 0; i < 20; i++) {
-                    this.options.push(i + 1);
-                }
-            }
-            else {
-                for (var i = 0; i < this.sizeItems; i++) {
-                    this.options.push(i + 1);
-                }
+            // if(answer==403){
+            //     this.auth.logOut();
+            //     this.router.navigate(['login']);
+            // }
 
-                if(this.sizeItems<this.currentSelection)
-                this.currentSelection=this.sizeItems;
-            }
+                this.sizeItems = answer;
+                if (this.sizeItems > 20) {
+                    for (var i = 0; i < 20; i++) {
+                        this.options.push(i + 1);
+                    }
+                }
+                else {
+                    for (var i = 0; i < this.sizeItems; i++) {
+                        this.options.push(i + 1);
+                    }
 
-            this.setPage(1);
+                    if (this.sizeItems < this.currentSelection)
+                        this.currentSelection = this.sizeItems;
+                }
+                this.setPage(1);
+
         });
     }
 

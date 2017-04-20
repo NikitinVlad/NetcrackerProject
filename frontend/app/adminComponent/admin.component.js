@@ -13,8 +13,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by Влад on 19.04.2017.
  */
 var core_1 = require("@angular/core");
+var CurLang_1 = require("../Entities/CurLang");
+var swap_data_1 = require("../services/communicate/swap.data");
 var AdminComponent = (function () {
     function AdminComponent() {
+        this.loc = CurLang_1.CurLang.locale;
+        swap_data_1.RouteTo.rout = 'administration';
     }
     return AdminComponent;
 }());

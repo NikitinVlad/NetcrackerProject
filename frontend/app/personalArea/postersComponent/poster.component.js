@@ -35,7 +35,10 @@ var PosterComponent = (function () {
         swap_data_1.RouteTo.rout = 'personal/posters';
         this.loc = CurLang_1.CurLang.locale;
         this.postsService.sendPost(swap_data_1.PersonalUser.user.id, 'getPostersSize').subscribe(function (answer) {
-            console.log(answer);
+            // if(answer==403){
+            //     this.auth.logOut();
+            //     this.router.navigate(['login']);
+            // }
             _this.sizeItems = answer;
             if (_this.sizeItems > 20) {
                 for (var i = 0; i < 20; i++) {

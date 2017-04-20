@@ -70,6 +70,12 @@ public class UserController {
         return userService.getUsersSize();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "admin/getUsersSize", produces = "application/json", method = RequestMethod.GET)
+    public int getUsersSizeAdmin() {
+        return userService.getUsersSize();
+    }
+
     @RequestMapping(value = "/getRangeUsers", produces = "application/json", method = RequestMethod.POST)
     public List getRangeUsers(@RequestBody Object[] mas) {
         return userService.getRangeUsers((Integer)mas[0],(Integer) mas[1]);

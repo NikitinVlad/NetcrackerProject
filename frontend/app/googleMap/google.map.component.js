@@ -17,18 +17,22 @@ var router_1 = require("@angular/router");
 var core_2 = require("angular2-google-maps/core");
 var forms_1 = require("@angular/forms");
 var core_3 = require("@angular/core");
+var CurLang_1 = require("../Entities/CurLang");
+var swap_data_1 = require("../services/communicate/swap.data");
 var GoogleMap = (function () {
     function GoogleMap(router, mapsAPILoader, ngZone) {
         this.router = router;
         this.mapsAPILoader = mapsAPILoader;
         this.ngZone = ngZone;
-        this.title = "Автохаус «СмартАвто» ждет вас";
+        this.loc = CurLang_1.CurLang.locale;
+        swap_data_1.RouteTo.rout = 'map';
+        this.title = this.loc.map_title;
         this.number1 = "376 60 52";
         this.number2 = "668 60 57";
         this.number3 = "686 60 57";
-        this.adress = "проспект Победителей 1, Минск, Беларусь";
-        this.time1 = "Пн-пт: c 7:00 до 23:00";
-        this.timeWeekend = "Сб-вс и праздничные дни: c 9:00 до 21:00";
+        this.adress = this.loc.map_address;
+        this.time1 = this.loc.map_time1;
+        this.timeWeekend = this.loc.map_time2;
         this.email = "smart-avto@mail.ru";
     }
     GoogleMap.prototype.clickMarker = function () {

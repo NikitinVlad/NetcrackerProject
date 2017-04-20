@@ -14,7 +14,7 @@
         <div class="main-info">
             <div class="item-info">
                 <div class="label-to">
-                    <label>Марка:</label>
+                    <label>{{loc.cur_mark}}:</label>
                 </div>
                 <div class="input-el">
                     <label>{{poster.markName}}</label>
@@ -23,7 +23,7 @@
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Модель:</label>
+                    <label>{{loc.cur_model}}:</label>
                 </div>
                 <div class="input-el">
                     <label>{{poster.modelName}}</label>
@@ -32,7 +32,7 @@
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Год выпуска:</label>
+                    <label>{{loc.cur_year}}:</label>
                 </div>
                 <div class="input-el">
                     <label>{{poster.year}}</label>
@@ -41,13 +41,13 @@
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Привод:</label>
+                    <label>{{loc.cur_trans}}:</label>
                 </div>
                 <div  class="input-el">
                     <select  class="transmission">
-                        <option>Передний</option>
-                        <option>Задний</option>
-                        <option>Полный</option>
+                        <option>{{loc.trans_front}}</option>
+                        <option>{{loc.trans_back}}</option>
+                        <option>{{loc.trans_full}}</option>
                     </select>
                     <label *ngIf="!curUser && !isAdmin" class="trans"></label>
                 </div>
@@ -56,13 +56,13 @@
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Тип топлива:</label>
+                    <label>{{loc.cur_fuel}}:</label>
                 </div>
                 <div class="input-el">
                     <select class="fuel" >
-                        <option>Бензин</option>
-                        <option>Дизель</option>
-                        <option>Гибридный</option>
+                        <option>{{loc.fuel_petrol}}</option>
+                        <option>{{loc.fuel_diesel}}</option>
+                        <option>{{loc.fuel_hybrid}}</option>
                     </select>
                     <label *ngIf="!curUser && !isAdmin" class="fuel2"></label>
                 </div>
@@ -70,31 +70,31 @@
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Объем:</label>
+                    <label>{{loc.cur_dimension}}:</label>
                 </div>
                 <div class="input-el">
                     <label *ngIf="!curUser && !isAdmin">{{poster.dimension}} </label>
-                    <input   type="number" class="dimension"  oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="4">см.куб.
+                    <input   type="number" class="dimension"  oninput="javascript:if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" type="number" (focus)="deleteError(2)" maxlength="4">{{loc.cur_sm}}
                 </div>
             </div>
 
             <div class="item-info">
                 <div class="label-to">
-                    <label>Цена:</label>
+                    <label>{{loc.cur_price}}:</label>
                 </div>
                 <div class="input-el">
                     <input  class="cur-input" type="number" maxlength="10">
                     <select  class="cur" (change)="changeCurrency($event.target.value)">
                         <option>$</option>
-                        <option>бел.руб.</option>
+                        <option>{{loc.cur_rub}}</option>
                     </select>
                     <label *ngIf="!curUser && !isAdmin">{{poster.priceUsd}} $</label><br/>
-                    <label *ngIf="!curUser && !isAdmin">{{poster.priceBlr}} бел.руб.</label>
+                    <label *ngIf="!curUser && !isAdmin">{{poster.priceBlr}} {{loc.cur_rub}}</label>
                 </div>
             </div>
             <div class="item-info">
                 <div class="label-to">
-                    <label>Город:</label>
+                    <label>{{loc.cur_city}}:</label>
                 </div>
                 <div class="input-el">
                     <label>{{poster.city}}</label>
@@ -103,10 +103,10 @@
         </div>
     </div>
     <div class="area">
-        <textarea *ngIf="curUser || isAdmin" cols="90" rows="8" placeholder="Текст объявления">{{poster.description}}</textarea>
+        <textarea *ngIf="curUser || isAdmin" cols="90" rows="8" placeholder="{{loc.cur_placeholder}}">{{poster.description}}</textarea>
         <p *ngIf="!curUser && !isAdmin" class="descript">{{poster.description}}</p>
     </div>
     <img src="../../images/close.png" class="myclose" (click)="exit()">
-    <div class="reload"><div class="table-reload"><label class="info-reload">Обновлено {{poster.date}}</label> <label *ngIf="curUser || isAdmin" (click)="goCurrentUser(poster.user)"> пользователем {{poster.user.login}}</label></div>
-        <div class="submit-form"><button *ngIf="curUser || isAdmin" type="button" class="btn btn-success" (click)="saveChanges()">Сохранить</button> </div></div>
+    <div class="reload"><div class="table-reload"><label class="info-reload">{{loc.cur_update}} {{poster.date}}</label> <label *ngIf="curUser || isAdmin" (click)="goCurrentUser(poster.user)"> {{loc.cur_by}} {{poster.user.login}}</label></div>
+        <div class="submit-form"><button *ngIf="curUser || isAdmin" type="button" class="btn btn-success" (click)="saveChanges()">{{loc.cur_save}}</button> </div></div>
 </div>

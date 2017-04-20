@@ -29,11 +29,11 @@ export class CurrentPoster{
     curUser:boolean=false;
     isAdmin=false;
     constructor(private swapData:SwapData,private postsService:PostsService,private router:Router,private sanitizer:DomSanitizer, private auth:LocaleAuth){
+        this.loc = CurLang.locale;
         if(this.swapData.personalAreaServ.getCurrentPosterID()==null){
             this.router.navigate(['main']);
         }
         else {
-            this.loc = CurLang.locale;
             RouteTo.rout = 'poster';
             this.postsService.sendPost(swapData.personalAreaServ.getCurrentPosterID(), 'getCurrentPoster').subscribe(answer=> {
                 this.poster = answer;
@@ -140,15 +140,22 @@ export class CurrentPoster{
         }
 
         this.poster.dimension=(document.getElementsByClassName('dimension')[0] as HTMLInputElement).value;
+        if(+this.poster.dimension<=0){
+            this.poster.dimension="";
+        }
 
         var currency:number=(document.getElementsByClassName('cur')[0] as HTMLSelectElement).selectedIndex;
+        var price=+(document.getElementsByClassName('cur-input')[0] as HTMLInputElement).value;
+        if(price<=0){
+            price=1;
+        }
         if(currency==0){
             this.poster.currency="USD";
-            this.poster.priceUsd=+(document.getElementsByClassName('cur-input')[0] as HTMLInputElement).value;
+            this.poster.priceUsd=price;
         }
         else {
             this.poster.currency = "BLR";
-            this.poster.priceBlr=+(document.getElementsByClassName('cur-input')[0] as HTMLInputElement).value;
+            this.poster.priceBlr=price;
         }
 
         this.poster.description=(document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement).value;

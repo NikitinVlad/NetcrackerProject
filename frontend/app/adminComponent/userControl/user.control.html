@@ -1,11 +1,11 @@
 <div class="container">
-    <h1>Все пользователи</h1>
+    <h1>{{loc.adm_users}}</h1>
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Логин</th>
-            <th>Имя</th>
-            <th>Email</th>
+            <th>{{loc.adm_login}}</th>
+            <th>{{loc.adm_name}}</th>
+            <th>{{loc.adm_email}}</th>
             <th></th>
         </tr>
         </thead>
@@ -14,7 +14,7 @@
             <td><a (click)="goCurrentUser(user)">{{user.login}}</a></td>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
-            <td><a (click)="deleteUser(user)">Удалить</a></td>
+            <td><a (click)="deleteUser(user)">{{loc.adm_delete}}</a></td>
         </tr>
         </tbody>
         </table>

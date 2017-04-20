@@ -27,6 +27,12 @@ public class PosterController {
         return posterService.getAddInfo();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "admin/getAddInfo", produces = "application/json", method = RequestMethod.GET)
+    public @ResponseBody AddInfo getAddInfoAdmin() {
+        return posterService.getAddInfo();
+    }
+
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/addNewPoster", produces = "application/json", method = RequestMethod.POST)
     public long addNewPoster(@RequestBody @Valid NewPoster newPoster, Errors errors) {

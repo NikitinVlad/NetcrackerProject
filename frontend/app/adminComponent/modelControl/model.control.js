@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var posts_service_1 = require("../../services/posts.service");
 var Model_1 = require("../../Entities/Model");
+var CurLang_1 = require("../../Entities/CurLang");
+var swap_data_1 = require("../../services/communicate/swap.data");
 var ModelControl = (function () {
     function ModelControl(postsService) {
         var _this = this;
@@ -23,7 +25,9 @@ var ModelControl = (function () {
         this.success = false;
         this.marks = [];
         this.models = [];
-        this.postsService.getData('getAddInfo').subscribe(function (ans) {
+        this.loc = CurLang_1.CurLang.locale;
+        swap_data_1.RouteTo.rout = "administration/models-control";
+        this.postsService.getData('admin/getAddInfo').subscribe(function (ans) {
             _this.marks = ans.marks;
         });
     }

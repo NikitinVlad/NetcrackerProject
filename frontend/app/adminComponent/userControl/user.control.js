@@ -27,7 +27,7 @@ var UserControl = (function () {
         this.pager = {};
         swap_data_1.RouteTo.rout = 'administration/users-control';
         this.loc = CurLang_1.CurLang.locale;
-        this.postsService.getData('getUsersSize').subscribe(function (answer) {
+        this.postsService.getData('admin/getUsersSize').subscribe(function (answer) {
             _this.sizeItems = answer;
             if (_this.sizeItems < 4) {
                 _this.how = _this.sizeItems;
