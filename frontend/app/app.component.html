@@ -5,9 +5,9 @@
         </div>
         <div class="collapse navbar-collapse" id="responsive-menu">
             <ul class="nav navbar-nav mydrop">
-                <li><a (click)="goMainPage()"  value>{{loc.app_home}}</a></li>
-                <li><a (click)="goCatalog()">{{loc.app_catalog}}</a></li>
-                <li><a (click)="goMap()">{{loc.app_map}}</a></li>
+                <li><a (click)="goMainPage()" [ngClass]="{'active': activeMain}">{{loc.app_home}}</a></li>
+                <li><a (click)="goCatalog()" [ngClass]="{'active': activeCatalog}">{{loc.app_catalog}}</a></li>
+                <li><a (click)="goMap()"  [ngClass]="{'active': activeMap}">{{loc.app_map}}</a></li>
             </ul>
             <div [ngClass]="{'active-lang': active=='ru'}" class="lang" (click)="changeLang('ru')">RU</div>
             <div [ngClass]="{'active-lang': active=='en'}" class="lang2" (click)="changeLang('en')">EN</div>
@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="cont">
-    <router-outlet [title]="title2"></router-outlet>
+    <router-outlet></router-outlet>
 </div>
  <div class="container mytoast">
      <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

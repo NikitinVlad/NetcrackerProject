@@ -3,18 +3,16 @@
  */
 import {Component} from "@angular/core";
 import {PagerService} from "../../services/pager.service";
-import * as _ from 'underscore';
 import {PostsService} from "../../services/posts.service";
 import {Router} from "@angular/router";
-import {routes} from "../../app.routes";
 import {SwapData, RouteTo, PersonalUser} from "../../services/communicate/swap.data";
 import {CurLang} from "../../Entities/CurLang";
 import {LocaleAuth} from "../../services/locale.auth";
-import {audit} from "rxjs/operator/audit";
+
 import {CurrPoster} from "../../dto/CurrPoster";
 import {DomSanitizer} from "@angular/platform-browser";
-import {error} from "util";
-import {logError} from "typings/dist/support/cli";
+
+
 
 @Component({
     moduleId:module.id,

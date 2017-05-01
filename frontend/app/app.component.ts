@@ -16,6 +16,10 @@ import {Lang} from "./dto/Lang";
     styleUrls:["app.component.css"]
 })
 export class AppComponent{
+    activeMain:boolean=true;
+    activeCatalog:boolean=false;
+    activeMap:boolean=false;
+
     active:string='ru';
     loc:any;
     toasterconfig : ToasterConfig;
@@ -49,6 +53,9 @@ export class AppComponent{
         });
     }
     goMainPage(){
+        this.activeCatalog=false;
+        this.activeMain=true;
+        this.activeMap=false;
         this.router.navigate(["main"]);
     }
     goRegistration(){
@@ -66,9 +73,15 @@ export class AppComponent{
         this.router.navigate(["help"]);
     }
     goCatalog(){
+        this.activeCatalog=true;
+        this.activeMain=false;
+        this.activeMap=false;
         this.router.navigate(["catalog"]);
     }
     goMap(){
+        this.activeCatalog=false;
+        this.activeMain=false;
+        this.activeMap=true;
         this.router.navigate(["map"]);
     }
     exit():void{

@@ -11,7 +11,6 @@ import {Mark} from "../../Entities/Mark";
 import {LocaleAuth} from "../../services/locale.auth";
 import {Router} from "@angular/router";
 import {NewPoster} from "../../dto/NewPoster";
-import {errorObject} from "rxjs/util/errorObject";
 @Component({
     moduleId:module.id,
     selector:"add-poster",

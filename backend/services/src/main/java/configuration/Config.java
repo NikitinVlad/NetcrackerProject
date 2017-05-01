@@ -2,9 +2,6 @@ package configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-/**
- * Created by Влад on 27.03.2017.
- */
 
 public class Config extends AbstractAnnotationConfigDispatcherServletInitializer {
 

@@ -7,12 +7,9 @@ import {CurLang} from "../Entities/CurLang";
 import {SwapData, RouteTo} from "../services/communicate/swap.data";
 import {Router} from "@angular/router";
 import {LocaleAuth} from "../services/locale.auth";
-import {Mark} from "../Entities/Mark";
-import {City} from "../Entities/City";
 import {AddInfo} from "../dto/AddInfo";
 import {Model} from "../Entities/Model";
 import {FilterPosters} from "../dto/FilterPosters";
-import {User} from "../Entities/User";
 
 
 @Component({
@@ -84,7 +81,7 @@ export class CatalogComponent{
             filter.mark=mark.value;
         }
         var model=(document.getElementsByTagName("select")[3] as HTMLSelectElement);
-        if(model.selectedIndex==0){
+        if(model.selectedIndex==0 || filter.mark==""){
             filter.model="";
         }
         else {
@@ -201,7 +198,7 @@ export class CatalogComponent{
             this.postsService.sendPost(filter, 'getFilterPostersSize').subscribe(answer=> {
                 this.sizeItems = answer;
                 this.options = [];
-                this.currentSelection=4;
+                this.currentSelection = 4;
                 if (this.sizeItems > 20) {
                     for (var i = 0; i < 20; i++) {
                         this.options.push(i + 1);

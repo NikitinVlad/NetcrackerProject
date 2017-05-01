@@ -1,8 +1,6 @@
 package user;
 
-/**
- * Created by Влад on 31.03.2017.
- */
+
 
 import dto.UserLogin;
 import entity.User;

@@ -24,6 +24,9 @@ var AppComponent = (function () {
         this.toasterService = toasterService;
         this.localeAuth = localeAuth;
         this.swapData = swapData;
+        this.activeMain = true;
+        this.activeCatalog = false;
+        this.activeMap = false;
         this.active = 'ru';
         this.loc = CurLang_1.CurLang.locale;
         this.toasterconfig = new angular2_toaster_1.ToasterConfig({ positionClass: 'center', limit: 1 });
@@ -53,6 +56,9 @@ var AppComponent = (function () {
         });
     };
     AppComponent.prototype.goMainPage = function () {
+        this.activeCatalog = false;
+        this.activeMain = true;
+        this.activeMap = false;
         this.router.navigate(["main"]);
     };
     AppComponent.prototype.goRegistration = function () {
@@ -70,9 +76,15 @@ var AppComponent = (function () {
         this.router.navigate(["help"]);
     };
     AppComponent.prototype.goCatalog = function () {
+        this.activeCatalog = true;
+        this.activeMain = false;
+        this.activeMap = false;
         this.router.navigate(["catalog"]);
     };
     AppComponent.prototype.goMap = function () {
+        this.activeCatalog = false;
+        this.activeMain = false;
+        this.activeMap = true;
         this.router.navigate(["map"]);
     };
     AppComponent.prototype.exit = function () {

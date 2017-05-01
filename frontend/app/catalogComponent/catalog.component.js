@@ -76,7 +76,7 @@ var CatalogComponent = (function () {
             filter.mark = mark.value;
         }
         var model = document.getElementsByTagName("select")[3];
-        if (model.selectedIndex == 0) {
+        if (model.selectedIndex == 0 || filter.mark == "") {
             filter.model = "";
         }
         else {
